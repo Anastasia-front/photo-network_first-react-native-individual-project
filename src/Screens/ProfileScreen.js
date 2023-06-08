@@ -206,6 +206,19 @@ export const ProfileScreen = ({ navigation, route }) => {
     setIsShowLoaderAvatar(false);
   };
 
+  const renderImage = () => {
+    if (avatar === null) {
+      return (
+        <Image
+          style={styles.photoImage}
+          source={require("../img/Rectangle-empty.jpg")}
+        />
+      );
+    } else {
+      return <Image style={styles.photoImage} source={{ uri: avatar }} />;
+    }
+  };
+
   return (
     <ImageBackground source={image} style={styles.imageBg}>
       <View style={styles.container}>
@@ -215,7 +228,9 @@ export const ProfileScreen = ({ navigation, route }) => {
               {/* {isShowLoaderAvatar ? (
                 <LoaderScreen />
               ) : ( */}
-              <Image source={{ uri: avatar }} style={styles.avatarImg} />
+              {renderImage()}
+
+              {/* <Image source={{ uri: avatar }} style={styles.avatarImg} /> */}
               {/* )} */}
             </View>
 
@@ -278,6 +293,17 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
     borderRadius: 16,
     backgroundColor: "#F6F6F6",
+  },
+  photoImage: {
+    width: 120,
+    height: 120,
+    position: "absolute",
+    top: 100,
+    // left: 130,
+    // top: "38%",
+    left: "48%",
+    transform: [{ translateX: -50 }, { translateY: -50 }],
+    borderRadius: 16,
   },
   avatarWrp: {
     borderRadius: 16,

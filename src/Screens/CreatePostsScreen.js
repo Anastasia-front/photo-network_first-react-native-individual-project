@@ -38,6 +38,7 @@ import { useNavigation } from "@react-navigation/native";
 //   savePostPhoto,
 // } from "../redux/post/postActions";
 import { LoaderScreen } from "../Screens/LoaderScreen";
+import { useKeyboardListener } from "../utils/keyboard";
 
 const INITIAL_POST = {
   photoUri: "",
@@ -53,11 +54,12 @@ export default function CreatePostsScreen() {
   // const dispatch = useDispatch();
   const navigation = useNavigation();
   const isFocused = useIsFocused();
+  const keyboardHeight = useKeyboardListener(300);
 
   const [isShowLoader, setIsShowLoader] = useState(false);
   const [state, setState] = useState(INITIAL_POST);
   const [isDirtyForm, setIsDirtyForm] = useState(false);
-  const [keyboardHeight, setKeyboardHeight] = useState(0);
+  // const [keyboardHeight, setKeyboardHeight] = useState(0);
   // const [selectedPhoto, setSelectedPhoto] = useState(null);
   // const [name, setName] = useState("");
   // const [writtenLocation, setWrittenLocation] = useState("");
@@ -171,28 +173,6 @@ export default function CreatePostsScreen() {
   //     });
   //   })();
   // }, []);
-
-  useEffect(() => {
-    const keyboardDidShowListener = Keyboard.addListener(
-      "keyboardDidShow",
-      (event) => {
-        const { height } = event.endCoordinates;
-        setKeyboardHeight(height - 300);
-      }
-    );
-
-    const keyboardDidHideListener = Keyboard.addListener(
-      "keyboardDidHide",
-      () => {
-        setKeyboardHeight(0);
-      }
-    );
-
-    return () => {
-      keyboardDidShowListener.remove();
-      keyboardDidHideListener.remove();
-    };
-  }, []);
 
   useEffect(() => {
     (async () => {
