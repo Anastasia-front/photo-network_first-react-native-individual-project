@@ -212,11 +212,11 @@ export const ProfileScreen = ({ navigation, route }) => {
         <View style={styles.myPostsContainer}>
           <View style={styles.avatarContainer}>
             <View style={styles.avatarWrp}>
-              {isShowLoaderAvatar ? (
+              {/* {isShowLoaderAvatar ? (
                 <LoaderScreen />
-              ) : (
-                <Image source={{ uri: avatar }} style={styles.avatarImg} />
-              )}
+              ) : ( */}
+              <Image source={{ uri: avatar }} style={styles.avatarImg} />
+              {/* )} */}
             </View>
 
             <TouchableOpacity
@@ -241,11 +241,11 @@ export const ProfileScreen = ({ navigation, route }) => {
           <Text style={styles.login}>{login}</Text>
           <Text style={styles.count}>Всього публікацій: {posts.length}</Text>
 
-          {isShowLoaderPosts ? (
+          {/* {isShowLoaderPosts ? (
             <LoaderScreen />
-          ) : (
-            <ProfileList posts={posts} navigation={navigation} route={route} />
-          )}
+          ) : ( */}
+          <ProfileList posts={posts} navigation={navigation} route={route} />
+          {/* )} */}
         </View>
       </View>
     </ImageBackground>
@@ -271,7 +271,7 @@ const styles = StyleSheet.create({
   },
   avatarContainer: {
     position: "absolute",
-    top: 60,
+    top: 30,
     left: 250,
     alignSelf: "center",
     alignItems: "flex-end",

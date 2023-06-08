@@ -17,59 +17,28 @@ import Title from "../components/Title";
 import { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 // import { loginDB } from "../firebase/authorization";
+import { validateEmail, validatePassword } from "../utils/validation";
 import { authSignInUser } from "../redux/auth/authOperations";
 import { LoaderScreen } from "./LoaderScreen";
 import { useDispatch } from "react-redux";
+import { useKeyboardListener, usePasswordVisibility } from "../utils/keyboard";
 
 export default function Login() {
   const navigation = useNavigation();
   const dispatch = useDispatch();
+  const keyboardHeight = useKeyboardListener(100);
 
   const [isShowLoader, setIsShowLoader] = useState(false);
-  const [keyboardHeight, setKeyboardHeight] = useState(0);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [validationError, setValidationError] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
-  const [hidden, setHidden] = useState("#F6F6F6");
 
-  //   #F6F6F6
-  // #1b4371
-
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
-
-  useEffect(() => {
-    if (password === "") {
-      setHidden("#F6F6F6");
-    } else {
-      setHidden("#1b4371");
-    }
-  }, [password]);
-
-  const validateEmail = () => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      setValidationError("Invalid email");
-      alert("Invalid email: it must contain @ and domain part, invalid space");
-    } else {
-      setValidationError("");
-    }
-  };
-
-  const validatePassword = () => {
-    if (password.length < 6) {
-      setValidationError("Password should be at least 6 characters");
-      alert("Password should be at least 6 characters");
-    } else {
-      setValidationError("");
-    }
-  };
+  const { showPassword, hidden, togglePasswordVisibility } =
+    usePasswordVisibility(false, password);
 
   const handleSubmit = () => {
-    validateEmail();
-    validatePassword();
+    validateEmail(email, setValidationError);
+    validatePassword(password, setValidationError);
 
     if (validationError === "" && password !== "" && email !== "") {
       setIsShowLoader(true);
@@ -82,50 +51,8 @@ export default function Login() {
         //   `Form submitted successfully! Email: ${email}, password: ${password}`
         // );
       });
-      // submit();
-      // handleLogin();
     }
   };
-  const submit = () => {};
-
-  // if (isShowLoader) {
-  //   return <LoaderScreen />;
-  // }
-
-  // const handleLogin = async () => {
-  //   try {
-  //     const user = await loginDB({ email, password });
-  //     console.log("Login successful:", user); // Handle success
-  //   } catch (error) {
-  //     if (error.message === "Firebase: Error (auth/user-not-found)") {
-  //       alert("This user is not registered yet!");
-  //     }
-  //     alert("Sorry! Something went wrong!");
-  //     console.log("Login error:", error.message); // Handle error
-  //   }
-  // };
-
-  useEffect(() => {
-    const keyboardDidShowListener = Keyboard.addListener(
-      "keyboardDidShow",
-      (event) => {
-        const { height } = event.endCoordinates;
-        setKeyboardHeight(height - 150);
-      }
-    );
-
-    const keyboardDidHideListener = Keyboard.addListener(
-      "keyboardDidHide",
-      () => {
-        setKeyboardHeight(0);
-      }
-    );
-
-    return () => {
-      keyboardDidShowListener.remove();
-      keyboardDidHideListener.remove();
-    };
-  }, []);
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>

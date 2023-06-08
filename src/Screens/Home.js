@@ -123,11 +123,12 @@ export const Home = ({ navigation, route, options }) => {
 };
 
 const styles = StyleSheet.create({
-  headerTintColor: "#212121",
+  headerTintColor: "grey",
   headerTitleAlign: "center",
   headerTitleStyle: {
     fontWeight: "500",
     fontSize: 17,
+    color: "#212121",
   },
   headerTitleContainerStyle: {
     justifyContent: "flex-end",
@@ -137,16 +138,19 @@ const styles = StyleSheet.create({
   },
   headerRightContainerStyle: {
     justifyContent: "flex-end",
+    alignItems: "center",
+
     paddingBottom: 11,
     paddingHorizontal: 16,
   },
   headerLeftContainerStyle: {
     justifyContent: "flex-end",
-    paddingBottom: 11,
+    alignItems: "center",
+
+    paddingBottom: 7,
     paddingHorizontal: 16,
   },
   tabBarStyle: {
-    // marginLeft: 50,
     paddingLeft: 60,
     paddingHorizontal: 30,
     justifyContent: "center",

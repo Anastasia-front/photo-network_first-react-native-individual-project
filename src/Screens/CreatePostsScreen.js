@@ -62,7 +62,7 @@ export default function CreatePostsScreen() {
   // const [name, setName] = useState("");
   // const [writtenLocation, setWrittenLocation] = useState("");
   const [permissionCam, requestPermissionCam] = Camera.useCameraPermissions();
-  // const [hasPermission, setHasPermission] = useState(null);
+  const [hasPermission, setHasPermission] = useState(null);
   const [cameraRef, setCameraRef] = useState(null);
   const [buttonPressCount, setButtonPressCount] = useState(0);
   const [type, setType] = useState(Camera.Constants.Type.back);
@@ -84,65 +84,65 @@ export default function CreatePostsScreen() {
     });
   }, [isDirtyForm]);
 
-  // useEffect(() => {
-  //   if (!isFocused) {
-  //     return;
-  //   }
+  useEffect(() => {
+    if (!isFocused) {
+      return;
+    }
 
-  //   (async () => {
-  //     // camera
-  //     try {
-  //       const { status } = await Camera.requestCameraPermissionsAsync();
+    (async () => {
+      // camera
+      try {
+        const { status } = await Camera.requestCameraPermissionsAsync();
 
-  //       if (status !== "granted") {
-  //         alert("Sorry, we need permissions to camera");
-  //         return;
-  //       }
-  //     } catch (error) {
-  //       console.log("permission camera === >> ", error.message);
-  //     }
+        if (status !== "granted") {
+          alert("Sorry, we need permissions to camera");
+          return;
+        }
+      } catch (error) {
+        console.log("permission camera === >> ", error.message);
+      }
 
-  //     // location
-  //     try {
-  //       const { status } = await Location.requestForegroundPermissionsAsync();
+      // location
+      try {
+        const { status } = await Location.requestForegroundPermissionsAsync();
 
-  //       if (status !== "granted") {
-  //         alert("Sorry, we need permissions to location");
-  //         return;
-  //       }
+        if (status !== "granted") {
+          alert("Sorry, we need permissions to location");
+          return;
+        }
 
-  //       const {
-  //         coords: { latitude, longitude },
-  //       } = await Location.getCurrentPositionAsync({});
+        const {
+          coords: { latitude, longitude },
+        } = await Location.getCurrentPositionAsync({});
 
-  //       const [postAddress] = await Location.reverseGeocodeAsync({
-  //         latitude,
-  //         longitude,
-  //       });
+        const [postAddress] = await Location.reverseGeocodeAsync({
+          latitude,
+          longitude,
+        });
 
-  //       setState((prev) => ({
-  //         ...prev,
-  //         location: { latitude, longitude, postAddress },
-  //       }));
-  //     } catch (error) {
-  //       console.log("permission location === >> ", error.message);
-  //     }
+        setState((prev) => ({
+          ...prev,
+          location: { latitude, longitude, postAddress },
+        }));
+      } catch (error) {
+        console.log("permission location === >> ", error.message);
+      }
 
-  //     // gallery
-  //     try {
-  //       if (Platform.OS !== "web") {
-  //         const { status } =
-  //           await ImagePicker.requestMediaLibraryPermissionsAsync();
+      // gallery
+      try {
+        if (Platform.OS !== "web") {
+          const { status } =
+            await ImagePicker.requestMediaLibraryPermissionsAsync();
 
-  //         if (status !== "granted") {
-  //           alert("Sorry, we need permissions to library");
-  //         }
-  //       }
-  //     } catch (error) {
-  //       console.log("permission library === >> ", error.message);
-  //     }
-  //   })();
-  // }, [isFocused]);
+          if (status !== "granted") {
+            alert("Sorry, we need permissions to library");
+          }
+        }
+      } catch (error) {
+        console.log("permission library === >> ", error.message);
+      }
+    })();
+  }, [isFocused]);
 
   // const handleDelete = () => {
   //   setName("");
@@ -194,21 +194,21 @@ export default function CreatePostsScreen() {
     };
   }, []);
 
-  // useEffect(() => {
-  //   (async () => {
-  //     const { status } = await Camera.requestCameraPermissionsAsync();
-  //     await MediaLibrary.requestPermissionsAsync();
+  useEffect(() => {
+    (async () => {
+      const { status } = await Camera.requestCameraPermissionsAsync();
+      await MediaLibrary.requestPermissionsAsync();
 
-  //     setHasPermission(status === "granted");
-  //   })();
-  // }, []);
+      setHasPermission(status === "granted");
+    })();
+  }, []);
 
-  // if (hasPermission === null) {
-  //   return <View />;
-  // }
-  // if (hasPermission === false) {
-  //   return <Text>No access to camera</Text>;
-  // }
+  if (hasPermission === null) {
+    return <View />;
+  }
+  if (hasPermission === false) {
+    return <Text>No access to camera</Text>;
+  }
 
   const handleCameraPress = async () => {
     ActionSheetIOS.showActionSheetWithOptions(
@@ -412,7 +412,7 @@ export default function CreatePostsScreen() {
         },
       });
     } catch (error) {
-      console.log("uploadPostToServer ===>>", error);
+      console.log("uploadPostToServer >", error);
       alert("Вибачте, але публікація не зберіглась на сервері", error.message);
     } finally {
       setState(INITIAL_POST);
@@ -564,6 +564,7 @@ export default function CreatePostsScreen() {
               name="trash"
               size={25}
               color="#BDBDBD"
+              onPress={() => setState(INITIAL_POST)}
             />
           </View>
         </View>
@@ -651,7 +652,7 @@ const styles = StyleSheet.create({
   delete: {
     position: "absolute",
     top: "130%",
-    right: "28%",
+    right: "25%",
     transform: [{ translateX: -50 }, { translateY: -50 }],
     // bottom: -180,
     // left: 130,

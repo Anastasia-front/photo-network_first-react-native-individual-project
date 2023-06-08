@@ -12,13 +12,16 @@ export const ProfileList = ({ navigation, posts, route }) => {
   if (posts.length === 0) {
     return (
       <View style={styles.container}>
-        <Text>Зараз у тебе немає фото, але можна зробити щось класне...</Text>
+        <Text style={styles.text}>
+          Зараз у тебе немає публікацій, але ти можеш їх створити - тисни на цю
+          кнопку👇🏻
+        </Text>
 
         <TouchableOpacity
           style={styles.buttonCapture}
           onPress={() => navigation.navigate("Create")}
         >
-          <MaterialIcons name="photo-camera" size={24} color="white" />
+          <MaterialIcons name="add" size={24} color="white" />
         </TouchableOpacity>
       </View>
     );
@@ -39,9 +42,13 @@ export const ProfileList = ({ navigation, posts, route }) => {
 };
 
 const styles = StyleSheet.create({
-  container: {},
-  text: {},
+  container: {
+    marginTop: 50,
+    paddingHorizontal: 30,
+  },
+  text: { textAlign: "center" },
   buttonCapture: {
+    marginTop: 30,
     height: 60,
     width: 60,
     alignItems: "center",

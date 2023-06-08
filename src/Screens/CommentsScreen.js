@@ -8,30 +8,10 @@ import {
 import InputWithButton from "../components/CommentInput";
 import { CommentFromOther, CommentOwn } from "../components/Comment";
 import { useState, useEffect } from "react";
+import { useKeyboardListener } from "../utils/keyboard";
 
 const CommentsScreen = () => {
-  const [keyboardHeight, setKeyboardHeight] = useState(0);
-  useEffect(() => {
-    const keyboardDidShowListener = Keyboard.addListener(
-      "keyboardDidShow",
-      (event) => {
-        const { height } = event.endCoordinates;
-        setKeyboardHeight(height - 30);
-      }
-    );
-
-    const keyboardDidHideListener = Keyboard.addListener(
-      "keyboardDidHide",
-      () => {
-        setKeyboardHeight(0);
-      }
-    );
-
-    return () => {
-      keyboardDidShowListener.remove();
-      keyboardDidHideListener.remove();
-    };
-  }, []);
+  const keyboardHeight = useKeyboardListener(-30);
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.main}>

@@ -18,82 +18,43 @@ import Title from "../components/Title";
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
-import * as ImagePicker from "expo-image-picker";
-import * as MediaLibrary from "expo-media-library";
-import { ActionSheetIOS } from "react-native";
 // import { registerDB } from "../../firebase/authorization";
 // import { savePhoto, saveName, saveEmail } from "../redux/auth/authOperations";
+import {
+  validateName,
+  validateEmail,
+  validatePassword,
+} from "../utils/validation";
+import { handleGalleryPress } from "../utils/cameraPress";
 import { LoaderScreen } from "./LoaderScreen";
 import { authSignUpUser } from "../redux/auth/authOperations";
 import { storage } from "../firebase/config";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import {
+  useKeyboardListenerWithOpen,
+  usePasswordVisibility,
+} from "../utils/keyboard";
 
 export default function Registration() {
   const dispatch = useDispatch();
   const navigation = useNavigation();
+  const { keyboardHeight, keyboardOpen } = useKeyboardListenerWithOpen(-20);
 
   const [isShowLoader, setIsShowLoader] = useState(false);
   const [buttonPressCount, setButtonPressCount] = useState(0);
-  const [keyboardHeight, setKeyboardHeight] = useState(0);
-  const [keyboardOpen, setKeyboardOpen] = useState(false);
   const [avatar, setAvatar] = useState("../img/Rectangle-empty.jpg");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [validationError, setValidationError] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
-  const [hidden, setHidden] = useState("#F6F6F6");
 
-  //   #F6F6F6
-  // #1b4371
-
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
-
-  useEffect(() => {
-    if (password.length === 0) {
-      setHidden("#F6F6F6");
-    } else {
-      setHidden("#1b4371");
-    }
-  }, [password]);
-
-  const validateName = () => {
-    const nameRegex = /^[a-zA-Z]+$/;
-    if (!nameRegex.test(name)) {
-      alert(
-        "Invalid name: login cannot contain numbers, hyphens, spaces, special characters"
-      );
-      setValidationError("Invalid name");
-    } else {
-      setValidationError(false);
-    }
-  };
-
-  const validateEmail = () => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      alert("Invalid email: it must contain @ and domain part, invalid space");
-      setValidationError("Invalid email");
-    } else {
-      setValidationError(false);
-    }
-  };
-
-  const validatePassword = () => {
-    if (password.length < 6) {
-      alert("Password should be at least 6 characters");
-      setValidationError("Password should be at least 6 characters");
-    } else {
-      setValidationError(false);
-    }
-  };
+  const { showPassword, hidden, togglePasswordVisibility } =
+    usePasswordVisibility(false, password);
 
   const handleSubmit = async () => {
-    validateName();
-    validateEmail();
-    validatePassword();
+    validateName(name, setValidationError);
+    validateEmail(email, setValidationError);
+    validatePassword(password, setValidationError);
 
     if (
       validationError === false &&
@@ -150,26 +111,6 @@ export default function Registration() {
     }
   };
 
-  const submit = async () => {};
-
-  // if (isShowLoader) {
-  //   return <LoaderScreen />;
-  // }
-
-  // const handleRegister = async () => {
-  //   try {
-  //     await registerDB({ email, password });
-
-  //     console.log(name, email, avatar, "Registration successful"); // Handle success
-  //   } catch (error) {
-  //     if (error.message === "Firebase: Error (auth/email-already-in-use)") {
-  //       alert("This user is registered already!");
-  //     }
-  //     alert("Sorry! Something went wrong!");
-  //     console.log("Registration error:", error.message); // Handle error
-  //   }
-  // };
-
   const renderImage = () => {
     if (avatar === "../img/Rectangle-empty.jpg") {
       return (
@@ -183,70 +124,7 @@ export default function Registration() {
     }
   };
 
-  const handleCameraPress = async () => {
-    if (buttonPressCount === 0) {
-      ActionSheetIOS.showActionSheetWithOptions(
-        {
-          options: ["Выбрать из галереи", "Отмена"],
-          cancelButtonIndex: 1,
-        },
-        async (buttonIndex) => {
-          if (buttonIndex === 0) {
-            const { status } =
-              await ImagePicker.requestMediaLibraryPermissionsAsync();
-            if (status === "granted") {
-              const result = await ImagePicker.launchImageLibraryAsync({
-                mediaTypes: ImagePicker.MediaTypeOptions.Images,
-                allowsEditing: true,
-                aspect: [1, 1],
-                quality: 1,
-              });
-
-              if (!result.canceled) {
-                const selectedAsset = await MediaLibrary.createAssetAsync(
-                  result.assets[0].uri
-                );
-                const selectedUri = await MediaLibrary.getAssetInfoAsync(
-                  selectedAsset
-                );
-                setAvatar(selectedUri.uri);
-                setButtonPressCount(1);
-              }
-            }
-          }
-        }
-      );
-    } else {
-      setAvatar("../img/Rectangle-empty.jpg");
-      setButtonPressCount(0);
-    }
-  };
-
-  useEffect(() => {
-    const keyboardDidShowListener = Keyboard.addListener(
-      "keyboardDidShow",
-      (event) => {
-        const { height } = event.endCoordinates;
-        setKeyboardHeight(height - 20);
-        setKeyboardOpen(true);
-      }
-    );
-
-    const keyboardDidHideListener = Keyboard.addListener(
-      "keyboardDidHide",
-      () => {
-        setKeyboardHeight(0);
-        setKeyboardOpen(false);
-      }
-    );
-
-    return () => {
-      keyboardDidShowListener.remove();
-      keyboardDidHideListener.remove();
-    };
-  }, []);
-
-  const photoImageTop = keyboardOpen ? keyboardHeight - 150 : "38%";
+  const photoImageTop = keyboardOpen ? keyboardHeight - 210 : "38%";
   // const psevdoTop = keyboardOpen ? keyboardHeight - 120 : 350;
 
   const styles = {
@@ -400,7 +278,15 @@ export default function Registration() {
             </View>
 
             <View style={styles.formContainer}>
-              <TouchableOpacity onPress={handleCameraPress}>
+              <TouchableOpacity
+                onPress={() =>
+                  handleGalleryPress(
+                    buttonPressCount,
+                    setButtonPressCount,
+                    setAvatar
+                  )
+                }
+              >
                 <Title title={"Реєстрація"} top={310} />
               </TouchableOpacity>
               <View style={{ paddingBottom: keyboardHeight }}>
