@@ -1,23 +1,23 @@
-export const savePhoto = (photo) => {
-  return {
-    type: "SAVE_PHOTO",
-    payload: photo,
-  };
-};
+// export const savePhoto = (photo) => {
+//   return {
+//     type: "SAVE_PHOTO",
+//     payload: photo,
+//   };
+// };
 
-export const saveName = (name) => {
-  return {
-    type: "SAVE_NAME",
-    payload: name,
-  };
-};
+// export const saveName = (name) => {
+//   return {
+//     type: "SAVE_NAME",
+//     payload: name,
+//   };
+// };
 
-export const saveEmail = (email) => {
-  return {
-    type: "SAVE_EMAIL",
-    payload: email,
-  };
-};
+// export const saveEmail = (email) => {
+//   return {
+//     type: "SAVE_EMAIL",
+//     payload: email,
+//   };
+// };
 
 import {
   createUserWithEmailAndPassword,
@@ -30,8 +30,7 @@ import { auth } from "../../firebase/config";
 import { updateUserProfile, authStateChange, authSignOut } from "./authReducer";
 
 export const authSignUpUser =
-  ({ login, email, password, photo }) =>
-  async (dispatch) => {
+  (login, email, password, photo) => async (dispatch) => {
     try {
       await createUserWithEmailAndPassword(auth, email, password);
 
@@ -55,7 +54,7 @@ export const authSignUpUser =
         email: emailBase,
         photoURL: photoUrlBase,
       };
-
+      console.log(userProfile, user.displayName);
       dispatch(updateUserProfile(userProfile));
       return user;
     } catch (error) {
@@ -97,28 +96,47 @@ export const authUpdateUser =
         email: emailBase,
         photoURL: photoUrlBase,
       };
-
+      // console.log(`updateUserProfile(userProfile) - ${auth.currentUser.uid}`);
       dispatch(updateUserProfile(userProfile));
+      return userProfile;
     } catch (error) {
       return error.code;
     }
   };
 
 export const authStateChangeUser = () => async (dispatch, state) => {
-  await onAuthStateChanged(auth, (user) => {
-    // console.log(user)
-    if (user) {
-      const userProfile = {
-        userId: user.uid,
-        login: user.displayName,
-        email: user.email,
-        photoURL: user.photoURL,
-      };
+  const user = auth.currentUser;
+  try {
+    await onAuthStateChanged(auth, async (_) => {
+      if (user) {
+        // const userProfile = {
+        //   userId: user.uid,
+        //   login: user.displayName,
+        //   email: user.email,
+        //   photoURL: user.photoURL,
+        // };
+        const {
+          uid,
+          displayName,
+          email: emailBase,
+          photoURL: photoUrlBase,
+        } = await auth.currentUser;
 
-      dispatch(authStateChange({ stateChange: true }));
-      dispatch(updateUserProfile(userProfile));
-    }
-  });
+        const userProfile = {
+          userId: uid,
+          login: displayName,
+          email: emailBase,
+          photoURL: photoUrlBase,
+        };
+        // const uid = user.uid;
+        // dispatch(authStateChange({ stateChange: true }));
+        dispatch(updateUserProfile(userProfile));
+        return user;
+      } else {
+        console.log("user is not sign in");
+      }
+    });
+  } catch {}
 };
 
 export const authSignOutUser = () => async (dispatch, state) => {

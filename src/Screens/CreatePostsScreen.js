@@ -21,7 +21,7 @@ import {
 } from "../redux/selectors";
 import { db, storage } from "../firebase/config";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { doc, setDoc, Timestamp } from "firebase/firestore";
+import { doc, setDoc, Timestamp, addDoc, collection } from "firebase/firestore";
 
 import { Camera } from "expo-camera";
 import CustomButton, { UnactiveButton } from "../components/Button";
@@ -146,16 +146,6 @@ export default function CreatePostsScreen() {
     })();
   }, [isFocused]);
 
-  // const handleDelete = () => {
-  //   setName("");
-  //   setWrittenLocation("");
-  //   setSelectedPhoto(null);
-  // };
-
-  // useEffect(() => {
-  //   handleDelete();
-  // }, []);
-
   // useEffect(() => {
   //   (async () => {
   //     let { status } = await Location.requestForegroundPermissionsAsync();
@@ -198,68 +188,28 @@ export default function CreatePostsScreen() {
       },
       async (buttonIndex) => {
         if (buttonIndex === 0) {
-          // Проверяем доступность камеры
           const { status } = await Camera.requestCameraPermissionsAsync();
           if (status === "granted") {
             if (buttonPressCount === 0) {
               takePhoto();
-              // const { uri } = await cameraRef.takePictureAsync();
-              // await MediaLibrary.createAssetAsync(uri);
-              // console.log(uri);
-              // console.log(selectedPhoto);
-              // setSelectedPhoto(uri);
             } else if (buttonPressCount === 1) {
               setState((prev) => ({ ...prev, photoUri: "" }));
               takePhoto();
-              // const { uri } = await cameraRef.takePictureAsync();
-              // await MediaLibrary.createAssetAsync(uri);
-              // console.log(uri);
-              // console.log(selectedPhoto);
-              // setSelectedPhoto(uri);
             }
           } else {
-            // Разрешение на использование камеры не было предоставлено
-            console.log(
-              "Разрешение на использование камеры не было предоставлено"
-            );
+            console.log("Дозвіл на використання камери не було надано");
           }
         } else if (buttonIndex === 1) {
-          // Выбрать из галереи
-          const { status } =
-            await ImagePicker.requestMediaLibraryPermissionsAsync();
-          if (status === "granted") {
-            const result = await ImagePicker.launchImageLibraryAsync({
-              mediaTypes: ImagePicker.MediaTypeOptions.Images,
-              allowsEditing: true,
-              aspect: [1, 1],
-              quality: 1,
-            });
-
-            if (!result.canceled) {
-              const selectedAsset = await MediaLibrary.createAssetAsync(
-                result.assets[0].uri
-              );
-              const selectedUri = await MediaLibrary.getAssetInfoAsync(
-                selectedAsset
-              );
-              setState((prev) => ({ ...prev, photoUri: selectedUri.uri }));
-              // setSelectedPhoto(selectedUri.uri);
-              //   console.log(selectedUri.uri);
-            }
-          }
+          pickImage();
         }
         setButtonPressCount(1);
       }
     );
   };
 
-  // if (isShowLoader) {
-  //   return <LoaderScreen />;
-  // }
-
-  // if (!permissionCam) {
-  //   return <LoaderScreen />;
-  // }
+  if (isShowLoader) {
+    return <LoaderScreen />;
+  }
 
   if (!permissionCam.granted) {
     return (
@@ -274,61 +224,45 @@ export default function CreatePostsScreen() {
   const takePhoto = async () => {
     if (cameraRef) {
       try {
-        const { uri } = await cameraRef.current.takePictureAsync();
-
-        const newUri = await ImageManipulator(
-          uri,
-          [
-            {
-              resize: { height: 480, width: 680 },
-            },
-          ],
-          0.5
-        );
-
+        const { uri } = await cameraRef.takePictureAsync();
+        await MediaLibrary.createAssetAsync(uri);
         setState((prev) => ({
           ...prev,
-          photoUri: newUri,
+          photoUri: uri,
         }));
 
         setIsDirtyForm(true);
       } catch (error) {
-        console.log("takePhoto ===>>> ", error.message);
+        console.log("takePhoto > ", error.message);
       }
     }
   };
 
   const pickImage = async () => {
     try {
-      const { assets, canceled } = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.All,
-        allowsEditing: true,
-        aspect: [4, 3],
-        quality: 1,
-      });
+      const { status } =
+        await ImagePicker.requestMediaLibraryPermissionsAsync();
+      if (status === "granted") {
+        const result = await ImagePicker.launchImageLibraryAsync({
+          mediaTypes: ImagePicker.MediaTypeOptions.Images,
+          allowsEditing: true,
+          aspect: [1, 1],
+          quality: 1,
+        });
 
-      if (!canceled) {
-        const [{ uri }] = assets;
-
-        const newUri = await ImageManipulator(
-          uri,
-          [
-            {
-              resize: { height: 480, width: 680 },
-            },
-          ],
-          0.5
-        );
-
-        setState((prev) => ({
-          ...prev,
-          photoUri: newUri,
-        }));
-
-        setIsDirtyForm(true);
+        if (!result.canceled) {
+          const selectedAsset = await MediaLibrary.createAssetAsync(
+            result.assets[0].uri
+          );
+          const selectedUri = await MediaLibrary.getAssetInfoAsync(
+            selectedAsset
+          );
+          setState((prev) => ({ ...prev, photoUri: selectedUri.uri }));
+          setIsDirtyForm(true);
+        }
       }
     } catch (error) {
-      console.log("pickImage ====>> ", error.message);
+      console.log("pickImage > ", error.message);
     }
   };
 
@@ -345,7 +279,7 @@ export default function CreatePostsScreen() {
         location: { latitude, longitude, postAddress, time },
       }));
     } catch (error) {
-      console.log("draggableMarker ====>> ", error.message);
+      console.log("draggableMarker > ", error.message);
     }
   };
 
@@ -365,19 +299,33 @@ export default function CreatePostsScreen() {
 
       return link;
     } catch (error) {
-      console.log("uploadPhotoToServer =====>> ", error);
+      console.log("uploadPhotoToServer > ", error);
       alert("Вибачте, але фото не зберіглось на сервері", error.message);
     }
   };
 
   const uploadPostToServer = async () => {
-    setIsShowLoader(true);
-
-    const uniquePostId = Date.now().toString();
-
     try {
+      setIsShowLoader(true);
+      // const photo = await uploadPhotoToServer();
+
+      // await addDoc(collection(db, "/postsInfo"), {
+      //   photo,
+      //   titlePost: state.titlePost ? state.titlePost : "Незабутня подія",
+      //   location: state.location,
+      //   createdAt: Timestamp.fromDate(new Date()),
+      //   updatedAt: Timestamp.fromDate(new Date()),
+      //   owner: {
+      //     userId,
+      //     login,
+      //     avatar,
+      //   },
+      // });
+
+      const uniquePostId = Date.now().toString();
+
       const photo = await uploadPhotoToServer();
-      const postRef = doc(db, "posts", uniquePostId);
+      const postRef = doc(db, "user", uniquePostId);
 
       await setDoc(postRef, {
         photo,
@@ -391,8 +339,55 @@ export default function CreatePostsScreen() {
           avatar,
         },
       });
+      console.log("yeah! post was downloaded!");
+
+      const citiesRef = collection(db, "cities");
+
+      await setDoc(doc(citiesRef, "SF"), {
+        name: "San Francisco",
+        state: "CA",
+        country: "USA",
+        capital: false,
+        population: 860000,
+        regions: ["west_coast", "norcal"],
+      });
+      await setDoc(doc(citiesRef, "LA"), {
+        name: "Los Angeles",
+        state: "CA",
+        country: "USA",
+        capital: false,
+        population: 3900000,
+        regions: ["west_coast", "socal"],
+      });
+      await setDoc(doc(citiesRef, "DC"), {
+        name: "Washington, D.C.",
+        state: null,
+        country: "USA",
+        capital: true,
+        population: 680000,
+        regions: ["east_coast"],
+      });
+      await setDoc(doc(citiesRef, "TOK"), {
+        name: "Tokyo",
+        state: null,
+        country: "Japan",
+        capital: true,
+        population: 9000000,
+        regions: ["kanto", "honshu"],
+      });
+      await setDoc(doc(citiesRef, "BJ"), {
+        name: "Beijing",
+        state: null,
+        country: "China",
+        capital: true,
+        population: 21500000,
+        regions: ["jingjinji", "hebei"],
+      });
     } catch (error) {
-      console.log("uploadPostToServer >", error);
+      const uniquePostId = Date.now().toString();
+
+      console.log("uploadPostToServer >", error, uniquePostId);
+      console.log(db);
       alert("Вибачте, але публікація не зберіглась на сервері", error.message);
     } finally {
       setState(INITIAL_POST);

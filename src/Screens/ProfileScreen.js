@@ -109,6 +109,8 @@ import { db } from "../firebase/config";
 import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { ProfileList } from "../components/ProfileList";
 import { askIfQuit, ImageManipulator } from "../helpers";
+import { handleGalleryPress } from "../utils/cameraPress";
+import { avatarTemplate } from "../utils/avatar";
 import { LoaderScreen } from "./LoaderScreen";
 
 export const ProfileScreen = ({ navigation, route }) => {
@@ -117,9 +119,11 @@ export const ProfileScreen = ({ navigation, route }) => {
   const [isShowLoaderPosts, setIsShowLoaderPosts] = useState(false);
   const dispatch = useDispatch();
   const userId = useSelector(selectStateUserId);
-  const login = useSelector(selectStateLogin);
+  const name = useSelector(selectStateLogin);
   const avatar = useSelector(selectStateAvatar);
   const comment = useSelector(selectorStateComment);
+
+  const login = name !== null ? name : "Default name";
 
   useEffect(() => {
     setIsShowLoaderPosts(true);
@@ -182,7 +186,7 @@ export const ProfileScreen = ({ navigation, route }) => {
 
       return await getDownloadURL(imageRef);
     } catch (error) {
-      console.log("uploadPhotoToServer =====>> ", error);
+      console.log("uploadPhotoToServer > ", error);
       Alert.alert("Вибачте, але фото не зберіглось на сервері", error.message);
     }
   };
@@ -194,8 +198,9 @@ export const ProfileScreen = ({ navigation, route }) => {
     const avatarURL = await uploadPhotoToServer(avatarUri);
 
     dispatch(authUpdateUser({ avatarURL })).then((data) => {
-      if (data === undefined || !data.uid) {
+      if (data === undefined || !data.userId) {
         setIsShowLoaderAvatar(false);
+        console.log(data);
         Alert.alert(`Реєстрацію не виконано! Помилка: ${data}`);
         return;
       }
@@ -206,41 +211,14 @@ export const ProfileScreen = ({ navigation, route }) => {
     setIsShowLoaderAvatar(false);
   };
 
-  const renderImage = () => {
-    if (avatar === null) {
-      return (
-        <Image
-          style={styles.photoImage}
-          source={require("../img/Rectangle-empty.jpg")}
-        />
-      );
-    } else {
-      return <Image style={styles.photoImage} source={{ uri: avatar }} />;
-    }
-  };
-
+  if (isShowLoaderAvatar) {
+    return <LoaderScreen />;
+  }
   return (
     <ImageBackground source={image} style={styles.imageBg}>
       <View style={styles.container}>
         <View style={styles.myPostsContainer}>
-          <View style={styles.avatarContainer}>
-            <View style={styles.avatarWrp}>
-              {/* {isShowLoaderAvatar ? (
-                <LoaderScreen />
-              ) : ( */}
-              {renderImage()}
-
-              {/* <Image source={{ uri: avatar }} style={styles.avatarImg} /> */}
-              {/* )} */}
-            </View>
-
-            <TouchableOpacity
-              style={styles.buttonAvatar}
-              onPress={changeAvatar}
-            >
-              <Text style={styles.buttonAvatarText}>{"+"}</Text>
-            </TouchableOpacity>
-          </View>
+          {avatarTemplate(avatar, -70, 0, 55, changeAvatar)}
 
           <View style={styles.exitBtn}>
             <Feather
@@ -256,11 +234,7 @@ export const ProfileScreen = ({ navigation, route }) => {
           <Text style={styles.login}>{login}</Text>
           <Text style={styles.count}>Всього публікацій: {posts.length}</Text>
 
-          {/* {isShowLoaderPosts ? (
-            <LoaderScreen />
-          ) : ( */}
           <ProfileList posts={posts} navigation={navigation} route={route} />
-          {/* )} */}
         </View>
       </View>
     </ImageBackground>
@@ -294,17 +268,7 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     backgroundColor: "#F6F6F6",
   },
-  photoImage: {
-    width: 120,
-    height: 120,
-    position: "absolute",
-    top: 100,
-    // left: 130,
-    // top: "38%",
-    left: "48%",
-    transform: [{ translateX: -50 }, { translateY: -50 }],
-    borderRadius: 16,
-  },
+
   avatarWrp: {
     borderRadius: 16,
     overflow: "hidden",
@@ -338,6 +302,7 @@ const styles = StyleSheet.create({
     color: "#BDBDBD",
   },
   login: {
+    marginTop: 10,
     marginBottom: 5,
     alignSelf: "center",
     fontSize: 30,
@@ -347,6 +312,7 @@ const styles = StyleSheet.create({
     alignSelf: "flex-end",
     fontSize: 12,
     marginBottom: 3,
+    marginTop: 10,
     color: "#BDBDBD",
   },
 });

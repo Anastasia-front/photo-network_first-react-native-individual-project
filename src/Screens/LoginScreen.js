@@ -47,6 +47,7 @@ export default function Login() {
           setIsShowLoader(false);
           alert(`Вхід не виконано! Помилка: ${data}`);
         }
+        console.log(data);
         // console.log(
         //   `Form submitted successfully! Email: ${email}, password: ${password}`
         // );

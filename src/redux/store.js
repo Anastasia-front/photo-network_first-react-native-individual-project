@@ -25,4 +25,8 @@ export const store = configureStore({
     getDefaultMiddleware({
       serializableCheck: false,
     }),
+  // .concat(
+  //   window.__REDUX_DEVTOOLS_EXTENSION__ &&
+  //     window.__REDUX_DEVTOOLS_EXTENSION__()
+  // ),
 });
