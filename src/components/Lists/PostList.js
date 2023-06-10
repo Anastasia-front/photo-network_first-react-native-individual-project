@@ -6,32 +6,13 @@ import {
   selectStateLogin,
   selectStateEmail,
 } from "../../redux/selectors";
-import { db, auth } from "../../firebase/config";
-import { updateUserProfile } from "../../redux/auth/authReducer";
-import {
-  collection,
-  onSnapshot,
-  setDoc,
-  getDoc,
-  addDoc,
-  doc,
-} from "firebase/firestore";
-import { updateProfile } from "firebase/auth";
-import {
-  View,
-  FlatList,
-  StyleSheet,
-  Image,
-  Text,
-  TouchableOpacity,
-} from "react-native";
+import { db } from "../../firebase/config";
+import { collection, onSnapshot } from "firebase/firestore";
+import { View, FlatList, StyleSheet, Image, Text } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { LoaderScreen } from "../../Screens/LoaderScreen";
 import { Post } from "../Posts/Post";
 import { askIfQuit } from "../../helpers";
-// import { authStateChangeUser } from "../redux/auth/authOperations";
-import { selectStateChange } from "../../redux/selectors";
-import { avatarTemplate } from "../../utils/avatar";
 
 export const PostsList = ({ navigation, route }) => {
   const dispatch = useDispatch();
