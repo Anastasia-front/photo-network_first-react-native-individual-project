@@ -54,7 +54,6 @@ export const PostsList = ({ navigation, route }) => {
         const reversPosts = posts.reverse();
         setPosts(reversPosts);
         setIsShowLoader(false);
-        console.log(reversPosts);
       },
       () => {}
     );

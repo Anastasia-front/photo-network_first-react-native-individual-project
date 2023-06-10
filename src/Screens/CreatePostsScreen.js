@@ -500,13 +500,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  // permissionButton: {
-  //   display: "flex",
-  //   justifyContent: "center",
-  //   alignItems: "center",
-  // },
   camera: {
-    // width: 350,
     width: "100%",
     height: 240,
     display: "flex",
