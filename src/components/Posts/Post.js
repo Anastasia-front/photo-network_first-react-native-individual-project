@@ -16,6 +16,7 @@ export const Post = ({ post, navigation, route }) => {
       setLikes(likes - 1);
       setNumberOfClicks(0);
     }
+    // dispatch(addComment(myComment));
   };
 
   useEffect(() => {

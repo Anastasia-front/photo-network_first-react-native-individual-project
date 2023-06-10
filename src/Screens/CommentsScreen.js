@@ -12,13 +12,10 @@ import {
 import { Feather } from "@expo/vector-icons";
 import { CommentsList } from "../components/Comments/CommentList";
 import { CommentForm } from "../components/Comments/CommentForm";
-// import { useKeyboardListener } from "../utils/keyboard";
 
 const CommentsScreen = ({ navigation, route }) => {
   const { id: postId, photo } = route.params;
   const [allComments, setAllComments] = useState([]);
-  // const { keyboardHeight } = useKeyboardListener(0);
-  // console.log(keyboardHeight);
 
   useEffect(() => {
     const commentsRef = collection(db, "posts", postId, "comments");
@@ -50,12 +47,12 @@ const CommentsScreen = ({ navigation, route }) => {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
-        {/* main content */}
-
         {allComments.length === 0 ? (
           <>
             <Image source={{ uri: photo }} style={styles.photo} />
-            <Text style={styles.text}>Ще немає коментарів...</Text>
+            <Text style={styles.text}>
+              Ще немає коментарів, напишіть перший✌🏼
+            </Text>
           </>
         ) : null}
 
@@ -65,10 +62,7 @@ const CommentsScreen = ({ navigation, route }) => {
           </View>
         ) : null}
 
-        {/* bottom form */}
-        {/* <View style={{ bottom: keyboardHeight }}> */}
         <CommentForm postId={postId} />
-        {/* </View> */}
       </View>
     </TouchableWithoutFeedback>
   );
@@ -93,14 +87,14 @@ const styles = StyleSheet.create({
     borderColor: "#E8E8E8",
   },
   text: {
-    fontSize: 25,
-    color: "#212121",
+    fontSize: 20,
     fontWeight: "400",
-    fontStyle: "italic",
-    textAlign: "left",
     position: "absolute",
-    top: 300,
-    left: 30,
+    top: 400,
+    left: 60,
+    color: "#BDBDBD",
+    width: "70%",
+    textAlign: "center",
   },
 });
 

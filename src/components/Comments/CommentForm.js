@@ -12,7 +12,7 @@ import {
   Keyboard,
   Platform,
 } from "react-native";
-import InputWithButton from "./Inputs/CommentInput";
+import InputWithButton from "../Inputs/CommentInput";
 import { useKeyboardListener } from "../../utils/keyboard";
 
 export const CommentForm = ({ postId }) => {

@@ -14,7 +14,7 @@ import CustomButton from "../components/Others/Button";
 import Input from "../components/Inputs/Input";
 import CustomLink from "../components/Others/Link";
 import Title from "../components/Others/Title";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import { authStateChange } from "../redux/auth/authReducer";
@@ -50,6 +50,27 @@ export default function Registration() {
   const { showPassword, hidden, togglePasswordVisibility } =
     usePasswordVisibility(false, password);
 
+  const uploadPhotoToServer = async () => {
+    const uniquePostId = Date.now().toString();
+
+    try {
+      const response = await fetch(avatar);
+
+      const file = await response.blob();
+
+      const imageRef = ref(storage, `userAvatars/${uniquePostId}`);
+
+      await uploadBytes(imageRef, file);
+
+      const link = await getDownloadURL(imageRef);
+
+      return link;
+    } catch (error) {
+      console.log("uploadPhotoToServer > ", error);
+      alert("Вибачте, але фото не зберіглось на сервері", error.message);
+    }
+  };
+
   const handleSubmit = async () => {
     validateName(login, setValidationError);
     validateEmail(email, setValidationError);
@@ -76,31 +97,6 @@ export default function Registration() {
         dispatch(authStateChange({ stateChange: true }));
         console.log(data);
       });
-    }
-  };
-
-  const uploadPhotoToServer = async () => {
-    const uniquePostId = Date.now().toString();
-
-    try {
-      const photo = avatar
-        ? await uploadPhotoToServer()
-        : "https://firebasestorage.googleapis.com/v0/b/first-react-native-proje-98226.appspot.com/o/userAvatars%2F1686212420486?alt=media&token=2423a9d7-2557-49b4-837a-971c121e2905";
-
-      const response = await fetch(photo);
-
-      const file = await response.blob();
-
-      const imageRef = ref(storage, `userAvatars/${uniquePostId}`);
-
-      await uploadBytes(imageRef, file);
-
-      const link = await getDownloadURL(imageRef);
-
-      return link;
-    } catch (error) {
-      console.log("uploadPhotoToServer > ", error);
-      alert("Вибачте, але фото не зберіглось на сервері", error.message);
     }
   };
 

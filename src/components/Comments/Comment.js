@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     gap: 12,
     marginBottom: 15,
-    marginLeft: 20,
+    marginLeft: 25,
   },
   image: {
     width: 28,
@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
     fontWeight: "400",
     fontSize: 13,
     textAlign: "left",
-    marginBottom: 10,
+    marginBottom: 1,
   },
   dateTime: {
     color: "#BDBDBD",

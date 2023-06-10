@@ -12,11 +12,17 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 
 import { authSlice, authReducer } from "./auth/authReducer";
-import { postSlice, postReducer } from "./post/postReducer";
+import {
+  postSlice,
+  postReducer,
+  likeSlice,
+  likeReducer,
+} from "./post/postReducer";
 
 const rootReducers = combineReducers({
   [authSlice.name]: authReducer,
   [postSlice.name]: postReducer,
+  [likeSlice.name]: likeReducer,
 });
 
 export const store = configureStore({

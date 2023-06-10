@@ -10,13 +10,16 @@ import MapScreen from "./Screens/MapScreen";
 
 const styles = StyleSheet.create({
   header: {
-    colorPrimary: "grey",
-    colorSecondary: "#BDBDBD",
+    colorPrimary: "black",
+    secondaryColor: "grey",
   },
   headerTitle: {
+    flex: 1,
+    marginTop: 9,
+    justifyContent: "center",
     alignItems: "center",
     fontWeight: "500",
-    fontSize: 17,
+    fontSize: 18,
   },
   headerContainerItem: {
     justifyContent: "flex-end",
@@ -40,7 +43,7 @@ const screenOptions = ({ navigation, route }) => ({
     <Feather
       name="arrow-left"
       size={24}
-      color={styles.header.colorPrimary}
+      color={styles.header.secondaryColor}
       onPress={navigation.goBack}
     />
   ),

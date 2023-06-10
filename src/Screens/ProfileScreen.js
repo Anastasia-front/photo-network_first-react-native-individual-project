@@ -1,86 +1,3 @@
-// import { View, ImageBackground, Image, Text, StyleSheet } from "react-native";
-// import OverlayImage from "../components/OverlayImage";
-// import { Post } from "../components/Post";
-// import { Ionicons } from "@expo/vector-icons";
-// import { selectAvatar, selectName } from "../redux/selectors";
-// import { useDispatch, useSelector } from "react-redux";
-
-// export const ProfileScreen = () => {
-//   const name = useSelector(selectName);
-//   const avatar = useSelector(selectAvatar);
-//   return (
-//     <View style={styles.container}>
-//       <ImageBackground
-//         source={require("../img/Photo-BG.jpg")}
-//         style={styles.imageBackground}
-//         resizeMode="cover"
-//       >
-//         <View style={styles.overlayContainer}>
-//           <OverlayImage top={-50} />
-//           <Image style={styles.photoImage} source={{ uri: avatar }} />
-//           <Ionicons
-//             name="ios-log-out"
-//             size={35}
-//             color="grey"
-//             style={styles.icon}
-//             // onPress={onLogin}
-//           />
-//           <View
-//             style={{
-//               marginTop: -620,
-//             }}
-//           >
-//             <Text style={styles.name}>{name}</Text>
-//             <Post />
-//           </View>
-//         </View>
-//       </ImageBackground>
-//     </View>
-//   );
-// };
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     ...StyleSheet.absoluteFill,
-//   },
-//   imageBackground: {
-//     flex: 1,
-//   },
-//   overlayContainer: {
-//     ...StyleSheet.absoluteFill,
-//     flex: 1,
-//     alignItems: "center",
-//     justifyContent: "center",
-//   },
-//   icon: {
-//     position: "absolute",
-//     // top: 150,
-//     // right: 30,
-//     top: "28%",
-//     right: 0,
-//     transform: [{ translateX: -50 }, { translateY: -50 }],
-//   },
-//   photoImage: {
-//     width: 120,
-//     height: 120,
-//     position: "absolute",
-//     // top: 90,
-//     // left: 130,
-//     top: "18%",
-//     left: "48%",
-//     transform: [{ translateX: -50 }, { translateY: -50 }],
-//     borderRadius: 16,
-//   },
-//   name: {
-//     fontWeight: "500",
-//     fontSize: 30,
-//     textAlign: "center",
-//     letterSpacing: 0.01,
-//     marginBottom: 20,
-//   },
-// });
-
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { authUpdateUser } from "../redux/auth/authOperations";
@@ -92,15 +9,7 @@ import {
 } from "../redux/selectors";
 import { storage } from "../firebase/config";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  ImageBackground,
-  Image,
-  Alert,
-  StyleSheet,
-} from "react-native";
+import { View, Text, ImageBackground, Alert, StyleSheet } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import { Feather } from "@expo/vector-icons";
 import image from "../img/Photo-BG.jpg";
@@ -109,7 +18,6 @@ import { db } from "../firebase/config";
 import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { ProfileList } from "../components/Lists/ProfileList";
 import { askIfQuit, ImageManipulator } from "../helpers";
-import { handleGalleryPress } from "../utils/cameraPress";
 import { avatarTemplate } from "../utils/avatar";
 import { LoaderScreen } from "./LoaderScreen";
 
@@ -218,7 +126,7 @@ export const ProfileScreen = ({ navigation, route }) => {
     <ImageBackground source={image} style={styles.imageBg}>
       <View style={styles.container}>
         <View style={styles.myPostsContainer}>
-          {avatarTemplate(avatar, -70, 0, 55, changeAvatar)}
+          {avatarTemplate(avatar, -70, 10, 42, changeAvatar)}
 
           <View style={styles.exitBtn}>
             <Feather
@@ -254,11 +162,14 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 16,
     borderTopRightRadius: 16,
     backgroundColor: "#fff",
+    //  paddingHorizontal: 12,
   },
   myPostsContainer: {
     width: "100%",
     paddingTop: 60,
+    paddingBottom: 400,
     marginLeft: 3,
+    // paddingHorizontal: 12,
   },
   avatarContainer: {
     position: "absolute",

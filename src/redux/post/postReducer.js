@@ -1,33 +1,3 @@
-// const initialState = {
-//   photoPost: "",
-//   namePost: "",
-//   locationPost: "",
-// };
-
-// const postReducer = (state = initialState, action) => {
-//   switch (action.type) {
-//     case "SAVE_POSTLOCATION":
-//       return {
-//         ...state,
-//         postLocation: action.payload,
-//       };
-//     case "SAVE_POSTPHOTO":
-//       return {
-//         ...state,
-//         postPhoto: action.payload,
-//       };
-//     case "SAVE_POSTNAME":
-//       return {
-//         ...state,
-//         postName: action.payload,
-//       };
-//     default:
-//       return state;
-//   }
-// };
-
-// export default postReducer;
-
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
@@ -47,3 +17,19 @@ export const postSlice = createSlice({
 export const { addComment } = postSlice.actions;
 
 export const postReducer = postSlice.reducer;
+
+export const likeSlice = createSlice({
+  name: "like",
+  initialState: {
+    like: 0,
+  },
+  reducers: {
+    addLike: (state, { payload }) => ({
+      like: payload,
+    }),
+  },
+});
+
+export const { addLike } = postSlice.actions;
+
+export const likeReducer = likeSlice.reducer;

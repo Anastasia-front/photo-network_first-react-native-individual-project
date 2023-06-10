@@ -1,4 +1,5 @@
 import {
+  ScrollView,
   View,
   Text,
   FlatList,
@@ -11,7 +12,7 @@ import { ProfilePost } from "../Posts/ProfilePost";
 export const ProfileList = ({ navigation, posts, route }) => {
   if (posts.length === 0) {
     return (
-      <View style={styles.container}>
+      <View style={{ flex: 1, marginTop: 10, paddingHorizontal: 24 }}>
         <Text style={styles.text}>
           Зараз у тебе немає публікацій, але ти можеш їх створити - тисни на цю
           кнопку👇🏻
@@ -28,17 +29,17 @@ export const ProfileList = ({ navigation, posts, route }) => {
   }
 
   return (
-    <View style={styles.container}>
-      <FlatList
-        style={styles.paddingBottom}
-        data={posts}
-        keyExtractor={({ id }) => id}
-        renderItem={({ item }) => (
-          <ProfilePost post={item} navigation={navigation} route={route} />
-        )}
-        ListFooterComponent={<View style={{ height: "70%" }} />}
-      />
-    </View>
+    // <ScrollView style={styles.container}>
+    <FlatList
+      style={styles.paddingBottom}
+      data={posts}
+      keyExtractor={({ id }) => id}
+      renderItem={({ item }) => (
+        <ProfilePost post={item} navigation={navigation} route={route} />
+      )}
+      ListFooterComponent={<View style={{ height: "70%" }} />}
+    />
+    // </ScrollView>
   );
 };
 
@@ -46,7 +47,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginTop: 10,
-    paddingHorizontal: 12,
+    paddingHorizontal: 24,
   },
   paddingBottom: {
     paddingBottom: 200,

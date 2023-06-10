@@ -1,5 +1,5 @@
 import { Ionicons, Feather } from "@expo/vector-icons";
-import Input from "./components/Inputs/InputCreatePost";
+import Input from "../components/Inputs/InputCreatePost";
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useIsFocused } from "@react-navigation/native";
@@ -44,7 +44,6 @@ const INITIAL_POST = {
 };
 
 export default function CreatePostsScreen() {
-  // const dispatch = useDispatch();
   const navigation = useNavigation();
   const isFocused = useIsFocused();
   const keyboardHeight = useKeyboardListener(300);
@@ -52,10 +51,6 @@ export default function CreatePostsScreen() {
   const [isShowLoader, setIsShowLoader] = useState(false);
   const [state, setState] = useState(INITIAL_POST);
   const [isDirtyForm, setIsDirtyForm] = useState(false);
-  // const [keyboardHeight, setKeyboardHeight] = useState(0);
-  // const [selectedPhoto, setSelectedPhoto] = useState(null);
-  // const [name, setName] = useState("");
-  // const [writtenLocation, setWrittenLocation] = useState("");
   const [permissionCam, requestPermissionCam] = Camera.useCameraPermissions();
   const [hasPermission, setHasPermission] = useState(null);
   const [cameraRef, setCameraRef] = useState(null);
@@ -85,16 +80,22 @@ export default function CreatePostsScreen() {
     }
 
     (async () => {
-      // camera
+      // camera & gallery
       try {
-        const { status } = await Camera.requestCameraPermissionsAsync();
+        // const { status } = await Camera.requestCameraPermissionsAsync();
 
-        if (status !== "granted") {
-          alert("Sorry, we need permissions to camera");
-          return;
-        }
+        // if (status !== "granted") {
+        //   alert("Sorry, we need permissions to camera");
+
+        //   return;
+        // }
+        // setHasPermission(status);
+        const { status } = await Camera.requestCameraPermissionsAsync();
+        await MediaLibrary.requestPermissionsAsync();
+
+        setHasPermission(status === "granted");
       } catch (error) {
-        console.log("permission camera === >> ", error.message);
+        console.log("permission camera/gallery > ", error.message);
       }
 
       // location
@@ -120,22 +121,22 @@ export default function CreatePostsScreen() {
           location: { latitude, longitude, postAddress },
         }));
       } catch (error) {
-        console.log("permission location === >> ", error.message);
+        console.log("permission location > ", error.message);
       }
 
       // gallery
-      try {
-        if (Platform.OS !== "web") {
-          const { status } =
-            await ImagePicker.requestMediaLibraryPermissionsAsync();
+      //   try {
+      //     if (Platform.OS !== "web") {
+      //       const { status } =
+      //         await ImagePicker.requestMediaLibraryPermissionsAsync();
 
-          if (status !== "granted") {
-            alert("Sorry, we need permissions to library");
-          }
-        }
-      } catch (error) {
-        console.log("permission library === >> ", error.message);
-      }
+      //       if (status !== "granted") {
+      //         alert("Sorry, we need permissions to library");
+      //       }
+      //     }
+      //   } catch (error) {
+      //     console.log("permission library > ", error.message);
+      //   }
     })();
   }, [isFocused]);
 
@@ -157,21 +158,21 @@ export default function CreatePostsScreen() {
   //   })();
   // }, []);
 
-  useEffect(() => {
-    (async () => {
-      const { status } = await Camera.requestCameraPermissionsAsync();
-      await MediaLibrary.requestPermissionsAsync();
+  // useEffect(() => {
+  //   (async () => {
+  //     const { status } = await Camera.requestCameraPermissionsAsync();
+  //     await MediaLibrary.requestPermissionsAsync();
 
-      setHasPermission(status === "granted");
-    })();
-  }, []);
+  //     setHasPermission(status === "granted");
+  //   })();
+  // }, []);
 
-  if (hasPermission === null) {
-    return <View />;
-  }
-  if (hasPermission === false) {
-    return <Text>No access to camera</Text>;
-  }
+  // if (hasPermission === null) {
+  //   return <View />;
+  // }
+  // if (hasPermission === false) {
+  //   return <Text>No access to camera</Text>;
+  // }
 
   const handleCameraPress = async () => {
     ActionSheetIOS.showActionSheetWithOptions(
@@ -204,13 +205,17 @@ export default function CreatePostsScreen() {
     return <LoaderScreen />;
   }
 
-  if (!permissionCam.granted) {
+  if (!hasPermission) {
     return (
       <View style={styles.permission}>
         <Text style={{ textAlign: "center" }}>
-          We need your permission to show the camera
+          Нам потрібен ваш дозвіл, щоб показати камеру
         </Text>
-        <CustomButton onPress={requestPermissionCam} title="grant permission" />
+        <CustomButton
+          onPress={requestPermissionCam}
+          width="50%"
+          text="отримати дозвіл"
+        />
       </View>
     );
   }
@@ -259,22 +264,22 @@ export default function CreatePostsScreen() {
     }
   };
 
-  const draggableMarker = async ({ latitude, longitude }) => {
-    const time = Date.now().toString();
-    try {
-      const [postAddress] = await Location.reverseGeocodeAsync({
-        latitude,
-        longitude,
-      });
+  // const draggableMarker = async ({ latitude, longitude }) => {
+  //   const time = Date.now().toString();
+  //   try {
+  //     const [postAddress] = await Location.reverseGeocodeAsync({
+  //       latitude,
+  //       longitude,
+  //     });
 
-      setState((prev) => ({
-        ...prev,
-        location: { latitude, longitude, postAddress, time },
-      }));
-    } catch (error) {
-      console.log("draggableMarker > ", error.message);
-    }
-  };
+  //     setState((prev) => ({
+  //       ...prev,
+  //       location: { latitude, longitude, postAddress, time },
+  //     }));
+  //   } catch (error) {
+  //     console.log("draggableMarker > ", error.message);
+  //   }
+  // };
 
   const uploadPhotoToServer = async () => {
     const uniquePostId = Date.now().toString();
@@ -490,6 +495,16 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  permission: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  // permissionButton: {
+  //   display: "flex",
+  //   justifyContent: "center",
+  //   alignItems: "center",
+  // },
   camera: {
     // width: 350,
     width: "100%",
