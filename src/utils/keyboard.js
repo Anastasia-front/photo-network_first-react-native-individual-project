@@ -55,7 +55,7 @@ export const useKeyboardListener = (number) => {
       keyboardDidHideListener.remove();
     };
   }, []);
-  return keyboardHeight;
+  return { keyboardHeight };
 };
 
 export const usePasswordVisibility = (initialState, password) => {

@@ -9,11 +9,11 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from "react-native";
-import OverlayImage from "../components/OverlayImage";
-import CustomButton from "../components/Button";
-import Input from "../components/Input";
-import CustomLink from "../components/Link";
-import Title from "../components/Title";
+import OverlayImage from "../components/Others/OverlayImage";
+import CustomButton from "../components/Others/Button";
+import Input from "../components/Inputs/Input";
+import CustomLink from "../components/Others/Link";
+import Title from "../components/Others/Title";
 import { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 // import { loginDB } from "../firebase/authorization";
@@ -22,11 +22,12 @@ import { authSignInUser } from "../redux/auth/authOperations";
 import { LoaderScreen } from "./LoaderScreen";
 import { useDispatch } from "react-redux";
 import { useKeyboardListener, usePasswordVisibility } from "../utils/keyboard";
+import { authStateChange } from "../redux/auth/authReducer";
 
 export default function Login() {
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const keyboardHeight = useKeyboardListener(100);
+  const { keyboardHeight } = useKeyboardListener(100);
 
   const [isShowLoader, setIsShowLoader] = useState(false);
   const [email, setEmail] = useState("");
@@ -42,15 +43,13 @@ export default function Login() {
 
     if (validationError === "" && password !== "" && email !== "") {
       setIsShowLoader(true);
-      dispatch(authSignInUser({ email, password })).then((data) => {
+      dispatch(authSignInUser(email, password)).then((data) => {
         if (data === undefined || !data.user) {
           setIsShowLoader(false);
-          alert(`Вхід не виконано! Помилка: ${data}`);
+          alert(`Вхід не виконано!       Помилка: ${data}`);
+          return;
         }
-        console.log(data);
-        // console.log(
-        //   `Form submitted successfully! Email: ${email}, password: ${password}`
-        // );
+        dispatch(authStateChange({ stateChange: true }));
       });
     }
   };

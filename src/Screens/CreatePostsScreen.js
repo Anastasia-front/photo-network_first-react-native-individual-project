@@ -1,5 +1,5 @@
 import { Ionicons, Feather } from "@expo/vector-icons";
-import Input from "../components/InputCreatePost";
+import Input from "./components/Inputs/InputCreatePost";
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useIsFocused } from "@react-navigation/native";
@@ -21,22 +21,15 @@ import {
 } from "../redux/selectors";
 import { db, storage } from "../firebase/config";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { doc, setDoc, Timestamp, addDoc, collection } from "firebase/firestore";
+import { doc, setDoc, Timestamp } from "firebase/firestore";
 
 import { Camera } from "expo-camera";
-import CustomButton, { UnactiveButton } from "../components/Button";
+import CustomButton, { UnactiveButton } from "../components/Others/Button";
 import { ActionSheetIOS } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import * as MediaLibrary from "expo-media-library";
 import * as Location from "expo-location";
 import { useNavigation } from "@react-navigation/native";
-// import { saveLocationAction } from "../redux/post/postActions";
-// import { writeDataToFirestore } from "../../firebase/collections";
-// import {
-//   savePostLocation,
-//   savePostName,
-//   savePostPhoto,
-// } from "../redux/post/postActions";
 import { LoaderScreen } from "../Screens/LoaderScreen";
 import { useKeyboardListener } from "../utils/keyboard";
 
@@ -305,27 +298,11 @@ export default function CreatePostsScreen() {
   };
 
   const uploadPostToServer = async () => {
+    setIsShowLoader(true);
+    const uniquePostId = Date.now().toString();
     try {
-      setIsShowLoader(true);
-      // const photo = await uploadPhotoToServer();
-
-      // await addDoc(collection(db, "/postsInfo"), {
-      //   photo,
-      //   titlePost: state.titlePost ? state.titlePost : "Незабутня подія",
-      //   location: state.location,
-      //   createdAt: Timestamp.fromDate(new Date()),
-      //   updatedAt: Timestamp.fromDate(new Date()),
-      //   owner: {
-      //     userId,
-      //     login,
-      //     avatar,
-      //   },
-      // });
-
-      const uniquePostId = Date.now().toString();
-
       const photo = await uploadPhotoToServer();
-      const postRef = doc(db, "user", uniquePostId);
+      const postRef = doc(db, "posts", uniquePostId);
 
       await setDoc(postRef, {
         photo,
@@ -339,55 +316,8 @@ export default function CreatePostsScreen() {
           avatar,
         },
       });
-      console.log("yeah! post was downloaded!");
-
-      const citiesRef = collection(db, "cities");
-
-      await setDoc(doc(citiesRef, "SF"), {
-        name: "San Francisco",
-        state: "CA",
-        country: "USA",
-        capital: false,
-        population: 860000,
-        regions: ["west_coast", "norcal"],
-      });
-      await setDoc(doc(citiesRef, "LA"), {
-        name: "Los Angeles",
-        state: "CA",
-        country: "USA",
-        capital: false,
-        population: 3900000,
-        regions: ["west_coast", "socal"],
-      });
-      await setDoc(doc(citiesRef, "DC"), {
-        name: "Washington, D.C.",
-        state: null,
-        country: "USA",
-        capital: true,
-        population: 680000,
-        regions: ["east_coast"],
-      });
-      await setDoc(doc(citiesRef, "TOK"), {
-        name: "Tokyo",
-        state: null,
-        country: "Japan",
-        capital: true,
-        population: 9000000,
-        regions: ["kanto", "honshu"],
-      });
-      await setDoc(doc(citiesRef, "BJ"), {
-        name: "Beijing",
-        state: null,
-        country: "China",
-        capital: true,
-        population: 21500000,
-        regions: ["jingjinji", "hebei"],
-      });
     } catch (error) {
-      const uniquePostId = Date.now().toString();
-
-      console.log("uploadPostToServer >", error, uniquePostId);
-      console.log(db);
+      console.log("uploadPostToServer ===>>", error);
       alert("Вибачте, але публікація не зберіглась на сервері", error.message);
     } finally {
       setState(INITIAL_POST);
@@ -456,12 +386,6 @@ export default function CreatePostsScreen() {
               </Camera>
             )}
           </View>
-
-          {/* {selectedPhoto !== null ? (
-            <Text style={styles.text}>Редагувати фото</Text>
-          ) : (
-            <Text style={styles.text}>Завантажте фото</Text>
-          )} */}
 
           {state.photoUri !== "" ? (
             <TouchableOpacity

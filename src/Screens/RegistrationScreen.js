@@ -9,15 +9,15 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from "react-native";
-import OverlayImage from "../components/OverlayImage";
-import CustomButton from "../components/Button";
-import Input from "../components/Input";
-import CustomLink from "../components/Link";
-import Title from "../components/Title";
+import OverlayImage from "../components/Others/OverlayImage";
+import CustomButton from "../components/Others/Button";
+import Input from "../components/Inputs/Input";
+import CustomLink from "../components/Others/Link";
+import Title from "../components/Others/Title";
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
-
+import { authStateChange } from "../redux/auth/authReducer";
 import {
   validateName,
   validateEmail,
@@ -44,7 +44,7 @@ export default function Registration() {
   const [avatar, setAvatar] = useState("../img/Rectangle-empty.jpg");
   const [login, setLogin] = useState(null);
   const [email, setEmail] = useState(null);
-  const [password, setPassword] = useState(null);
+  const [password, setPassword] = useState("");
   const [validationError, setValidationError] = useState(false);
 
   const { showPassword, hidden, togglePasswordVisibility } =
@@ -59,23 +59,21 @@ export default function Registration() {
       validationError === false &&
       login !== null &&
       email !== null &&
-      password !== null
+      password !== ""
     ) {
       setIsShowLoader(true);
 
       const photo =
         avatar !== "../img/Rectangle-empty.jpg"
           ? await uploadPhotoToServer()
-          : "https://firebasestorage.googleapis.com/v0/b/first-react-native-proje-98226.appspot.com/o/userAvatars%2F1686212420486?alt=media&token=2423a9d7-2557-49b4-837a-971c121e2905";
-
+          : "https://firebasestorage.googleapis.com/v0/b/first-react-native-proje-98226.appspot.com/o/userAvatars%2FDefault_pfp.svg.png?alt=media&token=7cafd3a4-f9a4-40f2-9115-9067f5a15f57";
       dispatch(authSignUpUser(login, email, password, photo)).then((data) => {
         if (data === undefined || !data.uid) {
           setIsShowLoader(false);
-          alert(`Реєстрацію не виконано!" Помилка: ${data}`);
+          alert(`Реєстрацію не виконано!"     Помилка: ${data}`);
+          return;
         }
-        // console.log(
-        //   `Form submitted successfully! Login: ${login}, email: ${email}, password: ${password}`
-        // );
+        dispatch(authStateChange({ stateChange: true }));
         console.log(data);
       });
     }

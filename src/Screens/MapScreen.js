@@ -1,40 +1,28 @@
-import React from "react";
-import { View, StyleSheet, Text, Dimensions } from "react-native";
-import MapView, { Marker, Callout } from "react-native-maps";
-import { useSelector } from "react-redux";
+import { useState, useEffect } from "react";
+import { View, StyleSheet } from "react-native";
+import MapView, { Marker } from "react-native-maps";
 
-const MapScreen = () => {
-  const location = useSelector((state) => state.location);
-  const handleMarkerPress = () => {
-    console.log("Marker Pressed");
-  };
+const MapScreen = ({ navigation, route }) => {
+  const [location, setLocation] = useState({});
+
+  useEffect(() => {
+    if (route.params) {
+      setLocation(route.params.location);
+    }
+  }, [route.params]);
+
   return (
     <View style={styles.container}>
       <MapView
         style={styles.mapStyle}
-        initialRegion={{
+        region={{
           ...location,
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
         }}
         showsUserLocation={true}
       >
-        {location && (
-          <Marker
-            title="I am here"
-            coordinate={location}
-            description="Hello"
-            onPressIn={handleMarkerPress}
-          >
-            <Callout style={{ flex: 1 }}>
-              <View style={styles.calloutContainer}>
-                <Text numberOfLines={2} style={{ fontSize: 16, marginLeft: 5 }}>
-                  Ваш пост був опублікований тут
-                </Text>
-              </View>
-            </Callout>
-          </Marker>
-        )}
+        {location && <Marker title={location.title} coordinate={location} />}
       </MapView>
     </View>
   );
@@ -43,19 +31,10 @@ const MapScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
   },
   mapStyle: {
-    width: Dimensions.get("window").width,
-    height: Dimensions.get("window").height,
-  },
-  calloutContainer: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    padding: 12,
+    width: "100%",
+    height: "100%",
   },
 });
 

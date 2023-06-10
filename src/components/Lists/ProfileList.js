@@ -6,7 +6,7 @@ import {
   StyleSheet,
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
-import { Post } from "./Post";
+import { ProfilePost } from "../Posts/ProfilePost";
 
 export const ProfileList = ({ navigation, posts, route }) => {
   if (posts.length === 0) {
@@ -30,10 +30,11 @@ export const ProfileList = ({ navigation, posts, route }) => {
   return (
     <View style={styles.container}>
       <FlatList
+        style={styles.paddingBottom}
         data={posts}
         keyExtractor={({ id }) => id}
         renderItem={({ item }) => (
-          <Post post={item} navigation={navigation} route={route} />
+          <ProfilePost post={item} navigation={navigation} route={route} />
         )}
         ListFooterComponent={<View style={{ height: "70%" }} />}
       />
@@ -43,8 +44,12 @@ export const ProfileList = ({ navigation, posts, route }) => {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 50,
-    paddingHorizontal: 30,
+    flex: 1,
+    marginTop: 10,
+    paddingHorizontal: 12,
+  },
+  paddingBottom: {
+    paddingBottom: 200,
   },
   text: { textAlign: "center" },
   buttonCapture: {

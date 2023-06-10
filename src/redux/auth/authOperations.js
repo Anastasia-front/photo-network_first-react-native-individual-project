@@ -62,15 +62,14 @@ export const authSignUpUser =
     }
   };
 
-export const authSignInUser =
-  ({ email, password }) =>
-  async () => {
-    try {
-      return await signInWithEmailAndPassword(auth, email, password);
-    } catch (error) {
-      return error.code;
-    }
-  };
+export const authSignInUser = (email, password) => async () => {
+  try {
+    // dispatch(authStateChange({ stateChange: true }));
+    return await signInWithEmailAndPassword(auth, email, password);
+  } catch (error) {
+    return error.code;
+  }
+};
 
 // refactor to change avatar or login
 export const authUpdateUser =
@@ -104,43 +103,60 @@ export const authUpdateUser =
     }
   };
 
-export const authStateChangeUser = () => async (dispatch, state) => {
-  const user = auth.currentUser;
-  try {
-    await onAuthStateChanged(auth, async (_) => {
-      if (user) {
-        // const userProfile = {
-        //   userId: user.uid,
-        //   login: user.displayName,
-        //   email: user.email,
-        //   photoURL: user.photoURL,
-        // };
-        const {
-          uid,
-          displayName,
-          email: emailBase,
-          photoURL: photoUrlBase,
-        } = await auth.currentUser;
+// export const authStateChangeUser = () => async (dispatch, state) => {
+//   const user = auth.currentUser;
+//   try {
+//     await onAuthStateChanged(auth, async (_) => {
+//       if (user) {
+//         // const userProfile = {
+//         //   userId: user.uid,
+//         //   login: user.displayName,
+//         //   email: user.email,
+//         //   photoURL: user.photoURL,
+//         // };
+//         const {
+//           uid,
+//           displayName,
+//           email: emailBase,
+//           photoURL: photoUrlBase,
+//         } = await auth.currentUser;
 
-        const userProfile = {
-          userId: uid,
-          login: displayName,
-          email: emailBase,
-          photoURL: photoUrlBase,
-        };
-        // const uid = user.uid;
-        // dispatch(authStateChange({ stateChange: true }));
-        dispatch(updateUserProfile(userProfile));
-        return user;
-      } else {
-        console.log("user is not sign in");
-      }
-    });
-  } catch {}
+//         const userProfile = {
+//           userId: uid,
+//           login: displayName,
+//           email: emailBase,
+//           photoURL: photoUrlBase,
+//         };
+//         // const uid = user.uid;
+//         // dispatch(authStateChange({ stateChange: true }));
+//         dispatch(updateUserProfile(userProfile));
+//         return user;
+//       } else {
+//         console.log("user is not sign in");
+//       }
+//     });
+//   } catch {}
+// };
+export const authStateChangeUser = () => async (dispatch, state) => {
+  onAuthStateChanged(auth, (user) => {
+    // console.log(user)
+    if (user) {
+      const userProfile = {
+        userId: user.uid,
+        login: user.displayName,
+        email: user.email,
+        photoURL: user.photoURL,
+      };
+
+      dispatch(authStateChange({ stateChange: true }));
+      dispatch(updateUserProfile(userProfile));
+    }
+  });
 };
 
 export const authSignOutUser = () => async (dispatch, state) => {
   await signOut(auth);
+  dispatch(authStateChange({ stateChange: false }));
 
   dispatch(authSignOut());
 };

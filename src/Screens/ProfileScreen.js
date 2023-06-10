@@ -107,7 +107,7 @@ import image from "../img/Photo-BG.jpg";
 
 import { db } from "../firebase/config";
 import { collection, onSnapshot, query, where } from "firebase/firestore";
-import { ProfileList } from "../components/ProfileList";
+import { ProfileList } from "../components/Lists/ProfileList";
 import { askIfQuit, ImageManipulator } from "../helpers";
 import { handleGalleryPress } from "../utils/cameraPress";
 import { avatarTemplate } from "../utils/avatar";
@@ -248,15 +248,17 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
   },
   container: {
-    marginTop: -450,
+    position: "absolute",
+    top: 150,
     paddingHorizontal: 16,
     borderTopLeftRadius: 16,
     borderTopRightRadius: 16,
     backgroundColor: "#fff",
   },
   myPostsContainer: {
+    width: "100%",
     paddingTop: 60,
-    minHeight: "50%",
+    marginLeft: 3,
   },
   avatarContainer: {
     position: "absolute",

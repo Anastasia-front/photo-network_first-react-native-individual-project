@@ -1,6 +1,6 @@
 import { View, Image, TouchableOpacity } from "react-native";
 
-function style(photoImageTop, psevdoTop, psevdoRight) {
+function style(photoImageTop, psevdoTop, psevdoRight, avatar) {
   const styles = {
     photoImage: {
       width: 120,
@@ -10,6 +10,9 @@ function style(photoImageTop, psevdoTop, psevdoRight) {
       left: "48%",
       transform: [{ translateX: -50 }, { translateY: -50 }],
       borderRadius: 16,
+      borderWidth: 0.5,
+      borderColor: "grey",
+      backgroundColor: "white",
     },
     psevdo: {
       position: "absolute",
@@ -36,7 +39,7 @@ function style(photoImageTop, psevdoTop, psevdoRight) {
       borderRadius: "50%",
     },
     afterElementCircleGray: {
-      borderColor: "#E8E8E8",
+      borderColor: "grey",
     },
     afterElementUnion: {
       position: "absolute",
@@ -54,7 +57,7 @@ function style(photoImageTop, psevdoTop, psevdoRight) {
       backgroundColor: "#FF6C00",
     },
     afterElementVerticalGray: {
-      backgroundColor: "#E8E8E8",
+      backgroundColor: "grey",
       transform: [{ rotate: "45deg" }],
     },
     afterElementHorizontal: {
@@ -67,20 +70,10 @@ function style(photoImageTop, psevdoTop, psevdoRight) {
       transform: [{ rotate: "-90deg" }],
     },
     afterElementHorizontalGray: {
-      backgroundColor: "#E8E8E8",
+      backgroundColor: "grey",
       transform: [{ rotate: "-45deg" }],
     },
   };
-  return styles;
-}
-
-export const avatarTemplate = (
-  avatar,
-  photoImageTop,
-  psevdoTop,
-  psevdoRight,
-  handleAvatar
-) => {
   const renderImage = () => {
     if (avatar === "../img/Rectangle-empty.jpg") {
       return (
@@ -90,11 +83,37 @@ export const avatarTemplate = (
         />
       );
     } else {
-      return <Image style={styles.photoImage} source={{ uri: avatar }} />;
+      if (
+        avatar ===
+        "https://firebasestorage.googleapis.com/v0/b/first-react-native-proje-98226.appspot.com/o/userAvatars%2FDefault_pfp.svg.png?alt=media&token=7cafd3a4-f9a4-40f2-9115-9067f5a15f57"
+      ) {
+        return (
+          <Image
+            style={[styles.photoImage, { borderRadius: 60 }]}
+            source={{ uri: avatar }}
+          />
+        );
+      } else {
+        return <Image style={styles.photoImage} source={{ uri: avatar }} />;
+      }
     }
   };
+  return { styles, renderImage };
+}
 
-  const styles = style(photoImageTop, psevdoTop, psevdoRight);
+export const avatarTemplate = (
+  avatar,
+  photoImageTop,
+  psevdoTop,
+  psevdoRight,
+  handleAvatar
+) => {
+  const { styles, renderImage } = style(
+    photoImageTop,
+    psevdoTop,
+    psevdoRight,
+    avatar
+  );
   return (
     <>
       <TouchableOpacity
@@ -142,19 +161,12 @@ export const avatarRegister = (
   psevdoTop,
   psevdoRight
 ) => {
-  const renderImage = () => {
-    if (avatar === "../img/Rectangle-empty.jpg") {
-      return (
-        <Image
-          style={styles.photoImage}
-          source={require("../img/Rectangle-empty.jpg")}
-        />
-      );
-    } else {
-      return <Image style={styles.photoImage} source={{ uri: avatar }} />;
-    }
-  };
-  const styles = style(photoImageTop, psevdoTop, psevdoRight);
+  const { styles, renderImage } = style(
+    photoImageTop,
+    psevdoTop,
+    psevdoRight,
+    avatar
+  );
 
   return (
     <>

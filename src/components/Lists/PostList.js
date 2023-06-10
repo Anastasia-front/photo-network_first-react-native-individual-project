@@ -5,9 +5,18 @@ import {
   selectStateAvatar,
   selectStateLogin,
   selectStateEmail,
-} from "../redux/selectors";
-import { db } from "../firebase/config";
-import { collection, onSnapshot, getDoc, doc } from "firebase/firestore";
+} from "../../redux/selectors";
+import { db, auth } from "../../firebase/config";
+import { updateUserProfile } from "../../redux/auth/authReducer";
+import {
+  collection,
+  onSnapshot,
+  setDoc,
+  getDoc,
+  addDoc,
+  doc,
+} from "firebase/firestore";
+import { updateProfile } from "firebase/auth";
 import {
   View,
   FlatList,
@@ -17,10 +26,12 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { Feather } from "@expo/vector-icons";
-import { LoaderScreen } from "../Screens/LoaderScreen";
-import { Post } from "./Post";
-import { askIfQuit } from "../helpers";
-import { authStateChangeUser } from "../redux/auth/authOperations";
+import { LoaderScreen } from "../../Screens/LoaderScreen";
+import { Post } from "../Posts/Post";
+import { askIfQuit } from "../../helpers";
+// import { authStateChangeUser } from "../redux/auth/authOperations";
+import { selectStateChange } from "../../redux/selectors";
+import { avatarTemplate } from "../../utils/avatar";
 
 export const PostsList = ({ navigation, route }) => {
   const dispatch = useDispatch();
@@ -34,7 +45,6 @@ export const PostsList = ({ navigation, route }) => {
   const name = login !== null ? login : "Default name";
 
   useEffect(() => {
-    setIsShowLoader(true);
     const dbRef = collection(db, "posts");
 
     onSnapshot(
@@ -44,11 +54,10 @@ export const PostsList = ({ navigation, route }) => {
         const reversPosts = posts.reverse();
         setPosts(reversPosts);
         setIsShowLoader(false);
-        console.log(data);
+        console.log(reversPosts);
       },
       () => {}
     );
-
     navigation.setOptions({
       headerRight: () => (
         <Feather
@@ -63,29 +72,59 @@ export const PostsList = ({ navigation, route }) => {
     });
   }, [navigation, comment]);
 
-  const handleGet = () => {
-    dispatch(authStateChangeUser()).then(async (data) => {
-      if (data === undefined || !data.userId) {
-        console.log(data);
-        alert(`Користувач не залогінений! Помилка: ${data}`);
-        return;
-      }
+  const borderRadius =
+    avatar ===
+    "https://firebasestorage.googleapis.com/v0/b/first-react-native-proje-98226.appspot.com/o/userAvatars%2FDefault_pfp.svg.png?alt=media&token=7cafd3a4-f9a4-40f2-9115-9067f5a15f57"
+      ? 50
+      : 12;
 
-      try {
-        const docRef = doc(db, "post", "post");
-        const docSnap = await getDoc(docRef);
-
-        if (docSnap.exists()) {
-          console.log("Document data:", docSnap.data());
-        } else {
-          // docSnap.data() will be undefined in this case
-          console.log("No such document!");
-        }
-      } catch (e) {
-        console.log(e);
-      }
-    });
-  };
+  const styles = StyleSheet.create({
+    container: {
+      marginLeft: -12,
+      justifyContent: "center",
+      paddingHorizontal: 16,
+    },
+    headerExitBtn: {
+      color: "#BDBDBD",
+    },
+    text: {
+      alignSelf: "center",
+    },
+    main: {
+      flex: 1,
+      backgroundColor: "#fff",
+      borderColor: "grey",
+      borderTopWidth: 1,
+      borderBottomWidth: 1,
+      paddingBottom: 100,
+    },
+    parent: {
+      marginHorizontal: 20,
+      marginVertical: 30,
+    },
+    person: {
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "flex-start",
+      gap: 10,
+    },
+    image: {
+      width: 60,
+      height: 60,
+      borderRadius: borderRadius,
+      borderWidth: 0.5,
+      borderColor: "grey",
+    },
+    text: {
+      fontSize: 20,
+      textAlign: "center",
+    },
+    name: {
+      fontSize: 15,
+      fontWeight: "700",
+    },
+    email: { fontSize: 13, fontWeight: "400" },
+  });
 
   if (posts.length === 0) {
     return (
@@ -100,11 +139,8 @@ export const PostsList = ({ navigation, route }) => {
           </View>
           <View style={{ marginTop: 30 }}>
             <View style={styles.container}>
-              <TouchableOpacity onPress={handleGet}>
-                <Text style={styles.text}>Немає публікацій користувачів! </Text>
-              </TouchableOpacity>
-
-              {/* {isShowLoader && <LoaderScreen />} */}
+              <Text style={styles.text}>Немає публікацій користувачів! </Text>
+              {isShowLoader && <LoaderScreen />}
             </View>
           </View>
         </View>
@@ -137,47 +173,3 @@ export const PostsList = ({ navigation, route }) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    // flex: 1,
-    justifyContent: "center",
-    paddingHorizontal: 16,
-  },
-  headerExitBtn: {
-    color: "#BDBDBD",
-  },
-  text: {
-    alignSelf: "center",
-  },
-  main: {
-    flex: 1,
-    backgroundColor: "#fff",
-    borderColor: "grey",
-    borderTopWidth: 1,
-    borderBottomWidth: 1,
-  },
-  parent: {
-    marginHorizontal: 20,
-    marginVertical: 30,
-  },
-  person: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "flex-start",
-    gap: 10,
-  },
-  image: {
-    width: 60,
-    height: 60,
-  },
-  text: {
-    fontSize: 20,
-    textAlign: "center",
-  },
-  name: {
-    fontSize: 15,
-    fontWeight: "700",
-  },
-  email: { fontSize: 13, fontWeight: "400" },
-});

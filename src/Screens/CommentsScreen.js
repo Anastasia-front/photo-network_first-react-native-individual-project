@@ -1,85 +1,106 @@
+import { useState, useEffect } from "react";
+import { db } from "../firebase/config";
+import { collection, onSnapshot } from "firebase/firestore";
 import {
   View,
   Image,
+  Text,
   StyleSheet,
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
-import InputWithButton from "../components/CommentInput";
-import { CommentFromOther, CommentOwn } from "../components/Comment";
-import { useState, useEffect } from "react";
-import { useKeyboardListener } from "../utils/keyboard";
+import { Feather } from "@expo/vector-icons";
+import { CommentsList } from "../components/Comments/CommentList";
+import { CommentForm } from "../components/Comments/CommentForm";
+// import { useKeyboardListener } from "../utils/keyboard";
 
-const CommentsScreen = () => {
-  const keyboardHeight = useKeyboardListener(-30);
+const CommentsScreen = ({ navigation, route }) => {
+  const { id: postId, photo } = route.params;
+  const [allComments, setAllComments] = useState([]);
+  // const { keyboardHeight } = useKeyboardListener(0);
+  // console.log(keyboardHeight);
+
+  useEffect(() => {
+    const commentsRef = collection(db, "posts", postId, "comments");
+
+    onSnapshot(
+      commentsRef,
+      (data) => {
+        setAllComments(
+          data.docs.map((comment) => ({ id: comment.id, ...comment.data() }))
+        );
+      },
+      () => {}
+    );
+
+    navigation.setOptions({
+      headerLeft: () => (
+        <Feather
+          name="arrow-left"
+          size={24}
+          color={styles.headerBackBtn}
+          onPress={() => {
+            navigation.goBack();
+          }}
+        />
+      ),
+    });
+  }, [postId, navigation]);
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View style={styles.main}>
-        <View style={styles.parent}>
-          <Image style={styles.photo} source={require("../img/Photo-BG.jpg")} />
-          <View style={{ marginTop: 32 }}>
-            <CommentFromOther
-              avatar={require("../img/Photo-BG.jpg")}
-              content="Really love your most recent photo. I’ve been trying to capture the same thing for a few months and would love some tips!"
-              date="09 червня, 2020"
-              time="08:40"
-            />
-            <CommentOwn
-              avatar={require("../img/Photo.jpg")}
-              content="A fast 50mm like f1.8 would help with the bokeh. I’ve been using primes as they tend to get a bit sharper images."
-              date="09 червня, 2020"
-              time="09:14"
-            />
-            <CommentFromOther
-              avatar={require("../img/Photo-BG.jpg")}
-              content="Thank you! That was very helpful!"
-              date="09 червня, 2020"
-              time="09:20"
-            />
+      <View style={styles.container}>
+        {/* main content */}
+
+        {allComments.length === 0 ? (
+          <>
+            <Image source={{ uri: photo }} style={styles.photo} />
+            <Text style={styles.text}>Ще немає коментарів...</Text>
+          </>
+        ) : null}
+
+        {allComments.length !== 0 ? (
+          <View>
+            <CommentsList allComments={allComments} photo={photo} />
           </View>
-          <View
-            style={{
-              paddingBottom: keyboardHeight,
-              flex: 1,
-              justifyContent: "center",
-              alignItems: "center",
-              marginTop: 50,
-              // position: "absolute",
-              // bottom: -70,
-              // left: 0,
-              // right: 0,
-            }}
-          >
-            <InputWithButton />
-          </View>
-        </View>
+        ) : null}
+
+        {/* bottom form */}
+        {/* <View style={{ bottom: keyboardHeight }}> */}
+        <CommentForm postId={postId} />
+        {/* </View> */}
       </View>
     </TouchableWithoutFeedback>
   );
 };
-
 const styles = StyleSheet.create({
-  main: {
+  keyboardWrp: {
     flex: 1,
-    backgroundColor: "#fff",
-    borderColor: "grey",
-    borderWidth: 1,
+    paddingHorizontal: 16,
   },
-  parent: {
-    marginHorizontal: 20,
-    marginVertical: 40,
-    justifyContent: "center",
-    alignItems: "center",
+  container: {
+    flex: 1,
+    justifyContent: "space-between",
   },
+  headerBackBtn: "grey",
   photo: {
-    // width: 350,
-    width: "100%",
+    width: 370,
     height: 240,
-    backgroundColor: "#f6f6f6",
-    borderColor: "#fff",
-    borderWidth: 1,
+    marginHorizontal: 10,
+    marginTop: 20,
+    marginBottom: 7,
     borderRadius: 8,
-    overflow: "hidden",
+    borderColor: "#E8E8E8",
+  },
+  text: {
+    fontSize: 25,
+    color: "#212121",
+    fontWeight: "400",
+    fontStyle: "italic",
+    textAlign: "left",
+    position: "absolute",
+    top: 300,
+    left: 30,
   },
 });
 
