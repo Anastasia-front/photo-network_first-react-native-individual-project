@@ -121,6 +121,7 @@ export const ProfileScreen = ({ navigation, route }) => {
   if (isShowLoaderAvatar) {
     return <LoaderScreen />;
   }
+
   return (
     <ImageBackground source={image} style={styles.imageBg}>
       <View style={styles.container}>
@@ -143,7 +144,13 @@ export const ProfileScreen = ({ navigation, route }) => {
           {isShowLoaderPosts ? (
             <LoaderScreen />
           ) : (
-            <ProfileList posts={posts} navigation={navigation} route={route} />
+            <View style={styles.listContainer}>
+              <ProfileList
+                posts={posts}
+                navigation={navigation}
+                route={route}
+              />
+            </View>
           )}
         </View>
       </View>
@@ -158,17 +165,21 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
   },
   container: {
-    position: "absolute",
-    top: 150,
+    height: "80%",
+    width: "100%",
+
     paddingHorizontal: 16,
     borderTopLeftRadius: 16,
     borderTopRightRadius: 16,
     backgroundColor: "#fff",
   },
+  listContainer: {
+    flex: 1,
+  },
   myPostsContainer: {
     width: "100%",
+    height: "100%",
     paddingTop: 60,
-    paddingBottom: 400,
     marginLeft: 3,
     paddingHorizontal: 12,
   },

@@ -187,7 +187,7 @@ const styles = StyleSheet.create({
   photo: {
     backgroundColor: "#F6F6F6",
     borderWidth: 1,
-    width: 330,
+    width: 350,
     height: 240,
     marginBottom: 10,
     borderRadius: 8,
@@ -230,7 +230,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    width: 260,
+    width: 280,
   },
   buttonComments: {
     flexDirection: "row",

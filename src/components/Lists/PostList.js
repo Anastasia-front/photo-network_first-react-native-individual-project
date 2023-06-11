@@ -60,9 +60,7 @@ export const PostsList = ({ navigation, route }) => {
 
   const styles = StyleSheet.create({
     container: {
-      marginLeft: -12,
       justifyContent: "center",
-      paddingHorizontal: 16,
     },
     headerExitBtn: {
       color: "#BDBDBD",
@@ -79,6 +77,7 @@ export const PostsList = ({ navigation, route }) => {
       paddingBottom: 100,
     },
     parent: {
+      width: "100%",
       marginHorizontal: 20,
       marginVertical: 30,
     },

@@ -46,13 +46,17 @@ export default function Login() {
       dispatch(authSignInUser(email, password)).then((data) => {
         if (data === undefined || !data.user) {
           setIsShowLoader(false);
-          alert(`Вхід не виконано!       Помилка: ${data}`);
+          alert(`Вхід не виконано!`);
           return;
         }
         dispatch(authStateChange({ stateChange: true }));
       });
     }
   };
+
+  if (isShowLoader) {
+    return <LoaderScreen />;
+  }
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>

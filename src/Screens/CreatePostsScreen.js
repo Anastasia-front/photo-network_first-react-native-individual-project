@@ -69,6 +69,12 @@ export default function CreatePostsScreen() {
   }, []);
 
   useEffect(() => {
+    if (state === INITIAL_POST) {
+      setIsDirtyForm(false);
+    }
+  }, []);
+
+  useEffect(() => {
     navigation.setParams({
       isDirtyForm,
     });
@@ -148,21 +154,23 @@ export default function CreatePostsScreen() {
   if (isShowLoader) {
     return <LoaderScreen />;
   }
+  setTimeout(() => {
+    if (!hasPermission && !permissionCam) {
+      return (
+        <View style={styles.permission}>
+          <Text style={{ textAlign: "center" }}>
+            Нам потрібен ваш дозвіл, щоб показати камеру
+          </Text>
+          <CustomButton
+            onPress={requestPermissionCam}
+            width="50%"
+            text="отримати дозвіл"
+          />
+        </View>
+      );
+    }
+  }, 300);
 
-  if (!hasPermission && !permissionCam) {
-    return (
-      <View style={styles.permission}>
-        <Text style={{ textAlign: "center" }}>
-          Нам потрібен ваш дозвіл, щоб показати камеру
-        </Text>
-        <CustomButton
-          onPress={requestPermissionCam}
-          width="50%"
-          text="отримати дозвіл"
-        />
-      </View>
-    );
-  }
   const takePhoto = async () => {
     if (cameraRef) {
       try {
