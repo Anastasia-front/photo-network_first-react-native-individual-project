@@ -8,12 +8,14 @@ import {
   doc,
   Timestamp,
   collection,
+  onSnapshot,
   getCountFromServer,
 } from "firebase/firestore";
 import { Feather } from "@expo/vector-icons";
 import { useSelector, useDispatch } from "react-redux";
 import { selectStateLogin, selectStateAvatar } from "../../redux/selectors";
 import { addLike } from "../../redux/post/postReducer";
+import { Modalka } from "../Others/Modal";
 
 export const Post = ({ post, navigation, route }) => {
   const dispatch = useDispatch();
@@ -21,7 +23,9 @@ export const Post = ({ post, navigation, route }) => {
   const avatar = useSelector(selectStateAvatar);
   const [countComments, setCountComments] = useState(0);
   const [likes, setLikes] = useState(0);
+  const [likesInfo, setLikesInfo] = useState([]);
   const [numberOfClicks, setNumberOfClicks] = useState(0);
+  const [modalVisible, setModalVisible] = useState(false);
 
   const handleLike = () => {
     setLikes(likes + 1);
@@ -81,6 +85,20 @@ export const Post = ({ post, navigation, route }) => {
     }
   }, [post]);
 
+  useEffect(() => {
+    const dbRef = collection(db, "posts", post.id, "likes");
+
+    onSnapshot(
+      dbRef,
+      (data) => {
+        const likes = data.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+        const reversLikes = likes.reverse();
+        setLikesInfo(reversLikes);
+      },
+      () => {}
+    );
+  }, [likes]);
+
   const selectTitleLocation = ({ location }) => {
     if (location.title) {
       return location.title;
@@ -92,6 +110,17 @@ export const Post = ({ post, navigation, route }) => {
 
     return "Дефолтна локація";
   };
+
+  if (modalVisible && likes !== 0) {
+    return (
+      <Modalka
+        title="Вподобайки"
+        likes={likesInfo}
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+      />
+    );
+  }
 
   return (
     <View style={styles.postWrp}>
@@ -130,7 +159,7 @@ export const Post = ({ post, navigation, route }) => {
 
               <TouchableOpacity
                 style={styles.buttonComments}
-                onPress={handleLike}
+                onPress={() => setModalVisible(true)}
               >
                 <View style={styles.mapIcon}>
                   <Ionicons

@@ -2,49 +2,118 @@ import { Ionicons } from "@expo/vector-icons";
 import { useState, useEffect } from "react";
 import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
 import { db } from "../../firebase/config";
-import { collection, getCountFromServer } from "firebase/firestore";
+import {
+  collection,
+  getCountFromServer,
+  onSnapshot,
+  setDoc,
+  deleteDoc,
+} from "firebase/firestore";
 import { Feather } from "@expo/vector-icons";
+import { Modalka } from "../Others/Modal";
 
 export const ProfilePost = ({ post, navigation, route }) => {
   const [countComments, setCountComments] = useState(0);
   const [likes, setLikes] = useState(0);
+  const [likesInfo, setLikesInfo] = useState([]);
   const [active, setActive] = useState(false);
   const [numberOfClicks, setNumberOfClicks] = useState(0);
+  const [modalVisible, setModalVisible] = useState(false);
+
   const handleLike = () => {
     setLikes(likes + 1);
     setNumberOfClicks(1);
+    sendLike();
     if (numberOfClicks === 1) {
       setLikes(likes - 1);
       setNumberOfClicks(0);
+      deleteLike();
+    }
+  };
+
+  const sendLike = async () => {
+    try {
+      const postRef = doc(db, "posts", post.id, "likes", login);
+
+      await setDoc(postRef, {
+        owner: {
+          login,
+          avatar,
+        },
+        createdAt: Timestamp.fromDate(new Date()),
+        updatedAt: Timestamp.fromDate(new Date()),
+      });
+      dispatch(addLike(likes));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const deleteLike = async () => {
+    try {
+      const documentRef = doc(db, "posts", post.id, "likes", login);
+      await deleteDoc(documentRef);
+      console.log("The document was successfully deleted.");
+    } catch (error) {
+      console.error("Error when deleting the document:", error);
     }
   };
 
   useEffect(() => {
     try {
-      const checkCount = async () => {
-        const dbRef = collection(db, "posts", post.id, "comments");
+      const fetchData = async () => {
+        const commentsRef = collection(db, "posts", post.id, "comments");
+        const likesRef = collection(db, "posts", post.id, "likes");
 
-        const snapshot = await getCountFromServer(dbRef);
-        setCountComments(snapshot.data().count);
+        const commentsSnapshot = await getCountFromServer(commentsRef);
+        const likesSnapshot = await getCountFromServer(likesRef);
+
+        setCountComments(commentsSnapshot.data().count);
+        setLikes(likesSnapshot.data().count);
       };
 
-      checkCount();
+      fetchData();
     } catch (error) {
-      console.log("Post >", error.message);
+      console.log("Error:", error.message);
     }
   }, [post]);
+
+  useEffect(() => {
+    const dbRef = collection(db, "posts", post.id, "likes");
+
+    onSnapshot(
+      dbRef,
+      (data) => {
+        const likes = data.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+        const reversLikes = likes.reverse();
+        setLikesInfo(reversLikes);
+      },
+      () => {}
+    );
+  }, [likes]);
 
   const selectTitleLocation = ({ location }) => {
     if (location.title) {
       return location.title;
     }
 
-    if (location.postAddress && location.postAddress) {
+    if (location.postAddress) {
       return `${location.postAddress?.city}, ${location.postAddress?.street}`;
     }
 
     return "Дефолтна локація";
   };
+
+  if (modalVisible && likes !== 0) {
+    return (
+      <Modalka
+        title="Вподобайки"
+        likes={likesInfo}
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+      />
+    );
+  }
 
   return (
     <View style={styles.postWrp}>
@@ -73,7 +142,7 @@ export const ProfilePost = ({ post, navigation, route }) => {
 
               <TouchableOpacity
                 style={styles.buttonComments}
-                onPress={handleLike}
+                onPress={() => setModalVisible(true)}
               >
                 <View style={styles.mapIcon}>
                   <Ionicons
