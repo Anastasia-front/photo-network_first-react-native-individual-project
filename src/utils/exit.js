@@ -6,7 +6,6 @@ export const askIfQuit = (dispatch) => {
     {
       text: "Відмінити",
       onPress: () => console.log("Cancel Pressed"),
-      // style: 'cancel',
     },
     {
       text: "Добре",
