@@ -12,13 +12,12 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { View, Text, ImageBackground, Alert, StyleSheet } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import { Feather } from "@expo/vector-icons";
-import image from "../img/Photo-BG.jpg";
+import image from "../img/Photo-BG3.jpg";
 
 import { db } from "../firebase/config";
 import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { ProfileList } from "../components/Lists/ProfileList";
-import { askIfQuit, ImageManipulator } from "../helpers";
-import { avatarTemplate } from "../utils/avatar";
+import { askIfQuit, ImageManipulator, avatarTemplate } from "../utils";
 import { LoaderScreen } from "./LoaderScreen";
 
 export const ProfileScreen = ({ navigation, route }) => {
@@ -141,8 +140,11 @@ export const ProfileScreen = ({ navigation, route }) => {
 
           <Text style={styles.login}>{login}</Text>
           <Text style={styles.count}>Всього публікацій: {posts.length}</Text>
-
-          <ProfileList posts={posts} navigation={navigation} route={route} />
+          {isShowLoaderPosts ? (
+            <LoaderScreen />
+          ) : (
+            <ProfileList posts={posts} navigation={navigation} route={route} />
+          )}
         </View>
       </View>
     </ImageBackground>
@@ -162,14 +164,13 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 16,
     borderTopRightRadius: 16,
     backgroundColor: "#fff",
-    //  paddingHorizontal: 12,
   },
   myPostsContainer: {
     width: "100%",
     paddingTop: 60,
     paddingBottom: 400,
     marginLeft: 3,
-    // paddingHorizontal: 12,
+    paddingHorizontal: 12,
   },
   avatarContainer: {
     position: "absolute",
@@ -216,7 +217,6 @@ const styles = StyleSheet.create({
   },
   login: {
     marginTop: 10,
-    marginBottom: 5,
     alignSelf: "center",
     fontSize: 30,
     fontWeight: "500",
@@ -224,8 +224,7 @@ const styles = StyleSheet.create({
   count: {
     alignSelf: "flex-end",
     fontSize: 12,
-    marginBottom: 3,
-    marginTop: 10,
+    marginBottom: 15,
     color: "#BDBDBD",
   },
 });

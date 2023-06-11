@@ -23,7 +23,7 @@ import {
   validateEmail,
   validatePassword,
 } from "../utils/validation";
-import { handleGalleryPress } from "../utils/cameraPress";
+import { handleGalleryPress } from "../utils/gallery";
 import { avatarRegister } from "../utils/avatar";
 import { LoaderScreen } from "./LoaderScreen";
 import { authSignUpUser } from "../redux/auth/authOperations";

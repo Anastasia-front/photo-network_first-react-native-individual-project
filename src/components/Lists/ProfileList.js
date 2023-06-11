@@ -12,7 +12,7 @@ import { ProfilePost } from "../Posts/ProfilePost";
 export const ProfileList = ({ navigation, posts, route }) => {
   if (posts.length === 0) {
     return (
-      <View style={{ flex: 1, marginTop: 10, paddingHorizontal: 24 }}>
+      <View style={{ flex: 1, marginTop: 10, paddingHorizontal: 20 }}>
         <Text style={styles.text}>
           Зараз у тебе немає публікацій, але ти можеш їх створити - тисни на цю
           кнопку👇🏻
@@ -29,7 +29,6 @@ export const ProfileList = ({ navigation, posts, route }) => {
   }
 
   return (
-    // <ScrollView style={styles.container}>
     <FlatList
       style={styles.paddingBottom}
       data={posts}
@@ -37,9 +36,7 @@ export const ProfileList = ({ navigation, posts, route }) => {
       renderItem={({ item }) => (
         <ProfilePost post={item} navigation={navigation} route={route} />
       )}
-      ListFooterComponent={<View style={{ height: "70%" }} />}
     />
-    // </ScrollView>
   );
 };
 
@@ -61,6 +58,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignSelf: "center",
     borderRadius: 50,
-    backgroundColor: "#FF6C00",
+    backgroundColor: "#2D767F",
   },
 });

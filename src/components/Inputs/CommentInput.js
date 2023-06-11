@@ -1,20 +1,9 @@
 import React, { useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
-import {
-  View,
-  TextInput,
-  KeyboardAvoidingView,
-  Keyboard,
-  Platform,
-  StyleSheet,
-  TouchableWithoutFeedback,
-} from "react-native";
-import { useKeyboardListener } from "../../utils/keyboard";
+import { View, TextInput, StyleSheet } from "react-native";
 
 const InputWithButton = ({ handleButtonClick, inputValue, setInputValue }) => {
-  // const [inputValue, setInputValue] = useState("");
   const [isFocused, setIsFocused] = useState(false);
-  const { keyboardHeight } = useKeyboardListener(220);
 
   const handleFocus = () => {
     setIsFocused(true);
@@ -29,11 +18,6 @@ const InputWithButton = ({ handleButtonClick, inputValue, setInputValue }) => {
   };
 
   return (
-    // <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-    // <View style={{ flexDirection: "row", paddingBottom: keyboardHeight }}>
-    //   <KeyboardAvoidingView
-    //     behavior={Platform.OS == "ios" ? "padding" : "height"}
-    //   >
     <>
       <TextInput
         style={[styles.input, isFocused && styles.inputFocused]}
@@ -53,10 +37,6 @@ const InputWithButton = ({ handleButtonClick, inputValue, setInputValue }) => {
         />
       </View>
     </>
-
-    //   </KeyboardAvoidingView>
-    // </View>
-    // </TouchableWithoutFeedback>
   );
 };
 
@@ -66,7 +46,6 @@ const styles = StyleSheet.create({
     height: 50,
     paddingLeft: 16,
     marginBottom: 16,
-    // marginLeft: 30,
     backgroundColor: "#f6f6f6",
     borderColor: "#E8E8E8",
     borderWidth: 1,
@@ -74,12 +53,12 @@ const styles = StyleSheet.create({
   },
   inputFocused: {
     backgroundColor: "white",
-    borderColor: "#FF6C00",
+    borderColor: "#2D767F",
   },
   arrowContainer: {
     width: 34,
     height: 34,
-    backgroundColor: "#FF6C00",
+    backgroundColor: "#9D84B7",
     borderRadius: 50,
     position: "absolute",
     top: 10,

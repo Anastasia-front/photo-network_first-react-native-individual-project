@@ -54,7 +54,6 @@ export const authSignUpUser =
         email: emailBase,
         photoURL: photoUrlBase,
       };
-      console.log(userProfile, user.displayName);
       dispatch(updateUserProfile(userProfile));
       return user;
     } catch (error) {
@@ -64,7 +63,6 @@ export const authSignUpUser =
 
 export const authSignInUser = (email, password) => async () => {
   try {
-    // dispatch(authStateChange({ stateChange: true }));
     return await signInWithEmailAndPassword(auth, email, password);
   } catch (error) {
     return error.code;
@@ -95,7 +93,6 @@ export const authUpdateUser =
         email: emailBase,
         photoURL: photoUrlBase,
       };
-      // console.log(`updateUserProfile(userProfile) - ${auth.currentUser.uid}`);
       dispatch(updateUserProfile(userProfile));
       return userProfile;
     } catch (error) {
@@ -103,43 +100,8 @@ export const authUpdateUser =
     }
   };
 
-// export const authStateChangeUser = () => async (dispatch, state) => {
-//   const user = auth.currentUser;
-//   try {
-//     await onAuthStateChanged(auth, async (_) => {
-//       if (user) {
-//         // const userProfile = {
-//         //   userId: user.uid,
-//         //   login: user.displayName,
-//         //   email: user.email,
-//         //   photoURL: user.photoURL,
-//         // };
-//         const {
-//           uid,
-//           displayName,
-//           email: emailBase,
-//           photoURL: photoUrlBase,
-//         } = await auth.currentUser;
-
-//         const userProfile = {
-//           userId: uid,
-//           login: displayName,
-//           email: emailBase,
-//           photoURL: photoUrlBase,
-//         };
-//         // const uid = user.uid;
-//         // dispatch(authStateChange({ stateChange: true }));
-//         dispatch(updateUserProfile(userProfile));
-//         return user;
-//       } else {
-//         console.log("user is not sign in");
-//       }
-//     });
-//   } catch {}
-// };
 export const authStateChangeUser = () => async (dispatch, state) => {
   onAuthStateChanged(auth, (user) => {
-    // console.log(user)
     if (user) {
       const userProfile = {
         userId: user.uid,

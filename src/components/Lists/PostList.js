@@ -12,7 +12,7 @@ import { View, FlatList, StyleSheet, Image, Text } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { LoaderScreen } from "../../Screens/LoaderScreen";
 import { Post } from "../Posts/Post";
-import { askIfQuit } from "../../helpers";
+import { askIfQuit } from "../../utils";
 
 export const PostsList = ({ navigation, route }) => {
   const dispatch = useDispatch();

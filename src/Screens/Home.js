@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { PostsScreen } from "./PostsScreen";
 import CreatePostsScreen from "./CreatePostsScreen";
 import { ProfileScreen } from "./ProfileScreen";
-import { checkIsDirtyForm } from "../helpers/checkIsDirtyForm";
+import { checkIsDirtyForm } from "../utils/form";
 import { Ionicons } from "@expo/vector-icons";
 
 const Tabs = createBottomTabNavigator();

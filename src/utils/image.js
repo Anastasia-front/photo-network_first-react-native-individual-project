@@ -1,4 +1,4 @@
-import { manipulateAsync, SaveFormat } from 'expo-image-manipulator';
+import { manipulateAsync, SaveFormat } from "expo-image-manipulator";
 
 export const ImageManipulator = async (oldUri, option = [], compressValue) => {
   try {
@@ -8,6 +8,6 @@ export const ImageManipulator = async (oldUri, option = [], compressValue) => {
     });
     return uri;
   } catch (error) {
-    console.log('Image Manipulator ====> ', error);
+    console.log("Image Manipulator > ", error);
   }
 };

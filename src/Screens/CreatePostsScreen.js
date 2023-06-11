@@ -46,7 +46,7 @@ const INITIAL_POST = {
 export default function CreatePostsScreen() {
   const navigation = useNavigation();
   const isFocused = useIsFocused();
-  const keyboardHeight = useKeyboardListener(300);
+  const { keyboardHeight } = useKeyboardListener(300);
 
   const [isShowLoader, setIsShowLoader] = useState(false);
   const [state, setState] = useState(INITIAL_POST);
@@ -82,14 +82,6 @@ export default function CreatePostsScreen() {
     (async () => {
       // camera & gallery
       try {
-        // const { status } = await Camera.requestCameraPermissionsAsync();
-
-        // if (status !== "granted") {
-        //   alert("Sorry, we need permissions to camera");
-
-        //   return;
-        // }
-        // setHasPermission(status);
         const { status } = await Camera.requestCameraPermissionsAsync();
         await MediaLibrary.requestPermissionsAsync();
 
@@ -123,56 +115,8 @@ export default function CreatePostsScreen() {
       } catch (error) {
         console.log("permission location > ", error.message);
       }
-
-      // gallery
-      //   try {
-      //     if (Platform.OS !== "web") {
-      //       const { status } =
-      //         await ImagePicker.requestMediaLibraryPermissionsAsync();
-
-      //       if (status !== "granted") {
-      //         alert("Sorry, we need permissions to library");
-      //       }
-      //     }
-      //   } catch (error) {
-      //     console.log("permission library > ", error.message);
-      //   }
     })();
   }, [isFocused]);
-
-  // useEffect(() => {
-  //   (async () => {
-  //     let { status } = await Location.requestForegroundPermissionsAsync();
-  //     if (status !== "granted") {
-  //       console.log("Permission to access location was denied");
-  //     }
-
-  //     let location = await Location.getCurrentPositionAsync({});
-  //     const coords = {
-  //       latitude: location.coords.latitude,
-  //       longitude: location.coords.longitude,
-  //     };
-  //     dispatch(saveLocationAction(coords)).catch((error) => {
-  //       console.log("Ошибка при сохранении местоположения:", error);
-  //     });
-  //   })();
-  // }, []);
-
-  // useEffect(() => {
-  //   (async () => {
-  //     const { status } = await Camera.requestCameraPermissionsAsync();
-  //     await MediaLibrary.requestPermissionsAsync();
-
-  //     setHasPermission(status === "granted");
-  //   })();
-  // }, []);
-
-  // if (hasPermission === null) {
-  //   return <View />;
-  // }
-  // if (hasPermission === false) {
-  //   return <Text>No access to camera</Text>;
-  // }
 
   const handleCameraPress = async () => {
     ActionSheetIOS.showActionSheetWithOptions(
@@ -205,7 +149,7 @@ export default function CreatePostsScreen() {
     return <LoaderScreen />;
   }
 
-  if (!hasPermission) {
+  if (!hasPermission && !permissionCam) {
     return (
       <View style={styles.permission}>
         <Text style={{ textAlign: "center" }}>
@@ -263,23 +207,6 @@ export default function CreatePostsScreen() {
       console.log("pickImage > ", error.message);
     }
   };
-
-  // const draggableMarker = async ({ latitude, longitude }) => {
-  //   const time = Date.now().toString();
-  //   try {
-  //     const [postAddress] = await Location.reverseGeocodeAsync({
-  //       latitude,
-  //       longitude,
-  //     });
-
-  //     setState((prev) => ({
-  //       ...prev,
-  //       location: { latitude, longitude, postAddress, time },
-  //     }));
-  //   } catch (error) {
-  //     console.log("draggableMarker > ", error.message);
-  //   }
-  // };
 
   const uploadPhotoToServer = async () => {
     const uniquePostId = Date.now().toString();
@@ -424,7 +351,7 @@ export default function CreatePostsScreen() {
                 }}
                 name="attach"
                 size={25}
-                color="#BDBDBD"
+                color={state.titlePost !== "" ? "#F9D89C" : "#BDBDBD"}
               />
               <Input
                 placeholder="Місцевість..."
@@ -445,7 +372,7 @@ export default function CreatePostsScreen() {
                 }}
                 name="navigate"
                 size={20}
-                color="#BDBDBD"
+                color={state.location?.title ? "#DBE9B7" : "#BDBDBD"}
               />
             </KeyboardAvoidingView>
           </View>
@@ -500,6 +427,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+
   camera: {
     width: "100%",
     height: 240,
@@ -562,8 +490,6 @@ const styles = StyleSheet.create({
     top: "130%",
     right: "25%",
     transform: [{ translateX: -50 }, { translateY: -50 }],
-    // bottom: -180,
-    // left: 130,
     display: "flex",
     justifyContent: "center",
     alignItems: "center",

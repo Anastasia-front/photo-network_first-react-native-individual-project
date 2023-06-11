@@ -2,35 +2,82 @@ import { Ionicons } from "@expo/vector-icons";
 import { useState, useEffect } from "react";
 import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
 import { db } from "../../firebase/config";
-import { collection, getCountFromServer } from "firebase/firestore";
+import {
+  setDoc,
+  deleteDoc,
+  doc,
+  Timestamp,
+  collection,
+  getCountFromServer,
+} from "firebase/firestore";
 import { Feather } from "@expo/vector-icons";
+import { useSelector, useDispatch } from "react-redux";
+import { selectStateLogin, selectStateAvatar } from "../../redux/selectors";
+import { addLike } from "../../redux/post/postReducer";
 
 export const Post = ({ post, navigation, route }) => {
+  const dispatch = useDispatch();
+  const login = useSelector(selectStateLogin);
+  const avatar = useSelector(selectStateAvatar);
   const [countComments, setCountComments] = useState(0);
   const [likes, setLikes] = useState(0);
   const [numberOfClicks, setNumberOfClicks] = useState(0);
+
   const handleLike = () => {
     setLikes(likes + 1);
     setNumberOfClicks(1);
+    sendLike();
     if (numberOfClicks === 1) {
       setLikes(likes - 1);
       setNumberOfClicks(0);
+      deleteLike();
     }
-    // dispatch(addComment(myComment));
+  };
+
+  const sendLike = async () => {
+    try {
+      const postRef = doc(db, "posts", post.id, "likes", login);
+
+      await setDoc(postRef, {
+        owner: {
+          login,
+          avatar,
+        },
+        createdAt: Timestamp.fromDate(new Date()),
+        updatedAt: Timestamp.fromDate(new Date()),
+      });
+      dispatch(addLike(likes));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const deleteLike = async () => {
+    try {
+      const documentRef = doc(db, "posts", post.id, "likes", login);
+      await deleteDoc(documentRef);
+      console.log("The document was successfully deleted.");
+    } catch (error) {
+      console.error("Error when deleting the document:", error);
+    }
   };
 
   useEffect(() => {
     try {
-      const checkCount = async () => {
-        const dbRef = collection(db, "posts", post.id, "comments");
+      const fetchData = async () => {
+        const commentsRef = collection(db, "posts", post.id, "comments");
+        const likesRef = collection(db, "posts", post.id, "likes");
 
-        const snapshot = await getCountFromServer(dbRef);
-        setCountComments(snapshot.data().count);
+        const commentsSnapshot = await getCountFromServer(commentsRef);
+        const likesSnapshot = await getCountFromServer(likesRef);
+
+        setCountComments(commentsSnapshot.data().count);
+        setLikes(likesSnapshot.data().count);
       };
 
-      checkCount();
+      fetchData();
     } catch (error) {
-      console.log("Post >", error.message);
+      console.log("Error:", error.message);
     }
   }, [post]);
 
@@ -39,7 +86,7 @@ export const Post = ({ post, navigation, route }) => {
       return location.title;
     }
 
-    if (location.postAddress && location.postAddress) {
+    if (location.postAddress) {
       return `${location.postAddress?.city}, ${location.postAddress?.street}`;
     }
 
@@ -48,18 +95,22 @@ export const Post = ({ post, navigation, route }) => {
 
   return (
     <View style={styles.postWrp}>
-      <Image source={{ uri: post.photo }} style={styles.photo} />
+      <Image style={styles.photo} source={{ uri: post.photo }} />
       <View style={styles.bottomInfo}>
         {route?.name !== "Profile" && (
-          <View style={styles.owner}>
-            <Image source={{ uri: post.owner.avatar }} style={styles.avatar} />
+          <View style={styles.column}>
+            <View style={styles.owner}>
+              <Image
+                source={{ uri: post.owner.avatar }}
+                style={styles.avatar}
+              />
+              <Text style={styles.dateTime}>{post.owner.login}</Text>
+            </View>
           </View>
         )}
 
         <View>
-          <Text style={styles.titlePost} ellipsizeMode="tail" numberOfLines={1}>
-            {post.titlePost}
-          </Text>
+          <Text style={styles.titlePost}>{post.titlePost}</Text>
 
           <View style={styles.buttonsWrp}>
             <View style={styles.row}>
@@ -71,7 +122,7 @@ export const Post = ({ post, navigation, route }) => {
                   <Feather
                     name="message-circle"
                     size={24}
-                    color={countComments > 0 ? "#FF6C00" : "#BDBDBD"}
+                    color={countComments > 0 ? "#A696C8" : "#BDBDBD"}
                   />
                 </View>
                 <Text style={styles.commentsCount}>{countComments}</Text>
@@ -85,7 +136,7 @@ export const Post = ({ post, navigation, route }) => {
                   <Ionicons
                     name="heart"
                     size={25}
-                    color={likes > 0 ? "#FF6C00" : "#BDBDBD"}
+                    color={likes > 0 ? "#F5A7A7" : "#BDBDBD"}
                     onPress={handleLike}
                   />
                 </View>
@@ -118,6 +169,18 @@ export const Post = ({ post, navigation, route }) => {
 };
 
 const styles = StyleSheet.create({
+  column: {
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  dateTime: {
+    marginTop: 3,
+    color: "#BDBDBD",
+    fontSize: 10,
+    fontWeight: "400",
+    textAlign: "center",
+  },
   postWrp: {
     marginBottom: 30,
   },
@@ -134,6 +197,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   owner: {
+    marginTop: -10,
     marginRight: 10,
     height: 50,
     width: 50,

@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, Image } from "react-native";
-import { dateConverter } from "../../helpers";
+import { dateConverter } from "../../utils";
 import { auth } from "../../firebase/config";
 
 export function CommentFromOther({

@@ -8,6 +8,7 @@ import { Feather } from "@expo/vector-icons";
 export const ProfilePost = ({ post, navigation, route }) => {
   const [countComments, setCountComments] = useState(0);
   const [likes, setLikes] = useState(0);
+  const [active, setActive] = useState(false);
   const [numberOfClicks, setNumberOfClicks] = useState(0);
   const handleLike = () => {
     setLikes(likes + 1);
@@ -47,7 +48,7 @@ export const ProfilePost = ({ post, navigation, route }) => {
 
   return (
     <View style={styles.postWrp}>
-      <Image source={{ uri: post.photo }} style={styles.photo} />
+      <Image style={styles.photo} source={{ uri: post.photo }} />
       <View style={styles.bottomInfo}>
         <View style={styles.marginLeft}>
           <Text style={styles.titlePost} ellipsizeMode="tail" numberOfLines={1}>
@@ -64,7 +65,7 @@ export const ProfilePost = ({ post, navigation, route }) => {
                   <Feather
                     name="message-circle"
                     size={24}
-                    color={countComments > 0 ? "#FF6C00" : "#BDBDBD"}
+                    color={countComments > 0 ? "#A696C8" : "#BDBDBD"}
                   />
                 </View>
                 <Text style={styles.commentsCount}>{countComments}</Text>
@@ -78,7 +79,7 @@ export const ProfilePost = ({ post, navigation, route }) => {
                   <Ionicons
                     name="heart"
                     size={25}
-                    color={likes > 0 ? "#FF6C00" : "#BDBDBD"}
+                    color={likes > 0 ? "#F5A7A7" : "#BDBDBD"}
                     onPress={handleLike}
                   />
                 </View>
@@ -89,10 +90,17 @@ export const ProfilePost = ({ post, navigation, route }) => {
             <View>
               <TouchableOpacity
                 style={styles.buttonLocation}
-                onPress={() => navigation.navigate("Map", post)}
+                onPress={() => {
+                  navigation.navigate("Map", post);
+                }}
               >
                 <View style={styles.mapIcon}>
-                  <Ionicons name="navigate" size={20} color="#BDBDBD" />
+                  <Ionicons
+                    name="navigate"
+                    size={20}
+                    onPress={() => setActive(true)}
+                    color={active ? "#DBE9B7" : "#BDBDBD"}
+                  />
                 </View>
                 <Text
                   style={styles.mapTitle}
@@ -183,7 +191,7 @@ const styles = StyleSheet.create({
   },
   mapIcon: {
     marginRight: 10,
-    fill: "#BDBDBD",
+    // fill: "#BDBDBD",
   },
   mapTitle: {
     maxWidth: 100,

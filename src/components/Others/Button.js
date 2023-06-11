@@ -14,7 +14,7 @@ export default function CustomButton({ text, width, onPress }) {
 
 const styles = StyleSheet.create({
   btn: {
-    backgroundColor: "#FF6C00",
+    backgroundColor: "#2D767F",
     borderRadius: "100px",
     paddingTop: 16,
     paddingBottom: 16,
