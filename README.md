@@ -27,23 +27,23 @@ Scan the QR code in the Expo Developer Tools console/IDE terminal using the Expo
 
 ## Screenshots
 
-<img src="./screenshots/1.png" alt="Empty login" width="200" height="300">
-<img src="./screenshots/1.1.png" alt="Fill login" width="200" height="300">
-<img src="./screenshots/2.png" alt="Empty registration" width="200" height="300">
-<img src="./screenshots/3.png" alt="Fill registration" width="200" height="300">
-<img src="./screenshots/4.png" alt="Save password" width="200" height="300">
-<img src="./screenshots/5.png" alt="Posts screen" width="200" height="300">
-<img src="./screenshots/6.png" alt="Start profile screen" width="200" height="300">
-<img src="./screenshots/7.png" alt="Empty 'creation of post' screen" width="200" height="300">
-<img src="./screenshots/8.png" alt="Add photo in 'creation of post' screen" width="200" height="300">
-<img src="./screenshots/9.png" alt="Add all information in 'creation of post' screen" width="200" height="300">
-<img src="./screenshots/10.png" alt="Download new post" width="200" height="300">
-<img src="./screenshots/11.png" alt="Add new post in posts screen" width="200" height="300">
-<img src="./screenshots/12.png" alt="Add another one post in posts screen" width="200" height="300">
-<img src="./screenshots/13.png" alt="Profile with own posts" width="200" height="300">
-<img src="./screenshots/14.png" alt="Empty comment screen" width="200" height="300">
-<img src="./screenshots/15.png" alt="Add comment" width="200" height="300">
-<img src="./screenshots/16.png" alt="Modal with likes" width="200" height="300">
+<img src="./screenshots/1.png" alt="Empty login" width="150" height="320">
+<img src="./screenshots/1.1.png" alt="Fill login" width="150" height="320">
+<img src="./screenshots/2.png" alt="Empty registration" width="150" height="320">
+<img src="./screenshots/3.png" alt="Fill registration" width="150" height="320">
+<img src="./screenshots/4.png" alt="Save password" width="150" height="320">
+<img src="./screenshots/5.png" alt="Posts screen" width="150" height="320">
+<img src="./screenshots/6.png" alt="Start profile screen" width="150" height="320">
+<img src="./screenshots/7.png" alt="Empty 'creation of post' screen" width="150" height="320">
+<img src="./screenshots/8.png" alt="Add photo in 'creation of post' screen" width="150" height="320">
+<img src="./screenshots/9.png" alt="Add all information in 'creation of post' screen" width="150" height="320">
+<img src="./screenshots/10.png" alt="Download new post" width="150" height="320">
+<img src="./screenshots/11.png" alt="Add new post in posts screen" width="150" height="320">
+<img src="./screenshots/12.png" alt="Add another one post in posts screen" width="150" height="320">
+<img src="./screenshots/13.png" alt="Profile with own posts" width="150" height="320">
+<img src="./screenshots/14.png" alt="Empty comment screen" width="150" height="320">
+<img src="./screenshots/15.png" alt="Add comment" width="150" height="320">
+<img src="./screenshots/16.png" alt="Modal with likes" width="150" height="320">
 
 <!-- ![Empty login](screenshots/1.png)
 ![Fill login](screenshots/1.1.png)
