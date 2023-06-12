@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
     height: "100%",
     backgroundColor: "#fff",
     borderColor: "grey",
-    borderWidth: 1,
+    borderTopWidth: 1,
   },
   parent: {
     marginHorizontal: 20,

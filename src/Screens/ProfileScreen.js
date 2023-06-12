@@ -94,7 +94,7 @@ export const ProfileScreen = ({ navigation, route }) => {
       return await getDownloadURL(imageRef);
     } catch (error) {
       console.log("uploadPhotoToServer > ", error);
-      Alert.alert("Вибачте, але фото не зберіглось на сервері", error.message);
+      Alert.alert("Вибачте, але фото не зберіглось на сервері");
     }
   };
 

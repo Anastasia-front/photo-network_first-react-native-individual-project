@@ -216,11 +216,11 @@ export default function CreatePostsScreen() {
     }
   };
 
-  const uploadPhotoToServer = async () => {
+  const uploadPhotoToServer = async (photo) => {
     const uniquePostId = Date.now().toString();
 
     try {
-      const response = await fetch(state.photoUri);
+      const response = await fetch(photo);
 
       const file = await response.blob();
 
@@ -233,7 +233,7 @@ export default function CreatePostsScreen() {
       return link;
     } catch (error) {
       console.log("uploadPhotoToServer > ", error);
-      alert("Вибачте, але фото не зберіглось на сервері", error.message);
+      alert("Вибачте, але фото не зберіглось на сервері");
     }
   };
 
@@ -241,7 +241,7 @@ export default function CreatePostsScreen() {
     setIsShowLoader(true);
     const uniquePostId = Date.now().toString();
     try {
-      const photo = await uploadPhotoToServer();
+      const photo = await uploadPhotoToServer(state.photoUri);
       const postRef = doc(db, "posts", uniquePostId);
 
       await setDoc(postRef, {

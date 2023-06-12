@@ -15,7 +15,7 @@ export function CommentFromOther({
         <Image style={styles.image} source={{ uri: avatar }} />
         <Text style={styles.dateTime}>{login}</Text>
       </View>
-      <View style={styles.text}>
+      <View style={[styles.text, { borderRadius: 12, borderTopLeftRadius: 0 }]}>
         <Text style={styles.content}>{comment}</Text>
         <Text style={styles.dateTime}>{dateConverter(createdAt)}</Text>
       </View>
@@ -32,7 +32,9 @@ export function CommentOwn({
 }) {
   return (
     <View style={styles.person}>
-      <View style={styles.text}>
+      <View
+        style={[styles.text, { borderRadius: 12, borderTopRightRadius: 0 }]}
+      >
         <Text style={styles.content}>{comment}</Text>
         <Text style={styles.dateTime}>{dateConverter(createdAt)}</Text>
       </View>
@@ -68,8 +70,6 @@ const styles = StyleSheet.create({
     width: 300,
     padding: 16,
     backgroundColor: "rgba(0, 0, 0, 0.03)",
-    borderRadius: 6,
-    borderTopRightRadius: 0,
   },
   content: {
     color: "#212121",

@@ -50,11 +50,11 @@ export default function Registration() {
   const { showPassword, hidden, togglePasswordVisibility } =
     usePasswordVisibility(false, password);
 
-  const uploadPhotoToServer = async () => {
+  const uploadPhotoToServer = async (photo) => {
     const uniquePostId = Date.now().toString();
 
     try {
-      const response = await fetch(avatar);
+      const response = await fetch(photo);
 
       const file = await response.blob();
 
@@ -67,7 +67,7 @@ export default function Registration() {
       return link;
     } catch (error) {
       console.log("uploadPhotoToServer > ", error);
-      alert("Вибачте, але фото не зберіглось на сервері", error.message);
+      alert("Вибачте, але фото не зберіглось на сервері");
     }
   };
 
@@ -86,12 +86,12 @@ export default function Registration() {
 
       const photo =
         avatar !== "../img/Rectangle-empty.jpg"
-          ? await uploadPhotoToServer()
+          ? await uploadPhotoToServer(avatar)
           : "https://firebasestorage.googleapis.com/v0/b/first-react-native-proje-98226.appspot.com/o/userAvatars%2FDefault_pfp.svg.png?alt=media&token=7cafd3a4-f9a4-40f2-9115-9067f5a15f57";
       dispatch(authSignUpUser(login, email, password, photo)).then((data) => {
         if (data === undefined || !data.uid) {
           setIsShowLoader(false);
-          alert(`Реєстрацію не виконано!"     Помилка: ${data}`);
+          alert(`Реєстрацію не виконано!`);
           return;
         }
         dispatch(authStateChange({ stateChange: true }));
