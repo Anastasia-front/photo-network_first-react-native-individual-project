@@ -27,6 +27,7 @@ Scan the QR code in the Expo Developer Tools console/IDE terminal using the Expo
 
 ## Screenshots
 
+<div style="display: flex; flex-direction: row; flex-wrap:wrap">
 <img src="./screenshots/1.png" alt="Empty login" width="150" height="320">
 <img src="./screenshots/1.1.png" alt="Fill login" width="150" height="320">
 <img src="./screenshots/2.png" alt="Empty registration" width="150" height="320">
@@ -44,7 +45,7 @@ Scan the QR code in the Expo Developer Tools console/IDE terminal using the Expo
 <img src="./screenshots/14.png" alt="Empty comment screen" width="150" height="320">
 <img src="./screenshots/15.png" alt="Add comment" width="150" height="320">
 <img src="./screenshots/16.png" alt="Modal with likes" width="150" height="320">
-
+</div>
 <!-- ![Empty login](screenshots/1.png)
 ![Fill login](screenshots/1.1.png)
 ![Empty registration](screenshots/2.png)
