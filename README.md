@@ -27,7 +27,7 @@ Scan the QR code in the Expo Developer Tools console/IDE terminal using the Expo
 
 ## Screenshots
 
-<div style="display: flex; flex-direction: row; flex-wrap:wrap">
+<div style="display: flex; flex-direction: row; flex-wrap:wrap; gap:20">
 <img src="./screenshots/1.png" alt="Empty login" width="150" height="320">
 <img src="./screenshots/1.1.png" alt="Fill login" width="150" height="320">
 <img src="./screenshots/2.png" alt="Empty registration" width="150" height="320">
