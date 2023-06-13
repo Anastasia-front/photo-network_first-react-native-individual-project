@@ -1,6 +1,10 @@
 import { manipulateAsync, SaveFormat } from "expo-image-manipulator";
 
-export const ImageManipulator = async (oldUri, option = [], compressValue) => {
+export const manipulationWithImage = async (
+  oldUri,
+  option = [],
+  compressValue
+) => {
   try {
     const { uri } = await manipulateAsync(oldUri, option, {
       compress: compressValue,

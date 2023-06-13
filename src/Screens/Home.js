@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { PostsScreen } from "./PostsScreen";
 import CreatePostsScreen from "./CreatePostsScreen";
 import { ProfileScreen } from "./ProfileScreen";
-import { checkIsDirtyForm } from "../utils/form";
+import { attention } from "../utils/form";
 import { Ionicons } from "@expo/vector-icons";
 
 const Tabs = createBottomTabNavigator();
@@ -16,7 +16,7 @@ const screenOptions = ({ navigation, route }) => ({
       color={styles.headerTintColor}
       style={{ marginLeft: 25 }}
       onPress={() => {
-        checkIsDirtyForm(navigation, route);
+        attention(navigation, route);
       }}
     />
   ),

@@ -12,7 +12,7 @@ import { View, FlatList, StyleSheet, Image, Text } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { LoaderScreen } from "../../Screens/LoaderScreen";
 import { Post } from "../Posts/Post";
-import { askIfQuit } from "../../utils";
+import { exit } from "../../utils";
 
 export const PostsList = ({ navigation, route }) => {
   const dispatch = useDispatch();
@@ -45,7 +45,7 @@ export const PostsList = ({ navigation, route }) => {
           size={24}
           color={styles.headerExitBtn.color}
           onPress={() => {
-            askIfQuit(dispatch);
+            exit(dispatch);
           }}
         />
       ),

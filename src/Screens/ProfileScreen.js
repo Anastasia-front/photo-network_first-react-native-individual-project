@@ -17,7 +17,7 @@ import image from "../img/Photo-BG3.jpg";
 import { db } from "../firebase/config";
 import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { ProfileList } from "../components/Lists/ProfileList";
-import { askIfQuit, ImageManipulator, avatarTemplate } from "../utils";
+import { exit, manipulationWithImage, avatarTemplate } from "../utils";
 import { LoaderScreen } from "./LoaderScreen";
 
 export const ProfileScreen = ({ navigation, route }) => {
@@ -64,7 +64,7 @@ export const ProfileScreen = ({ navigation, route }) => {
       if (!canceled) {
         const [{ uri }] = assets;
 
-        const newUri = await ImageManipulator(
+        const newUri = await manipulationWithImage(
           uri,
           [
             {
@@ -134,7 +134,7 @@ export const ProfileScreen = ({ navigation, route }) => {
               size={24}
               color={styles.exitBtn.color}
               onPress={() => {
-                askIfQuit(dispatch);
+                exit(dispatch);
               }}
             />
           </View>

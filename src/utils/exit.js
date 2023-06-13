@@ -1,14 +1,14 @@
 import { authSignOutUser } from "../redux/auth/authOperations";
 import { Alert } from "react-native";
 
-export const askIfQuit = (dispatch) => {
-  Alert.alert("Увага!", "Вихід з додатку", [
+export const exit = (dispatch) => {
+  Alert.alert("Ви дійсно хочете вийти з додатку?", [
     {
-      text: "Відмінити",
-      onPress: () => console.log("Cancel Pressed"),
+      text: "Ні",
+      onPress: () => console.log("Cancel"),
     },
     {
-      text: "Добре",
+      text: "Так",
       onPress: () => {
         dispatch(authSignOutUser());
       },

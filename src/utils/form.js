@@ -1,14 +1,14 @@
 import { Alert } from "react-native";
 
-export const checkIsDirtyForm = (navigation, { params }) => {
+export const attention = (navigation, { params }) => {
   if (params.isDirtyForm) {
-    Alert.alert("Увага!", "При переході дані не зберігаються", [
+    Alert.alert("Дані видаляться після виходу зі сторінки. Виконати переход?", [
       {
-        text: "Відмінити",
-        onPress: () => console.log("Cancel Pressed"),
+        text: "Ні",
+        onPress: () => console.log("Cancel"),
         // style: 'cancel',
       },
-      { text: "Добре", onPress: () => navigation.goBack() },
+      { text: "Так", onPress: () => navigation.goBack() },
     ]);
     return;
   }

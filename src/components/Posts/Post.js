@@ -199,11 +199,13 @@ export const Post = ({ post, navigation, route }) => {
 
 const styles = StyleSheet.create({
   column: {
+    width: 65,
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
   },
   dateTime: {
+    width: 59,
     marginTop: 3,
     color: "#BDBDBD",
     fontSize: 10,
