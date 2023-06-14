@@ -96,6 +96,38 @@ export const authUpdateUser =
       dispatch(updateUserProfile(userProfile));
       return userProfile;
     } catch (error) {
+      console.log(error);
+      return error.code;
+    }
+  };
+
+export const authUpdateUserLogin =
+  ({ login }) =>
+  async (dispatch, state) => {
+    try {
+      const user = auth.currentUser;
+
+      await updateProfile(user, {
+        displayName: login,
+      });
+
+      const {
+        uid,
+        displayName,
+        email: emailBase,
+        photoURL: photoUrlBase,
+      } = await auth.currentUser;
+
+      const userProfile = {
+        userId: uid,
+        login: displayName,
+        email: emailBase,
+        photoURL: photoUrlBase,
+      };
+      dispatch(updateUserProfile(userProfile));
+      return userProfile;
+    } catch (error) {
+      console.log(error);
       return error.code;
     }
   };

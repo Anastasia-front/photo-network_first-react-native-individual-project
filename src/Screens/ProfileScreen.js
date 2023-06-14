@@ -7,17 +7,26 @@ import {
   selectStateAvatar,
   selectorStateComment,
 } from "../redux/selectors";
-import { storage } from "../firebase/config";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { View, Text, ImageBackground, Alert, StyleSheet } from "react-native";
-import * as ImagePicker from "expo-image-picker";
+import { pickImage, uploadPhotoToServer } from "../utils/photo";
+
+import {
+  View,
+  Text,
+  ImageBackground,
+  TouchableOpacity,
+  Alert,
+  StyleSheet,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from "react-native";
 import { Feather } from "@expo/vector-icons";
 import image from "../img/Photo-BG3.jpg";
+import { ModalLogin } from "../components/Others/Modal";
 
 import { db } from "../firebase/config";
 import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { ProfileList } from "../components/Lists/ProfileList";
-import { exit, manipulationWithImage, avatarTemplate } from "../utils";
+import { exit, avatarTemplate } from "../utils";
 import { LoaderScreen } from "./LoaderScreen";
 
 export const ProfileScreen = ({ navigation, route }) => {
@@ -29,6 +38,7 @@ export const ProfileScreen = ({ navigation, route }) => {
   const name = useSelector(selectStateLogin);
   const avatar = useSelector(selectStateAvatar);
   const comment = useSelector(selectorStateComment);
+  const [modalLogin, setModalLogin] = useState(false);
 
   const login = name !== null ? name : "Default name";
 
@@ -52,67 +62,22 @@ export const ProfileScreen = ({ navigation, route }) => {
     );
   }, [userId, comment]);
 
-  const pickImage = async () => {
-    try {
-      const { assets, canceled } = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.All,
-        allowsEditing: true,
-        aspect: [4, 3],
-        quality: 1,
-      });
-
-      if (!canceled) {
-        const [{ uri }] = assets;
-
-        const newUri = await manipulationWithImage(
-          uri,
-          [
-            {
-              resize: { height: 240, width: 240 },
-            },
-          ],
-          0.5
-        );
-        return newUri;
-      }
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
-
-  const uploadPhotoToServer = async (photo) => {
-    const uniquePostId = Date.now().toString();
-
-    try {
-      const response = await fetch(photo);
-
-      const file = await response.blob();
-
-      const imageRef = ref(storage, `userAvatars/${uniquePostId}`);
-      await uploadBytes(imageRef, file);
-
-      return await getDownloadURL(imageRef);
-    } catch (error) {
-      console.log("uploadPhotoToServer > ", error);
-      Alert.alert("Вибачте, але фото не зберіглось на сервері");
-    }
-  };
-
   const changeAvatar = async () => {
     setIsShowLoaderAvatar(true);
 
     const avatarUri = await pickImage();
-    const avatarURL = await uploadPhotoToServer(avatarUri);
+    const avatarURL = await uploadPhotoToServer(avatarUri, "userAvatars");
 
     dispatch(authUpdateUser({ avatarURL })).then((data) => {
       if (data === undefined || !data.userId) {
         setIsShowLoaderAvatar(false);
         console.log(data);
-        Alert.alert(`Реєстрацію не виконано! Помилка: ${data}`);
+        Alert.alert(`Реєстрацію не виконано!`);
         return;
       }
-
-      Alert.alert("Вітаємо! Аватар змінено");
+      if (avatarURL !== avatarUri) {
+        Alert.alert("Успішна зміна аватара!");
+      }
     });
 
     setIsShowLoaderAvatar(false);
@@ -120,6 +85,24 @@ export const ProfileScreen = ({ navigation, route }) => {
 
   if (isShowLoaderAvatar) {
     return <LoaderScreen />;
+  }
+
+  if (modalLogin) {
+    return (
+      <TouchableWithoutFeedback
+        onPress={() => {
+          Keyboard.dismiss();
+          console.log("Button pressed");
+        }}
+      >
+        <ModalLogin
+          title="Редагування логіну"
+          oldLogin={login}
+          modalLogin={modalLogin}
+          setModalLogin={setModalLogin}
+        />
+      </TouchableWithoutFeedback>
+    );
   }
 
   return (
@@ -138,8 +121,9 @@ export const ProfileScreen = ({ navigation, route }) => {
               }}
             />
           </View>
-
-          <Text style={styles.login}>{login}</Text>
+          <TouchableOpacity onPress={() => setModalLogin(true)}>
+            <Text style={styles.login}>{login}</Text>
+          </TouchableOpacity>
           <Text style={styles.count}>Всього публікацій: {posts.length}</Text>
           {isShowLoaderPosts ? (
             <LoaderScreen />

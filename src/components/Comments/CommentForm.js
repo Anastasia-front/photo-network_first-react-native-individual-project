@@ -1,6 +1,10 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { selectStateLogin, selectStateAvatar } from "../../redux/selectors";
+import {
+  selectStateLogin,
+  selectStateAvatar,
+  selectStateUserId,
+} from "../../redux/selectors";
 import { addComment } from "../../redux/post/postReducer";
 
 import { db } from "../../firebase/config";
@@ -21,9 +25,11 @@ export const CommentForm = ({ postId }) => {
   const avatar = useSelector(selectStateAvatar);
   const [myComment, setMyComment] = useState("");
   const { keyboardHeight } = useKeyboardListener(170);
+  const userId = useSelector(selectStateUserId);
 
   const sendComment = async () => {
     const uniqueCommentId = Date.now().toString();
+
     try {
       const postRef = doc(db, "posts", postId, "comments", uniqueCommentId);
 
@@ -32,6 +38,7 @@ export const CommentForm = ({ postId }) => {
         owner: {
           login,
           avatar,
+          userId,
         },
         createdAt: Timestamp.fromDate(new Date()),
         updatedAt: Timestamp.fromDate(new Date()),
@@ -64,7 +71,6 @@ export const CommentForm = ({ postId }) => {
 const styles = StyleSheet.create({
   formWrp: {
     position: "absolute",
-    // bottom: 10,
     left: 20,
   },
 });

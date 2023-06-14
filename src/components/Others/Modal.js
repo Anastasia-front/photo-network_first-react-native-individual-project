@@ -1,46 +1,259 @@
 import { LikeInfo } from "./Like";
+import Input from "../Inputs/Input";
+import CustomButton, { UnactiveButton } from "../Others/Button";
+import { LoaderScreen } from "../../Screens/LoaderScreen";
+import { validateName, useKeyboardListener } from "../../utils";
 import {
   Modal,
   Text,
   TouchableOpacity,
   View,
   StyleSheet,
+  Image,
   FlatList,
+  TouchableWithoutFeedback,
+  // KeyboardAvoidingView,
+  // Platform,
+  Keyboard,
 } from "react-native";
-import { AntDesign } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
+import { useState } from "react";
+import { authUpdateUserLogin } from "../../redux/auth/authOperations";
+import { useDispatch } from "react-redux";
 
-export const Modalka = ({ modalVisible, setModalVisible, title, likes }) => {
+export const ModalLikes = ({ modalLikes, setModalLikes, title, likes }) => {
+  const [isPressed, setIsPressed] = useState(false);
+
   const closeAndElevate = () => {
-    setModalVisible(!modalVisible);
+    setModalLikes(!modalLikes);
   };
 
   return (
     <Modal
       animationType="fade"
       transparent={true}
-      visible={modalVisible}
+      visible={modalLikes}
       onRequestClose={() => {
-        setModalVisible(!modalVisible);
+        setModalLikes(!modalLikes);
       }}
     >
-      <View style={styles.container}>
-        <View>
+      <TouchableWithoutFeedback onPress={closeAndElevate}>
+        <View style={styles.container}>
+          <View>
+            <View
+              style={[
+                styles.modalView,
+                {
+                  backgroundColor: "orange",
+                  borderTopLeftRadius: 8,
+                  borderTopRightRadius: 8,
+                },
+              ]}
+            >
+              <Text style={styles.modalTitle}>{title}</Text>
+              <TouchableOpacity
+                style={styles.buttonClose}
+                onPress={closeAndElevate}
+              >
+                {isPressed ? (
+                  <View>
+                    <Ionicons
+                      name="close-circle"
+                      size={25}
+                      color="white"
+                      style={{ marginRight: 25 }}
+                      onPress={() => setIsPressed(!isPressed)}
+                    />
+                  </View>
+                ) : (
+                  <Ionicons
+                    name="close-circle-outline"
+                    size={25}
+                    color="white"
+                    style={{ marginRight: 25 }}
+                  />
+                )}
+              </TouchableOpacity>
+            </View>
+            <View
+              style={[
+                styles.modalView,
+                {
+                  backgroundColor: "white",
+                  borderBottomLeftRadius: 8,
+                  borderBottomRightRadius: 8,
+                },
+              ]}
+            >
+              <FlatList
+                data={likes}
+                keyExtractor={({ id }) => id}
+                renderItem={({ item }) => <LikeInfo like={item} />}
+              />
+            </View>
+          </View>
+        </View>
+      </TouchableWithoutFeedback>
+    </Modal>
+  );
+};
+export const ModalPhoto = ({ modalPhoto, setModalPhoto, photo }) => {
+  const [isPressed, setIsPressed] = useState(false);
+
+  const closeAndElevate = () => {
+    setModalPhoto(!modalPhoto);
+  };
+
+  return (
+    <Modal
+      animationType="fade"
+      transparent={true}
+      visible={modalPhoto}
+      onRequestClose={() => {
+        setModalPhoto(!modalPhoto);
+      }}
+    >
+      <TouchableWithoutFeedback onPress={closeAndElevate}>
+        <View style={styles.container}>
+          <View>
+            <View
+              style={[
+                styles.modalView,
+                {
+                  backgroundColor: "lightgrey",
+                  borderTopLeftRadius: 8,
+                  borderTopRightRadius: 8,
+                  paddingBottom: 40,
+                },
+              ]}
+            >
+              <TouchableOpacity
+                style={styles.buttonClose}
+                onPress={closeAndElevate}
+              >
+                {isPressed ? (
+                  <View>
+                    <Ionicons
+                      name="close-circle"
+                      size={35}
+                      color="grey"
+                      style={{ marginRight: 10 }}
+                      onPress={() => setIsPressed(!isPressed)}
+                    />
+                  </View>
+                ) : (
+                  <Ionicons
+                    name="close-circle-outline"
+                    size={35}
+                    color="grey"
+                    style={{ marginRight: 10 }}
+                  />
+                )}
+              </TouchableOpacity>
+            </View>
+            <View
+              style={[
+                styles.modalView,
+                {
+                  backgroundColor: "white",
+                  borderBottomLeftRadius: 8,
+                  borderBottomRightRadius: 8,
+                },
+              ]}
+            >
+              <Image style={styles.photo} source={{ uri: photo }} />
+            </View>
+          </View>
+        </View>
+      </TouchableWithoutFeedback>
+    </Modal>
+  );
+};
+export const ModalLogin = ({ modalLogin, setModalLogin, oldLogin, title }) => {
+  const [isPressed, setIsPressed] = useState(false);
+  const [isShowLoader, setIsShowLoader] = useState(false);
+  const [login, setLogin] = useState(oldLogin);
+  const { keyboardHeight } = useKeyboardListener(150);
+  const dispatch = useDispatch();
+
+  const closeAndElevate = () => {
+    setModalLogin(!modalLogin);
+  };
+
+  const changeLogin = async () => {
+    setIsShowLoader(true);
+
+    dispatch(authUpdateUserLogin({ login })).then((data) => {
+      if (data === undefined || !data.userId) {
+        setIsShowLoader(false);
+        console.log(data);
+        alert(`Реєстрацію не виконано!`);
+        return;
+      }
+      setModalLogin(!modalLogin);
+      alert("Успішна зміна логіну!");
+    });
+
+    setIsShowLoader(false);
+  };
+
+  if (isShowLoader) {
+    return <LoaderScreen />;
+  }
+
+  return (
+    <Modal
+      animationType="fade"
+      transparent={true}
+      visible={modalLogin}
+      onRequestClose={() => {
+        setModalLogin(!modalLogin);
+      }}
+    >
+      <TouchableWithoutFeedback
+        onPress={() => {
+          Keyboard.dismiss();
+          console.log("Button pressed");
+        }}
+      >
+        {/* <KeyboardAvoidingView
+          behavior={Platform.OS == "ios" ? "padding" : "height"}
+        > */}
+        <View style={[styles.container, { paddingBottom: keyboardHeight }]}>
           <View
             style={[
               styles.modalView,
               {
-                backgroundColor: "orange",
+                backgroundColor: "teal",
                 borderTopLeftRadius: 8,
                 borderTopRightRadius: 8,
+                paddingBottom: 20,
               },
             ]}
           >
-            <Text style={styles.modalTitle}>{title}</Text>
+            <Text style={[styles.modalTitle, { marginTop: 10 }]}>{title}</Text>
             <TouchableOpacity
-              style={styles.buttonClose}
+              style={[styles.buttonClose, { top: 3 }]}
               onPress={closeAndElevate}
             >
-              <AntDesign name="close" size={24} color="#fff" />
+              {isPressed ? (
+                <View>
+                  <Ionicons
+                    name="close-circle"
+                    size={35}
+                    color="white"
+                    style={{ marginRight: 10 }}
+                    onPress={() => setIsPressed(!isPressed)}
+                  />
+                </View>
+              ) : (
+                <Ionicons
+                  name="close-circle-outline"
+                  size={35}
+                  color="white"
+                  style={{ marginRight: 10 }}
+                />
+              )}
             </TouchableOpacity>
           </View>
           <View
@@ -53,23 +266,38 @@ export const Modalka = ({ modalVisible, setModalVisible, title, likes }) => {
               },
             ]}
           >
-            <FlatList
-              style={styles.paddingBottom}
-              data={likes}
-              keyExtractor={({ id }) => id}
-              renderItem={({ item }) => <LikeInfo like={item} />}
+            <Text style={{ padding: 10 }}>Введіть нижче бажаний нік👇🏻</Text>
+            <Input
+              inputMode="text"
+              placeholder="Логін"
+              value={login}
+              onChangeText={setLogin}
+              onBlur={validateName}
             />
+            <View style={{ marginTop: -20 }}>
+              {login !== oldLogin ? (
+                <CustomButton text="Змінити" onPress={changeLogin} />
+              ) : (
+                <UnactiveButton text="Змінити" />
+              )}
+            </View>
           </View>
         </View>
-      </View>
+        {/* </KeyboardAvoidingView> */}
+      </TouchableWithoutFeedback>
     </Modal>
   );
 };
 const styles = StyleSheet.create({
+  photo: {
+    borderRadius: 8,
+    width: 350,
+    height: 600,
+  },
   container: {
     flex: 1,
     justifyContent: "center",
-    backgroundColor: "#dadee6",
+    backgroundColor: "rgba(0,0,0,0.5)",
   },
   modalView: {
     marginHorizontal: 16,

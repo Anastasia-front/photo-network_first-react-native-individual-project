@@ -12,7 +12,7 @@ export const CommentsList = ({ allComments, photo }) => {
             {index === 0 && (
               <Image source={{ uri: photo }} style={styles.photo} />
             )}
-            <Comment item={item} />
+            <Comment commentId={item.id} item={item} />
           </>
         )}
         ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
@@ -24,10 +24,8 @@ export const CommentsList = ({ allComments, photo }) => {
 
 const styles = StyleSheet.create({
   main: {
-    height: "100%",
+    paddingBottom: 50,
     backgroundColor: "#fff",
-    // borderColor: "grey",
-    // borderTopWidth: 0.5,
   },
   parent: {
     marginHorizontal: 20,

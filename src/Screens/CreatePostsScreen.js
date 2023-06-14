@@ -3,6 +3,7 @@ import Input from "../components/Inputs/InputCreatePost";
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useIsFocused } from "@react-navigation/native";
+import { uploadPhotoToServer } from "../utils/photo";
 import {
   Text,
   View,
@@ -19,8 +20,7 @@ import {
   selectStateAvatar,
   selectStateLogin,
 } from "../redux/selectors";
-import { db, storage } from "../firebase/config";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { db } from "../firebase/config";
 import { doc, setDoc, Timestamp } from "firebase/firestore";
 
 import { Camera } from "expo-camera";
@@ -216,32 +216,32 @@ export default function CreatePostsScreen() {
     }
   };
 
-  const uploadPhotoToServer = async (photo) => {
-    const uniquePostId = Date.now().toString();
+  // const uploadPhotoToServer = async (photo) => {
+  //   const uniquePostId = Date.now().toString();
 
-    try {
-      const response = await fetch(photo);
+  //   try {
+  //     const response = await fetch(photo);
 
-      const file = await response.blob();
+  //     const file = await response.blob();
 
-      const imageRef = ref(storage, `postImages/${uniquePostId}`);
+  //     const imageRef = ref(storage, `postImages/${uniquePostId}`);
 
-      const q = await uploadBytes(imageRef, file);
+  //     const q = await uploadBytes(imageRef, file);
 
-      const link = await getDownloadURL(imageRef);
+  //     const link = await getDownloadURL(imageRef);
 
-      return link;
-    } catch (error) {
-      console.log("uploadPhotoToServer > ", error);
-      alert("Вибачте, але фото не зберіглось на сервері");
-    }
-  };
+  //     return link;
+  //   } catch (error) {
+  //     console.log("uploadPhotoToServer > ", error);
+  //     alert("Вибачте, але фото не зберіглось на сервері");
+  //   }
+  // };
 
   const uploadPostToServer = async () => {
     setIsShowLoader(true);
     const uniquePostId = Date.now().toString();
     try {
-      const photo = await uploadPhotoToServer(state.photoUri);
+      const photo = await uploadPhotoToServer(state.photoUri, "postImages");
       const postRef = doc(db, "posts", uniquePostId);
 
       await setDoc(postRef, {
@@ -257,8 +257,8 @@ export default function CreatePostsScreen() {
         },
       });
     } catch (error) {
-      console.log("uploadPostToServer ===>>", error);
-      alert("Вибачте, але публікація не зберіглась на сервері", error.message);
+      console.log("uploadPostToServer >", error);
+      alert("Щось пішло не так - публікація не зберіглась на сервері");
     } finally {
       setState(INITIAL_POST);
       setIsDirtyForm(false);
@@ -329,7 +329,10 @@ export default function CreatePostsScreen() {
 
           {state.photoUri !== "" ? (
             <TouchableOpacity
-              onPress={() => setState((prev) => ({ ...prev, photoUri: "" }))}
+              onPress={
+                handleCameraPress
+                // () => setState((prev) => ({ ...prev, photoUri: "" }))
+              }
             >
               <Text style={styles.text}>Редагувати фото</Text>
             </TouchableOpacity>

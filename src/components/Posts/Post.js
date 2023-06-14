@@ -13,9 +13,13 @@ import {
 } from "firebase/firestore";
 import { Feather } from "@expo/vector-icons";
 import { useSelector, useDispatch } from "react-redux";
-import { selectStateLogin, selectStateAvatar } from "../../redux/selectors";
+import {
+  selectStateLogin,
+  selectStateAvatar,
+  selectStateUserId,
+} from "../../redux/selectors";
 import { addLike } from "../../redux/post/postReducer";
-import { Modalka } from "../Others/Modal";
+import { ModalLikes, ModalPhoto } from "../Others/Modal";
 
 export const Post = ({ post, navigation, route }) => {
   const dispatch = useDispatch();
@@ -25,7 +29,9 @@ export const Post = ({ post, navigation, route }) => {
   const [likes, setLikes] = useState(0);
   const [likesInfo, setLikesInfo] = useState([]);
   const [numberOfClicks, setNumberOfClicks] = useState(0);
-  const [modalVisible, setModalVisible] = useState(false);
+  const [modalLikes, setModalLikes] = useState(false);
+  const [modalPhoto, setModalPhoto] = useState(false);
+  const userId = useSelector(selectStateUserId);
 
   const handleLike = () => {
     setLikes(likes + 1);
@@ -46,6 +52,7 @@ export const Post = ({ post, navigation, route }) => {
         owner: {
           login,
           avatar,
+          userId,
         },
         createdAt: Timestamp.fromDate(new Date()),
         updatedAt: Timestamp.fromDate(new Date()),
@@ -111,20 +118,32 @@ export const Post = ({ post, navigation, route }) => {
     return "Дефолтна локація";
   };
 
-  if (modalVisible && likes !== 0) {
+  if (modalLikes && likes !== 0) {
     return (
-      <Modalka
+      <ModalLikes
         title="Вподобайки"
         likes={likesInfo}
-        modalVisible={modalVisible}
-        setModalVisible={setModalVisible}
+        modalLikes={modalLikes}
+        setModalLikes={setModalLikes}
+      />
+    );
+  }
+  if (modalPhoto) {
+    return (
+      <ModalPhoto
+        photo={post.photo}
+        modalPhoto={modalPhoto}
+        setModalPhoto={setModalPhoto}
       />
     );
   }
 
   return (
     <View style={styles.postWrp}>
-      <Image style={styles.photo} source={{ uri: post.photo }} />
+      <TouchableOpacity onPress={() => setModalPhoto(true)}>
+        <Image style={styles.photo} source={{ uri: post.photo }} />
+      </TouchableOpacity>
+
       <View style={styles.bottomInfo}>
         {route?.name !== "Profile" && (
           <View style={styles.column}>
@@ -159,7 +178,7 @@ export const Post = ({ post, navigation, route }) => {
 
               <TouchableOpacity
                 style={styles.buttonComments}
-                onPress={() => setModalVisible(true)}
+                onPress={() => setModalLikes(true)}
               >
                 <View style={styles.mapIcon}>
                   <Ionicons

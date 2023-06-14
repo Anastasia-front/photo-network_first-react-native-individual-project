@@ -1,48 +1,90 @@
-import { StyleSheet, Text, View, Image } from "react-native";
+import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import { dateConverter } from "../../utils";
+import { deleteComment } from "../../utils/delete";
 import { auth } from "../../firebase/config";
+import { Ionicons } from "@expo/vector-icons";
+import PostIdContext from "../../utils/context";
 
 export function CommentFromOther({
   item: {
-    owner: { login, avatar },
+    owner: { login, avatar, userId },
     comment,
     createdAt,
   },
+  commentId,
 }) {
+  const user = auth.currentUser;
   return (
-    <View style={styles.person}>
-      <View style={styles.column}>
-        <Image style={styles.image} source={{ uri: avatar }} />
-        <Text style={styles.dateTime}>{login}</Text>
-      </View>
-      <View style={[styles.text, { borderRadius: 12, borderTopLeftRadius: 0 }]}>
-        <Text style={styles.content}>{comment}</Text>
-        <Text style={styles.dateTime}>{dateConverter(createdAt)}</Text>
-      </View>
-    </View>
+    <PostIdContext.Consumer>
+      {(postId) => (
+        <View style={styles.person}>
+          <View style={styles.column}>
+            <Image style={styles.image} source={{ uri: avatar }} />
+            <Text style={styles.dateTime}>{login}</Text>
+          </View>
+          <View
+            style={[styles.text, { borderRadius: 12, borderTopLeftRadius: 0 }]}
+          >
+            {/* {userId === user.uid && ( */}
+            <Ionicons
+              name="trash-outline"
+              size={15}
+              color="#BDBDBD"
+              style={{ position: "absolute", top: 7, right: 10 }}
+              onPress={() => {
+                deleteComment(postId, commentId);
+              }}
+            />
+            {/* )} */}
+            <Text style={styles.content}>{comment}</Text>
+            <Text style={styles.dateTime}>{dateConverter(createdAt)}</Text>
+
+            {/* <TouchableOpacity >
+          <Text style={[styles.dateTime, { marginTop: 7 }]}>Add like</Text>
+        </TouchableOpacity> */}
+          </View>
+        </View>
+      )}
+    </PostIdContext.Consumer>
   );
 }
 
 export function CommentOwn({
   item: {
-    owner: { login, avatar },
+    owner: { login, avatar, userId },
     comment,
     createdAt,
   },
+  commentId,
 }) {
   return (
-    <View style={styles.person}>
-      <View
-        style={[styles.text, { borderRadius: 12, borderTopRightRadius: 0 }]}
-      >
-        <Text style={styles.content}>{comment}</Text>
-        <Text style={styles.dateTime}>{dateConverter(createdAt)}</Text>
-      </View>
-      <View style={styles.column}>
-        <Image style={styles.image} source={{ uri: avatar }} />
-        <Text style={styles.dateTime}>{login}</Text>
-      </View>
-    </View>
+    <PostIdContext.Consumer>
+      {(postId) => (
+        <View style={styles.person}>
+          <View
+            style={[styles.text, { borderRadius: 12, borderTopRightRadius: 0 }]}
+          >
+            {userId === user.uid && (
+              <Ionicons
+                name="trash-outline"
+                size={15}
+                color="#BDBDBD"
+                style={{ position: "absolute", top: 7, right: 10 }}
+                onPress={() => {
+                  deleteComment(postId, commentId);
+                }}
+              />
+            )}
+            <Text style={styles.content}>{comment}</Text>
+            <Text style={styles.dateTime}>{dateConverter(createdAt)}</Text>
+          </View>
+          <View style={styles.column}>
+            <Image style={styles.image} source={{ uri: avatar }} />
+            <Text style={styles.dateTime}>{login}</Text>
+          </View>
+        </View>
+      )}
+    </PostIdContext.Consumer>
   );
 }
 
@@ -50,10 +92,9 @@ const styles = StyleSheet.create({
   person: {
     flexDirection: "row",
     alignItems: "flex-start",
-    justifyContent: "flex-start",
+    justifyContent: "center",
     gap: 12,
     marginBottom: 15,
-    marginLeft: 25,
   },
   image: {
     width: 28,
@@ -68,7 +109,7 @@ const styles = StyleSheet.create({
   },
   text: {
     width: 300,
-    padding: 16,
+    padding: 12,
     backgroundColor: "rgba(0, 0, 0, 0.03)",
   },
   content: {
@@ -86,11 +127,13 @@ const styles = StyleSheet.create({
   },
 });
 
-export function Comment({ item }) {
+export function Comment({ item, commentId }) {
   const user = auth.currentUser;
-  return item.owner.login === user.displayName ? (
-    <CommentOwn item={item} />
+
+  console.log(user.uid, item.owner.userId);
+  return item.owner.userId === user.uid ? (
+    <CommentOwn item={item} commentId={commentId} />
   ) : (
-    <CommentFromOther item={item} />
+    <CommentFromOther item={item} commentId={commentId} />
   );
 }

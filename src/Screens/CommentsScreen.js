@@ -12,6 +12,7 @@ import {
 import { Feather } from "@expo/vector-icons";
 import { CommentsList } from "../components/Comments/CommentList";
 import { CommentForm } from "../components/Comments/CommentForm";
+import PostIdContext from "../utils/context";
 
 const CommentsScreen = ({ navigation, route }) => {
   const { id: postId, photo } = route.params;
@@ -19,7 +20,6 @@ const CommentsScreen = ({ navigation, route }) => {
 
   useEffect(() => {
     const commentsRef = collection(db, "posts", postId, "comments");
-
     onSnapshot(
       commentsRef,
       (data) => {
@@ -45,26 +45,28 @@ const CommentsScreen = ({ navigation, route }) => {
   }, [postId, navigation]);
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View style={styles.container}>
-        {allComments.length === 0 ? (
-          <>
-            <Image source={{ uri: photo }} style={styles.photo} />
-            <Text style={styles.text}>
-              Ще немає коментарів, напишіть перший✌🏼
-            </Text>
-          </>
-        ) : null}
+    <PostIdContext.Provider value={postId}>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={styles.container}>
+          {allComments.length === 0 ? (
+            <>
+              <Image source={{ uri: photo }} style={styles.photo} />
+              <Text style={styles.text}>
+                Ще немає коментарів, напишіть перший✌🏼
+              </Text>
+            </>
+          ) : null}
 
-        {allComments.length !== 0 ? (
-          <View>
-            <CommentsList allComments={allComments} photo={photo} />
-          </View>
-        ) : null}
+          {allComments.length !== 0 ? (
+            <View>
+              <CommentsList allComments={allComments} photo={photo} />
+            </View>
+          ) : null}
 
-        <CommentForm postId={postId} />
-      </View>
-    </TouchableWithoutFeedback>
+          <CommentForm postId={postId} />
+        </View>
+      </TouchableWithoutFeedback>
+    </PostIdContext.Provider>
   );
 };
 const styles = StyleSheet.create({
