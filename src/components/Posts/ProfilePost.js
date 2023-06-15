@@ -10,7 +10,10 @@ import {
   deleteDoc,
 } from "firebase/firestore";
 import { Feather } from "@expo/vector-icons";
-import { Modalka } from "../Others/Modal";
+import { ModalLikes, ModalPhoto } from "../Others/Modal";
+import { deletePost } from "../../utils/delete";
+import { useSelector } from "react-redux";
+import { selectStateUserId } from "../../redux/selectors";
 
 export const ProfilePost = ({ post, navigation, route }) => {
   const [countComments, setCountComments] = useState(0);
@@ -18,7 +21,9 @@ export const ProfilePost = ({ post, navigation, route }) => {
   const [likesInfo, setLikesInfo] = useState([]);
   const [active, setActive] = useState(false);
   const [numberOfClicks, setNumberOfClicks] = useState(0);
-  const [modalVisible, setModalVisible] = useState(false);
+  const [modalLikes, setModalLikes] = useState(false);
+  const [modalPhoto, setModalPhoto] = useState(false);
+  const userId = useSelector(selectStateUserId);
 
   const handleLike = () => {
     setLikes(likes + 1);
@@ -39,6 +44,7 @@ export const ProfilePost = ({ post, navigation, route }) => {
         owner: {
           login,
           avatar,
+          userId,
         },
         createdAt: Timestamp.fromDate(new Date()),
         updatedAt: Timestamp.fromDate(new Date()),
@@ -103,26 +109,48 @@ export const ProfilePost = ({ post, navigation, route }) => {
 
     return "Дефолтна локація";
   };
-
-  if (modalVisible && likes !== 0) {
+  if (modalLikes && likes !== 0) {
     return (
-      <Modalka
+      <ModalLikes
         title="Вподобайки"
         likes={likesInfo}
-        modalVisible={modalVisible}
-        setModalVisible={setModalVisible}
+        modalLikes={modalLikes}
+        setModalLikes={setModalLikes}
+      />
+    );
+  }
+  if (modalPhoto) {
+    return (
+      <ModalPhoto
+        photo={post.photo}
+        modalPhoto={modalPhoto}
+        setModalPhoto={setModalPhoto}
       />
     );
   }
 
   return (
     <View style={styles.postWrp}>
-      <Image style={styles.photo} source={{ uri: post.photo }} />
+      <TouchableOpacity onPress={() => setModalPhoto(true)}>
+        <Image style={styles.photo} source={{ uri: post.photo }} />
+      </TouchableOpacity>
+
+      <Ionicons
+        name="trash-outline"
+        size={25}
+        color="#fff"
+        style={{
+          position: "absolute",
+          top: 7,
+          right: 10,
+        }}
+        onPress={() => {
+          deletePost(post.id);
+        }}
+      />
       <View style={styles.bottomInfo}>
         <View style={styles.marginLeft}>
-          <Text style={styles.titlePost} ellipsizeMode="tail" numberOfLines={1}>
-            {post.titlePost}
-          </Text>
+          <Text style={styles.titlePost}>{post.titlePost}</Text>
 
           <View style={styles.buttonsWrp}>
             <View style={styles.row}>
@@ -142,7 +170,7 @@ export const ProfilePost = ({ post, navigation, route }) => {
 
               <TouchableOpacity
                 style={styles.buttonComments}
-                onPress={() => setModalVisible(true)}
+                onPress={() => setModalLikes(true)}
               >
                 <View style={styles.mapIcon}>
                   <Ionicons

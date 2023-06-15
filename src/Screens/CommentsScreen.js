@@ -15,7 +15,7 @@ import { CommentForm } from "../components/Comments/CommentForm";
 import PostIdContext from "../utils/context";
 
 const CommentsScreen = ({ navigation, route }) => {
-  const { id: postId, photo } = route.params;
+  const { id: postId, owner, photo } = route.params;
   const [allComments, setAllComments] = useState([]);
 
   useEffect(() => {
@@ -45,7 +45,7 @@ const CommentsScreen = ({ navigation, route }) => {
   }, [postId, navigation]);
 
   return (
-    <PostIdContext.Provider value={postId}>
+    <PostIdContext.Provider value={{ postId, owner }}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.container}>
           {allComments.length === 0 ? (

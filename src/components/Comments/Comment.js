@@ -7,7 +7,7 @@ import PostIdContext from "../../utils/context";
 
 export function CommentFromOther({
   item: {
-    owner: { login, avatar, userId },
+    owner: { login, avatar },
     comment,
     createdAt,
   },
@@ -16,60 +16,67 @@ export function CommentFromOther({
   const user = auth.currentUser;
   return (
     <PostIdContext.Consumer>
-      {(postId) => (
-        <View style={styles.person}>
-          <View style={styles.column}>
-            <Image style={styles.image} source={{ uri: avatar }} />
-            <Text style={styles.dateTime}>{login}</Text>
-          </View>
-          <View
-            style={[styles.text, { borderRadius: 12, borderTopLeftRadius: 0 }]}
-          >
-            {/* {userId === user.uid && ( */}
-            <Ionicons
-              name="trash-outline"
-              size={15}
-              color="#BDBDBD"
-              style={{ position: "absolute", top: 7, right: 10 }}
-              onPress={() => {
-                deleteComment(postId, commentId);
-              }}
-            />
-            {/* )} */}
-            <Text style={styles.content}>{comment}</Text>
-            <Text style={styles.dateTime}>{dateConverter(createdAt)}</Text>
+      {({ postId, owner }) => {
+        return (
+          <View style={styles.person}>
+            <View style={styles.column}>
+              <Image style={styles.image} source={{ uri: avatar }} />
+              <Text style={styles.dateTime}>{login}</Text>
+            </View>
+            <View
+              style={[
+                styles.text,
+                { borderRadius: 12, borderTopLeftRadius: 0 },
+              ]}
+            >
+              {user.uid === owner.userId && (
+                <Ionicons
+                  name="trash-outline"
+                  size={20}
+                  color="#BDBDBD"
+                  style={{ position: "absolute", top: 3, right: 7 }}
+                  onPress={() => {
+                    deleteComment(postId, commentId);
+                  }}
+                />
+              )}
+              <Text style={styles.content}>{comment}</Text>
+              <Text style={styles.dateTime}>{dateConverter(createdAt)}</Text>
 
-            {/* <TouchableOpacity >
+              {/* <TouchableOpacity >
           <Text style={[styles.dateTime, { marginTop: 7 }]}>Add like</Text>
         </TouchableOpacity> */}
+            </View>
           </View>
-        </View>
-      )}
+        );
+      }}
     </PostIdContext.Consumer>
   );
 }
 
 export function CommentOwn({
   item: {
-    owner: { login, avatar, userId },
+    owner: { login, avatar },
     comment,
     createdAt,
   },
   commentId,
 }) {
+  const user = auth.currentUser;
+
   return (
     <PostIdContext.Consumer>
-      {(postId) => (
+      {({ postId, owner }) => (
         <View style={styles.person}>
           <View
             style={[styles.text, { borderRadius: 12, borderTopRightRadius: 0 }]}
           >
-            {userId === user.uid && (
+            {owner.userId === user.uid && (
               <Ionicons
                 name="trash-outline"
-                size={15}
+                size={20}
                 color="#BDBDBD"
-                style={{ position: "absolute", top: 7, right: 10 }}
+                style={{ position: "absolute", top: 3, right: 7 }}
                 onPress={() => {
                   deleteComment(postId, commentId);
                 }}
@@ -130,7 +137,7 @@ const styles = StyleSheet.create({
 export function Comment({ item, commentId }) {
   const user = auth.currentUser;
 
-  console.log(user.uid, item.owner.userId);
+  // console.log(user.uid, item.owner.userId);
   return item.owner.userId === user.uid ? (
     <CommentOwn item={item} commentId={commentId} />
   ) : (

@@ -3,30 +3,32 @@ import { deleteDoc, doc } from "firebase/firestore";
 import { Alert } from "react-native";
 
 export const deleteComment = (postID, id) => {
-  Alert.alert("Ви дійсно хочете видалити коментарій?", [
+  Alert.alert("Підтвердження!", "Ви дійсно хочете видалити коментарій?", [
     {
       text: "Ні",
       onPress: () => console.log("Cancel"),
     },
     {
       text: "Так",
-      onPress: async () => {
-        try {
-          const documentRef = doc(db, "posts", postID, "comments", id);
-          await deleteDoc(documentRef);
-          alert("Коментар був успішно видалений!");
-          console.log("The document was successfully deleted.");
-        } catch (error) {
-          alert("Щось пішло не так!");
-          console.error("Error when deleting the document:", error);
-        }
-      },
+      onPress:
+        //   () => console.log("Yes"),
+        async () => {
+          try {
+            const documentRef = doc(db, "posts", postID, "comments", id);
+            await deleteDoc(documentRef);
+            alert("Коментар був успішно видалений!");
+            console.log("The document was successfully deleted.");
+          } catch (error) {
+            alert("Щось пішло не так!");
+            console.error("Error when deleting the document:", error);
+          }
+        },
     },
   ]);
 };
 
 export const deletePost = (postID) => {
-  Alert.alert("Ви дійсно хочете видалити пост?", [
+  Alert.alert("Підтвердження!", "Ви дійсно хочете видалити пост?", [
     {
       text: "Ні",
       onPress: () => console.log("Cancel"),
