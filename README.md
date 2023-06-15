@@ -32,7 +32,7 @@ Scan the QR code in the Expo Developer Tools console/IDE terminal using the Expo
 <img src="./screenshots/1.1.png" alt="Fill login" width="200" height="420">
 <img src="./screenshots/2.png" alt="Empty registration" width="200" height="420">
 <img src="./screenshots/3.png" alt="Fill registration" width="200" height="420">
-<img src="./screenshots/4.png" alt="Save password" width="200" height="420">
+<img src="./screenshots/4.png" alt="Map screen" width="200" height="420">
 <img src="./screenshots/5.png" alt="Posts screen" width="200" height="420">
 <img src="./screenshots/6.png" alt="Start profile screen" width="200" height="420">
 <img src="./screenshots/7.png" alt="Empty 'creation of post' screen" width="200" height="420">
@@ -45,6 +45,10 @@ Scan the QR code in the Expo Developer Tools console/IDE terminal using the Expo
 <img src="./screenshots/14.png" alt="Empty comment screen" width="200" height="420">
 <img src="./screenshots/15.png" alt="Add comment" width="200" height="420">
 <img src="./screenshots/16.png" alt="Modal with likes" width="200" height="420">
+<img src="./screenshots/17.png" alt="Change avatar" width="200" height="420">
+<img src="./screenshots/18.png" alt="Modal 'change login' - start state" width="200" height="420">
+<img src="./screenshots/19.png" alt="Modal 'change login' - edit state" width="200" height="420">
+<img src="./screenshots/20.png" alt="Successfull change of login" width="200" height="420">
 </div>
 <!-- ![Empty login](screenshots/1.png)
 ![Fill login](screenshots/1.1.png)
