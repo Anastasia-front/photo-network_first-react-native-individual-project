@@ -77,7 +77,7 @@ export default function Registration() {
     validatePassword(password, setValidationError);
 
     if (
-      validationError === false &&
+      (validationError === "" || !validationError) &&
       login !== null &&
       email !== null &&
       password !== ""

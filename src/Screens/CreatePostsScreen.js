@@ -141,7 +141,7 @@ export default function CreatePostsScreen() {
               takePhoto();
             }
           } else {
-            console.log("Дозвіл на використання камери не було надано");
+            alert("Дозвіл на використання камери не було надано");
           }
         } else if (buttonIndex === 1) {
           pickImage();
@@ -154,22 +154,22 @@ export default function CreatePostsScreen() {
   if (isShowLoader) {
     return <LoaderScreen />;
   }
-  setTimeout(() => {
-    if (!hasPermission && !permissionCam) {
-      return (
-        <View style={styles.permission}>
-          <Text style={{ textAlign: "center" }}>
-            Нам потрібен ваш дозвіл, щоб показати камеру
-          </Text>
-          <CustomButton
-            onPress={requestPermissionCam}
-            width="50%"
-            text="отримати дозвіл"
-          />
-        </View>
-      );
-    }
-  }, 300);
+  // setTimeout(() => {
+  if (!hasPermission && !permissionCam) {
+    return (
+      <View style={styles.permission}>
+        <Text style={{ textAlign: "center" }}>
+          Нам потрібен ваш дозвіл, щоб показати камеру
+        </Text>
+        <CustomButton
+          onPress={requestPermissionCam}
+          width="50%"
+          text="отримати дозвіл"
+        />
+      </View>
+    );
+  }
+  // }, 300);
 
   const takePhoto = async () => {
     if (cameraRef) {
@@ -215,27 +215,6 @@ export default function CreatePostsScreen() {
       console.log("pickImage > ", error.message);
     }
   };
-
-  // const uploadPhotoToServer = async (photo) => {
-  //   const uniquePostId = Date.now().toString();
-
-  //   try {
-  //     const response = await fetch(photo);
-
-  //     const file = await response.blob();
-
-  //     const imageRef = ref(storage, `postImages/${uniquePostId}`);
-
-  //     const q = await uploadBytes(imageRef, file);
-
-  //     const link = await getDownloadURL(imageRef);
-
-  //     return link;
-  //   } catch (error) {
-  //     console.log("uploadPhotoToServer > ", error);
-  //     alert("Вибачте, але фото не зберіглось на сервері");
-  //   }
-  // };
 
   const uploadPostToServer = async () => {
     setIsShowLoader(true);
@@ -328,12 +307,7 @@ export default function CreatePostsScreen() {
           </View>
 
           {state.photoUri !== "" ? (
-            <TouchableOpacity
-              onPress={
-                handleCameraPress
-                // () => setState((prev) => ({ ...prev, photoUri: "" }))
-              }
-            >
+            <TouchableOpacity onPress={handleCameraPress}>
               <Text style={styles.text}>Редагувати фото</Text>
             </TouchableOpacity>
           ) : (

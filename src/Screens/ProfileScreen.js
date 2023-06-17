@@ -36,11 +36,15 @@ export const ProfileScreen = ({ navigation, route }) => {
   const dispatch = useDispatch();
   const userId = useSelector(selectStateUserId);
   const name = useSelector(selectStateLogin);
-  const avatar = useSelector(selectStateAvatar);
+  const avatarGet = useSelector(selectStateAvatar);
   const comment = useSelector(selectorStateComment);
   const [modalLogin, setModalLogin] = useState(false);
 
   const login = name !== null ? name : "Default name";
+  const avatar =
+    avatarGet !== null
+      ? avatarGet
+      : "https://firebasestorage.googleapis.com/v0/b/first-react-native-proje-98226.appspot.com/o/userAvatars%2FDefault_pfp.svg.png?alt=media&token=7cafd3a4-f9a4-40f2-9115-9067f5a15f57";
 
   useEffect(() => {
     setIsShowLoaderPosts(true);

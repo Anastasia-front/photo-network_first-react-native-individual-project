@@ -30,6 +30,6 @@ export const likeSlice = createSlice({
   },
 });
 
-export const { addLike } = postSlice.actions;
+export const { addLike } = likeSlice.actions;
 
 export const likeReducer = likeSlice.reducer;

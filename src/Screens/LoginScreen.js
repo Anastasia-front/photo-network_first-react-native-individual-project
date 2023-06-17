@@ -14,9 +14,8 @@ import CustomButton from "../components/Others/Button";
 import Input from "../components/Inputs/Input";
 import CustomLink from "../components/Others/Link";
 import Title from "../components/Others/Title";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-// import { loginDB } from "../firebase/authorization";
 import { validateEmail, validatePassword } from "../utils/validation";
 import { authSignInUser } from "../redux/auth/authOperations";
 import { LoaderScreen } from "./LoaderScreen";
@@ -41,7 +40,11 @@ export default function Login() {
     validateEmail(email, setValidationError);
     validatePassword(password, setValidationError);
 
-    if (validationError === "" && password !== "" && email !== "") {
+    if (
+      (validationError === "" || !validationError) &&
+      password !== "" &&
+      email !== ""
+    ) {
       setIsShowLoader(true);
       dispatch(authSignInUser(email, password)).then((data) => {
         if (data === undefined || !data.user) {

@@ -10,19 +10,17 @@ export const deleteComment = (postID, id) => {
     },
     {
       text: "Так",
-      onPress:
-        //   () => console.log("Yes"),
-        async () => {
-          try {
-            const documentRef = doc(db, "posts", postID, "comments", id);
-            await deleteDoc(documentRef);
-            alert("Коментар був успішно видалений!");
-            console.log("The document was successfully deleted.");
-          } catch (error) {
-            alert("Щось пішло не так!");
-            console.error("Error when deleting the document:", error);
-          }
-        },
+      onPress: async () => {
+        try {
+          const documentRef = doc(db, "posts", postID, "comments", id);
+          await deleteDoc(documentRef);
+          alert("Коментар був успішно видалений!");
+          console.log("The document was successfully deleted.");
+        } catch (error) {
+          alert("Щось пішло не так!");
+          console.error("Error when deleting the document:", error);
+        }
+      },
     },
   ]);
 };

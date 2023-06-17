@@ -3,17 +3,23 @@ import { useState, useEffect } from "react";
 import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
 import { db } from "../../firebase/config";
 import {
+  doc,
   collection,
   getCountFromServer,
   onSnapshot,
   setDoc,
   deleteDoc,
+  Timestamp,
 } from "firebase/firestore";
 import { Feather } from "@expo/vector-icons";
 import { ModalLikes, ModalPhoto } from "../Others/Modal";
 import { deletePost } from "../../utils/delete";
 import { useSelector } from "react-redux";
-import { selectStateUserId } from "../../redux/selectors";
+import {
+  selectStateUserId,
+  selectStateLogin,
+  selectStateAvatar,
+} from "../../redux/selectors";
 
 export const ProfilePost = ({ post, navigation, route }) => {
   const [countComments, setCountComments] = useState(0);
@@ -24,6 +30,8 @@ export const ProfilePost = ({ post, navigation, route }) => {
   const [modalLikes, setModalLikes] = useState(false);
   const [modalPhoto, setModalPhoto] = useState(false);
   const userId = useSelector(selectStateUserId);
+  const login = useSelector(selectStateLogin);
+  const avatar = useSelector(selectStateAvatar);
 
   const handleLike = () => {
     setLikes(likes + 1);

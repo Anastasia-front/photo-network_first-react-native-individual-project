@@ -6,3 +6,6 @@ export * from "./avatar";
 export * from "./gallery";
 export * from "./keyboard";
 export * from "./validation";
+export * from "./context";
+export * from "./delete";
+export * from "./photo";

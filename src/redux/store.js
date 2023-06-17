@@ -1,14 +1,3 @@
-// import { combineReducers } from "redux";
-// import postReducer from "./post/postReducer";
-// import authReducer from "./auth/authReducer";
-
-// const rootReducer = combineReducers({
-//   post: postReducer,
-//   auth: authReducer,
-// });
-
-// export default rootReducer;
-
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 
 import { authSlice, authReducer } from "./auth/authReducer";
@@ -31,8 +20,4 @@ export const store = configureStore({
     getDefaultMiddleware({
       serializableCheck: false,
     }),
-  // .concat(
-  //   window.__REDUX_DEVTOOLS_EXTENSION__ &&
-  //     window.__REDUX_DEVTOOLS_EXTENSION__()
-  // ),
 });
