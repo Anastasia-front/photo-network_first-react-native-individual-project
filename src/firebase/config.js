@@ -14,6 +14,7 @@ import {
   APP_ID,
 } from "@env";
 
+// react-native-first-app
 const firebaseConfig = {
   apiKey: API_KEY,
   authDomain: AUTH_DOMAIN,
