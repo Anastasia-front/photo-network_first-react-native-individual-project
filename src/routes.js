@@ -8,10 +8,12 @@ import { Home } from "./Screens/Home";
 import CommentsScreen from "./Screens/CommentsScreen";
 import MapScreen from "./Screens/MapScreen";
 
+import { globalVariables } from "../styles/globalVariables";
+
 const styles = StyleSheet.create({
   header: {
     colorPrimary: "black",
-    secondaryColor: "grey",
+    secondaryColor: globalVariables.color.grey,
   },
   headerTitle: {
     flex: 1,

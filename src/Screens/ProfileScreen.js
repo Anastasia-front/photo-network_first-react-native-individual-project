@@ -76,7 +76,7 @@ export const ProfileScreen = ({ navigation, route }) => {
       if (data === undefined || !data.userId) {
         setIsShowLoaderAvatar(false);
         console.log(data);
-        Alert.alert(`Реєстрацію не виконано!`);
+        Alert.alert("Реєстрацію не виконано!");
         return;
       }
       if (avatarURL !== avatarUri) {
@@ -203,7 +203,7 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     borderWidth: 1,
     borderColor: "#FF6C00",
-    backgroundColor: "#ffffff",
+    backgroundColor: "#fff",
   },
   buttonAvatarText: {
     color: "#FF6C00",

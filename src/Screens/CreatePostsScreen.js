@@ -33,6 +33,8 @@ import { useNavigation } from "@react-navigation/native";
 import { LoaderScreen } from "../Screens/LoaderScreen";
 import { useKeyboardListener } from "../utils/keyboard";
 
+import { globalVariables } from "../../styles/globalVariables";
+
 const INITIAL_POST = {
   photoUri: "",
   titlePost: "",
@@ -127,7 +129,7 @@ export default function CreatePostsScreen() {
   const handleCameraPress = async () => {
     ActionSheetIOS.showActionSheetWithOptions(
       {
-        options: ["Сделать фото", "Выбрать из галереи", "Отмена"],
+        options: ["Зробити фото", "Обрати в галереї", "Відміна"],
         cancelButtonIndex: 2,
       },
       async (buttonIndex) => {
@@ -237,7 +239,7 @@ export default function CreatePostsScreen() {
       });
     } catch (error) {
       console.log("uploadPostToServer >", error);
-      alert("Щось пішло не так - публікація не зберіглась на сервері");
+      alert("Щось пішло не так - публікація не зберіглася на сервері");
     } finally {
       setState(INITIAL_POST);
       setIsDirtyForm(false);
@@ -393,7 +395,7 @@ const styles = StyleSheet.create({
   main: {
     flex: 1,
     backgroundColor: "#fff",
-    borderColor: "grey",
+    borderColor: globalVariables.color.grey,
     borderTopWidth: 1,
     borderBottomWidth: 1,
   },

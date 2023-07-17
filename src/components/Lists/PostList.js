@@ -14,6 +14,8 @@ import { LoaderScreen } from "../../Screens/LoaderScreen";
 import { Post } from "../Posts/Post";
 import { exit } from "../../utils";
 
+import { globalVariables } from "../../../styles/globalVariables";
+
 export const PostsList = ({ navigation, route }) => {
   const dispatch = useDispatch();
   const [isShowLoader, setIsShowLoader] = useState(false);
@@ -76,7 +78,7 @@ export const PostsList = ({ navigation, route }) => {
     main: {
       flex: 1,
       backgroundColor: "#fff",
-      borderColor: "grey",
+      borderColor: globalVariables.color.grey,
       borderTopWidth: 1,
       borderBottomWidth: 1,
       paddingBottom: 100,
@@ -97,7 +99,7 @@ export const PostsList = ({ navigation, route }) => {
       height: 60,
       borderRadius: borderRadius,
       borderWidth: 0.5,
-      borderColor: "grey",
+      borderColor: globalVariables.color.grey,
     },
     text: {
       fontSize: 20,

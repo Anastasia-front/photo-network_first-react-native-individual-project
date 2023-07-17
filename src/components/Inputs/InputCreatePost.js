@@ -34,7 +34,6 @@ export default function Input({ placeholder, onChangeText, value }) {
 
 const styles = StyleSheet.create({
   input: {
-    // width: 343,
     width: "100%",
     height: 50,
     paddingLeft: 36,

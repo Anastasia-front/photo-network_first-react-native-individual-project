@@ -1,5 +1,7 @@
 import { View, Image, TouchableOpacity } from "react-native";
 
+import { globalVariables } from "../../styles/globalVariables";
+
 function style(photoImageTop, psevdoTop, psevdoRight, avatar) {
   const styles = {
     photoImage: {
@@ -11,7 +13,7 @@ function style(photoImageTop, psevdoTop, psevdoRight, avatar) {
       transform: [{ translateX: -50 }, { translateY: -50 }],
       borderRadius: 16,
       borderWidth: 0.5,
-      borderColor: "grey",
+      borderColor: globalVariables.color.grey,
       backgroundColor: "white",
     },
     psevdo: {
@@ -39,7 +41,7 @@ function style(photoImageTop, psevdoTop, psevdoRight, avatar) {
       borderRadius: "50%",
     },
     afterElementCircleGray: {
-      borderColor: "grey",
+      borderColor: globalVariables.color.grey,
     },
     afterElementUnion: {
       position: "absolute",
@@ -57,7 +59,7 @@ function style(photoImageTop, psevdoTop, psevdoRight, avatar) {
       backgroundColor: "#FF6C00",
     },
     afterElementVerticalGray: {
-      backgroundColor: "grey",
+      backgroundColor: globalVariables.color.grey,
       transform: [{ rotate: "45deg" }],
     },
     afterElementHorizontal: {
@@ -70,7 +72,7 @@ function style(photoImageTop, psevdoTop, psevdoRight, avatar) {
       transform: [{ rotate: "-90deg" }],
     },
     afterElementHorizontalGray: {
-      backgroundColor: "grey",
+      backgroundColor: globalVariables.color.grey,
       transform: [{ rotate: "-45deg" }],
     },
   };

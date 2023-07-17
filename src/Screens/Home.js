@@ -6,6 +6,8 @@ import { ProfileScreen } from "./ProfileScreen";
 import { attention } from "../utils/form";
 import { Ionicons } from "@expo/vector-icons";
 
+import { globalVariables } from "../../styles/globalVariables";
+
 const Tabs = createBottomTabNavigator();
 
 const screenOptions = ({ navigation, route }) => ({
@@ -123,7 +125,7 @@ export const Home = ({ navigation, route, options }) => {
 };
 
 const styles = StyleSheet.create({
-  headerTintColor: "grey",
+  headerTintColor: globalVariables.color.grey,
   headerTitleAlign: "center",
   headerTitleStyle: {
     fontWeight: "500",
@@ -168,6 +170,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     borderRadius: 20,
     activeFill: "#FF6C00",
-    inActiveFill: "grey",
+    inActiveFill: globalVariables.color.grey,
   },
 });

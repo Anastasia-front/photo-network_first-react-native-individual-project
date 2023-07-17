@@ -1,6 +1,8 @@
 import { Keyboard } from "react-native";
 import { useEffect, useState } from "react";
 
+import { globalVariables } from "../../styles/globalVariables";
+
 export const useKeyboardListenerWithOpen = (number) => {
   const [keyboardHeight, setKeyboardHeight] = useState(0);
   const [keyboardOpen, setKeyboardOpen] = useState(false);
@@ -70,7 +72,7 @@ export const usePasswordVisibility = (initialState, password) => {
     if (password === "") {
       setHidden("#F6F6F6");
     } else {
-      setHidden("#1B4371");
+      setHidden(globalVariables.color.blue);
     }
   }, [password]);
 

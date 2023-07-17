@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { View, TextInput, StyleSheet } from "react-native";
 
+import { globalVariables } from "../../../styles/globalVariables";
+
 const InputWithButton = ({ handleButtonClick, inputValue, setInputValue }) => {
   const [isFocused, setIsFocused] = useState(false);
 
@@ -46,7 +48,7 @@ const styles = StyleSheet.create({
     height: 50,
     paddingLeft: 16,
     marginBottom: 16,
-    backgroundColor: "#f6f6f6",
+    backgroundColor: globalVariables.color.lightGrey1,
     borderColor: "#E8E8E8",
     borderWidth: 1,
     borderRadius: 100,

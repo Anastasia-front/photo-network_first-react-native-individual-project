@@ -1,6 +1,8 @@
 import { StyleSheet, TouchableOpacity } from "react-native";
 import { Text } from "react-native";
 
+import { globalVariables } from "../../../styles/globalVariables";
+
 export default function CustomButton({ text, width, onPress }) {
   const buttonStyle = StyleSheet.compose(styles.btn, {
     width: width,
@@ -43,7 +45,7 @@ export function UnactiveButton({ text, width, onPress }) {
 
 const style = StyleSheet.create({
   btn: {
-    backgroundColor: "#F6F6F6",
+    backgroundColor: globalVariables.color.lightGrey1,
     borderRadius: "100px",
     paddingTop: 16,
     paddingBottom: 16,

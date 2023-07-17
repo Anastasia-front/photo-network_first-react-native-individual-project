@@ -22,6 +22,7 @@ import { LoaderScreen } from "./LoaderScreen";
 import { useDispatch } from "react-redux";
 import { useKeyboardListener, usePasswordVisibility } from "../utils/keyboard";
 import { authStateChange } from "../redux/auth/authReducer";
+import { globalVariables } from "../../styles/globalVariables";
 
 export default function Login() {
   const navigation = useNavigation();
@@ -115,7 +116,7 @@ export default function Login() {
               <View style={styles.text}>
                 <Text style={styles.textColor}>Немає акаунту?</Text>
                 <CustomLink
-                  color="#1B4371"
+                  color={globalVariables.color.blue}
                   top={0}
                   left={10}
                   text="Зареєструватися"
@@ -159,6 +160,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   textColor: {
-    color: "#1B4371",
+    color: globalVariables.color.blue,
   },
 });

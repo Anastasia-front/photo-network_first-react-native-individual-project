@@ -1,5 +1,7 @@
 import { View, Image, Text } from "react-native";
 
+import { globalVariables } from "../../../styles/globalVariables";
+
 export function LikeInfo({ like }) {
   return (
     <View
@@ -17,9 +19,9 @@ export function LikeInfo({ like }) {
           width: 50,
           height: 50,
           borderWidth: 1,
-          borderColor: "grey",
+          borderColor: globalVariables.color.grey,
           borderRadius: 50,
-          backgroundColor: "lightgrey",
+          backgroundColor: "#E8E8E8",
           marginRight: 15,
         }}
       />

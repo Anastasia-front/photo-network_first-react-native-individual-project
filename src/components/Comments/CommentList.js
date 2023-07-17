@@ -1,6 +1,8 @@
 import { View, FlatList, Image, StyleSheet } from "react-native";
 import { Comment } from "./Comment";
 
+import { globalVariables } from "../../../styles/globalVariables";
+
 export const CommentsList = ({ allComments, photo }) => {
   return (
     <View style={styles.main}>
@@ -36,7 +38,7 @@ const styles = StyleSheet.create({
   photo: {
     width: 370,
     height: 240,
-    backgroundColor: "#f6f6f6",
+    backgroundColor: globalVariables.color.lightGrey1,
     borderColor: "#fff",
     borderWidth: 1,
     borderRadius: 8,

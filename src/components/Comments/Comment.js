@@ -137,7 +137,6 @@ const styles = StyleSheet.create({
 export function Comment({ item, commentId }) {
   const user = auth.currentUser;
 
-  // console.log(user.uid, item.owner.userId);
   return item.owner.userId === user.uid ? (
     <CommentOwn item={item} commentId={commentId} />
   ) : (
