@@ -1,5 +1,7 @@
 import { TouchableOpacity, Text, StyleSheet } from "react-native";
 
+import { globalVariables } from "../../../styles/globalVariables";
+
 const CustomLink = ({ top, left, color, text, onPress }) => {
   const linkStyle = StyleSheet.compose(styles.link, {
     paddingTop: top,
@@ -16,7 +18,7 @@ const CustomLink = ({ top, left, color, text, onPress }) => {
 
 const styles = StyleSheet.create({
   link: {
-    textDecorationLine: "underline",
+    textDecorationLine: globalVariables.textDecoration,
   },
 });
 

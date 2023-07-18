@@ -11,8 +11,8 @@ function style(photoImageTop, psevdoTop, psevdoRight, avatar) {
       top: photoImageTop,
       left: "48%",
       transform: [{ translateX: -50 }, { translateY: -50 }],
-      borderRadius: 16,
-      borderWidth: 0.5,
+      borderRadius: globalVariables.radius.avatar,
+      borderWidth: globalVariables.border.thin,
       borderColor: globalVariables.color.grey,
       backgroundColor: globalVariables.color.white,
     },
@@ -37,8 +37,8 @@ function style(photoImageTop, psevdoTop, psevdoRight, avatar) {
       top: 0,
       backgroundColor: globalVariables.color.white,
       borderColor: globalVariables.color.orangeMain,
-      borderWidth: 1,
-      borderRadius: "50%",
+      borderWidth: globalVariables.border.main,
+      borderRadius: globalVariables.radius.circle,
     },
     afterElementCircleGray: {
       borderColor: globalVariables.color.grey,
@@ -91,7 +91,10 @@ function style(photoImageTop, psevdoTop, psevdoRight, avatar) {
       ) {
         return (
           <Image
-            style={[styles.photoImage, { borderRadius: 60 }]}
+            style={[
+              styles.photoImage,
+              { borderRadius: globalVariables.radius.image },
+            ]}
             source={{ uri: avatar }}
           />
         );

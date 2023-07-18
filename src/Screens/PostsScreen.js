@@ -24,8 +24,8 @@ const styles = StyleSheet.create({
   headerTintColor: globalVariables.color.black,
   headerTitleAlign: "center",
   headerTitleStyle: {
-    fontWeight: "500",
-    fontSize: 17,
+    fontWeight: globalVariables.font.weight.medium,
+    fontSize: globalVariables.font.size.md,
   },
   headerTitleContainerStyle: {
     justifyContent: "flex-end",

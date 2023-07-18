@@ -80,8 +80,8 @@ export const ModalLikes = ({ modalLikes, setModalLikes, title, likes }) => {
                 styles.modalView,
                 {
                   backgroundColor: globalVariables.color.white,
-                  borderBottomLeftRadius: 8,
-                  borderBottomRightRadius: 8,
+                  borderBottomLeftRadius: globalVariables.radius.main,
+                  borderBottomRightRadius: globalVariables.radius.main,
                 },
               ]}
             >
@@ -121,8 +121,8 @@ export const ModalPhoto = ({ modalPhoto, setModalPhoto, photo }) => {
                 styles.modalView,
                 {
                   backgroundColor: globalVariables.color.lightGrey1,
-                  borderTopLeftRadius: 8,
-                  borderTopRightRadius: 8,
+                  borderTopLeftRadius: globalVariables.radius.main,
+                  borderTopRightRadius: globalVariables.radius.main,
                   paddingBottom: 40,
                 },
               ]}
@@ -156,8 +156,8 @@ export const ModalPhoto = ({ modalPhoto, setModalPhoto, photo }) => {
                 styles.modalView,
                 {
                   backgroundColor: globalVariables.color.white,
-                  borderBottomLeftRadius: 8,
-                  borderBottomRightRadius: 8,
+                  borderBottomLeftRadius: globalVariables.radius.main,
+                  borderBottomRightRadius: globalVariables.radius.main,
                 },
               ]}
             >
@@ -222,8 +222,8 @@ export const ModalLogin = ({ modalLogin, setModalLogin, oldLogin, title }) => {
               styles.modalView,
               {
                 backgroundColor: globalVariables.color.teal,
-                borderTopLeftRadius: 8,
-                borderTopRightRadius: 8,
+                borderTopLeftRadius: globalVariables.radius.main,
+                borderTopRightRadius: globalVariables.radius.main,
                 paddingBottom: 20,
               },
             ]}
@@ -258,8 +258,8 @@ export const ModalLogin = ({ modalLogin, setModalLogin, oldLogin, title }) => {
               styles.modalView,
               {
                 backgroundColor: globalVariables.color.white,
-                borderBottomLeftRadius: 8,
-                borderBottomRightRadius: 8,
+                borderBottomLeftRadius: globalVariables.radius.main,
+                borderBottomRightRadius: globalVariables.radius.main,
               },
             ]}
           >
@@ -286,12 +286,13 @@ export const ModalLogin = ({ modalLogin, setModalLogin, oldLogin, title }) => {
 };
 const styles = StyleSheet.create({
   photo: {
-    borderRadius: 8,
+    borderRadius: globalVariables.radius.main,
     width: 350,
     height: 600,
   },
   container: {
     flex: 1,
+    paddingTop: 10,
     justifyContent: "center",
     backgroundColor: globalVariables.color.commentScreenBg,
   },
@@ -304,21 +305,21 @@ const styles = StyleSheet.create({
       width: 0,
       height: 2,
     },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
+    shadowOpacity: globalVariables.shadowOpacity,
+    shadowRadius: globalVariables.radius.shadow,
     elevation: 5,
   },
   modalTitle: {
     alignSelf: "center",
-    fontSize: 20,
-    fontWeight: "700",
+    fontSize: globalVariables.font.size.lg,
+    fontWeight: globalVariables.font.weight.bold,
     color: globalVariables.color.white,
   },
   modalSubTitle: {
     alignSelf: "center",
     marginBottom: 20,
-    fontSize: 12,
-    fontWeight: "500",
+    fontSize: globalVariables.font.size.sm,
+    fontWeight: globalVariables.font.weight.medium,
     color: globalVariables.color.white,
   },
   buttonClose: {
@@ -328,13 +329,13 @@ const styles = StyleSheet.create({
     padding: 4,
   },
   mapWrp: {
-    height: "80%",
-    width: "90%",
-    borderRadius: 8,
+    height: globalVariables.containerPercent.eighty,
+    width: globalVariables.containerPercent.ninety,
+    borderRadius: globalVariables.radius.main,
     overflow: "hidden",
   },
   mapStyle: {
-    width: "100%",
-    height: "100%",
+    width: globalVariables.containerPercent.full,
+    height: globalVariables.containerPercent.full,
   },
 });

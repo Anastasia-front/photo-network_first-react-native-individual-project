@@ -241,8 +241,8 @@ const styles = StyleSheet.create({
     width: 59,
     marginTop: 3,
     color: globalVariables.color.lightGrey3,
-    fontSize: 10,
-    fontWeight: "400",
+    fontSize: globalVariables.font.size.xs,
+    fontWeight: globalVariables.font.weight.normal,
     textAlign: "center",
   },
   postWrp: {
@@ -250,11 +250,11 @@ const styles = StyleSheet.create({
   },
   photo: {
     backgroundColor: globalVariables.color.lightGrey1,
-    borderWidth: 1,
+    borderWidth: globalVariables.border.main,
     width: 350,
     height: 240,
     marginBottom: 10,
-    borderRadius: 8,
+    borderRadius: globalVariables.radius.main,
     borderColor: globalVariables.color.lightGrey2,
   },
   bottomInfo: {
@@ -265,14 +265,14 @@ const styles = StyleSheet.create({
     marginRight: 10,
     height: 50,
     width: 50,
-    borderRadius: 50,
+    borderRadius: globalVariables.radius.circle,
     backgroundColor: globalVariables.color.lightGrey1,
   },
   avatar: {
-    height: "100%",
-    width: "100%",
-    borderRadius: 50,
-    borderWidth: 1,
+    height: globalVariables.containerPercent.full,
+    width: globalVariables.containerPercent.full,
+    borderRadius: globalVariables.radius.circle,
+    borderWidth: globalVariables.border.main,
     borderColor: globalVariables.color.grey,
     overflow: "hidden",
   },
@@ -286,8 +286,8 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     maxWidth: 100,
 
-    fontSize: 16,
-    fontWeight: "500",
+    fontSize: globalVariables.font.size.md,
+    fontWeight: globalVariables.font.weight.medium,
     color: globalVariables.color.black,
   },
   buttonsWrp: {
@@ -306,7 +306,7 @@ const styles = StyleSheet.create({
     fill: globalVariables.color.lightGrey3,
   },
   commentsCount: {
-    fontSize: 16,
+    fontSize: globalVariables.font.size.md,
   },
   buttonLocation: {
     flexDirection: "row",
@@ -320,9 +320,9 @@ const styles = StyleSheet.create({
   mapTitle: {
     maxWidth: 100,
 
-    fontSize: 16,
-    fontWeight: "500",
-    textDecorationLine: "underline",
+    fontSize: globalVariables.font.size.md,
+    fontWeight: globalVariables.font.weight.medium,
+    textDecorationLine: globalVariables.textDecoration,
     color: globalVariables.color.black,
   },
 });

@@ -16,6 +16,7 @@ export const registerDB = async ({ email, password }) => {
 };
 
 // або більш короткий запис цієї функції
+
 // export const registerDB = ({ email, password }) =>
 //         createUserWithEmailAndPassword(auth, email, password);
 
@@ -41,7 +42,7 @@ export const updateUserProfile = async (update) => {
   // якщо такий користувач знайдений
   if (user) {
     navigation.replace("Posts");
-    // оновлюємо його профайл
+    // оновлюємо його profile
     try {
       await updateProfile(user, update);
     } catch (error) {

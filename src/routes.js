@@ -12,7 +12,7 @@ import { globalVariables } from "../styles/globalVariables";
 
 const styles = StyleSheet.create({
   header: {
-    colorPrimary: "black",
+    colorPrimary: globalVariables.color.black,
     secondaryColor: globalVariables.color.grey,
   },
   headerTitle: {
@@ -20,8 +20,8 @@ const styles = StyleSheet.create({
     marginTop: 9,
     justifyContent: "center",
     alignItems: "center",
-    fontWeight: "500",
-    fontSize: 18,
+    fontWeight: globalVariables.font.weight.medium,
+    fontSize: globalVariables.font.size.lg,
   },
   headerContainerItem: {
     justifyContent: "flex-end",

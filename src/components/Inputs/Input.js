@@ -50,8 +50,8 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     backgroundColor: globalVariables.color.lightGrey1,
     borderColor: globalVariables.color.lightGrey2,
-    borderWidth: 1,
-    borderRadius: 8,
+    borderWidth: globalVariables.border.main,
+    borderRadius: globalVariables.radius.main,
   },
   inputFocused: {
     backgroundColor: globalVariables.color.white,

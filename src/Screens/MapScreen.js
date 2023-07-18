@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { View, StyleSheet } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 
+import { globalVariables } from "../../styles/globalVariables";
+
 const MapScreen = ({ navigation, route }) => {
   const [location, setLocation] = useState({});
 
@@ -33,8 +35,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   mapStyle: {
-    width: "100%",
-    height: "100%",
+    width: globalVariables.containerPercent.full,
+    height: globalVariables.containerPercent.full,
   },
 });
 

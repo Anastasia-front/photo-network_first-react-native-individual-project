@@ -17,7 +17,7 @@ export default function CustomButton({ text, width, onPress }) {
 const styles = StyleSheet.create({
   btn: {
     backgroundColor: globalVariables.color.green,
-    borderRadius: "100px",
+    borderRadius: globalVariables.radius.button,
     paddingTop: 16,
     paddingBottom: 16,
     paddingLeft: 32,
@@ -26,8 +26,8 @@ const styles = StyleSheet.create({
   },
   text: {
     textAlign: "center",
-    fontWeight: "400",
-    fontSize: 16,
+    fontWeight: globalVariables.font.weight.normal,
+    fontSize: globalVariables.font.size.md,
     color: globalVariables.color.white,
   },
 });
@@ -46,7 +46,7 @@ export function UnactiveButton({ text, width, onPress }) {
 const style = StyleSheet.create({
   btn: {
     backgroundColor: globalVariables.color.lightGrey1,
-    borderRadius: "100px",
+    borderRadius: globalVariables.radius.button,
     paddingTop: 16,
     paddingBottom: 16,
     paddingLeft: 32,
@@ -55,8 +55,8 @@ const style = StyleSheet.create({
   },
   text: {
     textAlign: "center",
-    fontWeight: "400",
-    fontSize: 16,
+    fontWeight: globalVariables.font.weight.normal,
+    fontSize: globalVariables.font.size.md,
     color: globalVariables.color.lightGrey3,
   },
 });

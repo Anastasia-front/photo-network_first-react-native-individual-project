@@ -84,7 +84,7 @@ export const PostsList = ({ navigation, route }) => {
       paddingBottom: 100,
     },
     parent: {
-      width: "100%",
+      width: globalVariables.containerPercent.full,
       marginHorizontal: 20,
       marginVertical: 30,
     },
@@ -98,18 +98,21 @@ export const PostsList = ({ navigation, route }) => {
       width: 60,
       height: 60,
       borderRadius: borderRadius,
-      borderWidth: 0.5,
+      borderWidth: globalVariables.border.thin,
       borderColor: globalVariables.color.grey,
     },
     text: {
-      fontSize: 20,
+      fontSize: globalVariables.font.size.lg,
       textAlign: "center",
     },
     name: {
-      fontSize: 15,
-      fontWeight: "700",
+      fontSize: globalVariables.font.size.md,
+      fontWeight: globalVariables.font.weight.bold,
     },
-    email: { fontSize: 13, fontWeight: "400" },
+    email: {
+      fontSize: globalVariables.font.size.sm,
+      fontWeight: globalVariables.font.weight.normal,
+    },
   });
 
   if (posts.length === 0) {

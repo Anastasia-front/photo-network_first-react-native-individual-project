@@ -128,8 +128,8 @@ const styles = StyleSheet.create({
   headerTintColor: globalVariables.color.grey,
   headerTitleAlign: "center",
   headerTitleStyle: {
-    fontWeight: "500",
-    fontSize: 17,
+    fontWeight: globalVariables.font.weight.medium,
+    fontSize: globalVariables.font.size.md,
     color: globalVariables.color.black,
   },
   headerTitleContainerStyle: {
@@ -168,7 +168,7 @@ const styles = StyleSheet.create({
     width: 70,
     alignItems: "center",
     justifyContent: "center",
-    borderRadius: 20,
+    borderRadius: globalVariables.radius.tab,
     activeFill: globalVariables.color.orangeMain,
     inActiveFill: globalVariables.color.grey,
   },

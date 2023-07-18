@@ -28,7 +28,10 @@ export function CommentFromOther({
             <View
               style={[
                 styles.text,
-                { borderRadius: 12, borderTopLeftRadius: 0 },
+                {
+                  borderRadius: globalVariables.radius.avatar,
+                  borderTopLeftRadius: 0,
+                },
               ]}
             >
               {user.uid === owner.userId && (
@@ -71,7 +74,13 @@ export function CommentOwn({
       {({ postId, owner }) => (
         <View style={styles.person}>
           <View
-            style={[styles.text, { borderRadius: 12, borderTopRightRadius: 0 }]}
+            style={[
+              styles.text,
+              {
+                borderRadius: globalVariables.radius.avatar,
+                borderTopRightRadius: 0,
+              },
+            ]}
           >
             {owner.userId === user.uid && (
               <Ionicons
@@ -108,7 +117,7 @@ const styles = StyleSheet.create({
   image: {
     width: 28,
     height: 28,
-    borderRadius: 50,
+    borderRadius: globalVariables.radius.circle,
     marginBottom: 7,
   },
   column: {
@@ -119,19 +128,19 @@ const styles = StyleSheet.create({
   text: {
     width: 300,
     padding: 12,
-    backgroundColor: globalVariables.color.commentScreenBg,
+    backgroundColor: globalVariables.color.lightGrey1,
   },
   content: {
     color: globalVariables.color.black,
-    fontWeight: "400",
-    fontSize: 13,
+    fontWeight: globalVariables.font.weight.normal,
+    fontSize: globalVariables.font.size.sm,
     textAlign: "left",
     marginBottom: 1,
   },
   dateTime: {
     color: globalVariables.color.lightGrey3,
-    fontSize: 10,
-    fontWeight: "400",
+    fontSize: globalVariables.font.size.xs,
+    fontWeight: globalVariables.font.weight.normal,
     textAlign: "right",
   },
 });

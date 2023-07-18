@@ -36,14 +36,14 @@ export default function Input({ placeholder, onChangeText, value }) {
 
 const styles = StyleSheet.create({
   input: {
-    width: "100%",
+    width: globalVariables.containerPercent.full,
     height: 50,
     paddingLeft: 36,
     marginBottom: 16,
     backgroundColor: globalVariables.color.white,
     borderBottomColor: globalVariables.color.lightGrey2,
     borderBottomWidth: 1,
-    borderRadius: 8,
+    borderRadius: globalVariables.radius.main,
   },
   inputFocused: {
     borderBottomColor: globalVariables.color.green,

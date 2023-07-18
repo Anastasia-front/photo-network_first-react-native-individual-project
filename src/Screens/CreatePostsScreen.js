@@ -156,7 +156,7 @@ export default function CreatePostsScreen() {
   if (isShowLoader) {
     return <LoaderScreen />;
   }
-  // setTimeout(() => {
+
   if (!hasPermission && !permissionCam) {
     return (
       <View style={styles.permission}>
@@ -165,13 +165,12 @@ export default function CreatePostsScreen() {
         </Text>
         <CustomButton
           onPress={requestPermissionCam}
-          width="50%"
+          width={globalVariables.containerPercent.fifty}
           text="отримати дозвіл"
         />
       </View>
     );
   }
-  // }, 300);
 
   const takePhoto = async () => {
     if (cameraRef) {
@@ -259,7 +258,7 @@ export default function CreatePostsScreen() {
                   <TouchableOpacity
                     style={[
                       styles.cameraButtonSelected,
-                      { backgroundColor: globalVariables.color.lightGrey1 },
+                      { backgroundColor: globalVariables.color.lightGrey3 },
                     ]}
                     onPress={handleCameraPress}
                   >
@@ -440,15 +439,15 @@ const styles = StyleSheet.create({
   },
 
   camera: {
-    width: "100%",
+    width: globalVariables.containerPercent.full,
     height: 240,
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: globalVariables.color.lightGrey1,
     borderColor: globalVariables.color.lightGrey2,
-    borderWidth: 1,
-    borderRadius: 8,
+    borderWidth: globalVariables.border.main,
+    borderRadius: globalVariables.radius.main,
     overflow: "hidden",
   },
   cameraButton: {
@@ -457,7 +456,7 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     backgroundColor: globalVariables.color.white,
-    borderRadius: "50%",
+    borderRadius: globalVariables.radius.circle,
   },
   photoView: {
     flex: 1,
@@ -470,7 +469,7 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     backgroundColor: globalVariables.color.cameraButtonSelected,
-    borderRadius: "50%",
+    borderRadius: globalVariables.radius.circle,
   },
   photoViewSelected: {
     flex: 1,

@@ -15,10 +15,10 @@ const styles = StyleSheet.create({
     backgroundColor: globalVariables.color.white,
     width: 390,
     height: 710,
-    borderTopLeftRadius: 25,
-    borderTopRightRadius: 25,
-    borderBottomLeftRadius: 0,
-    borderBottomRightRadius: 0,
+    borderTopLeftRadius: globalVariables.radius.overlay,
+    borderTopRightRadius: globalVariables.radius.overlay,
+    borderBottomLeftRadius: globalVariables.radius.none,
+    borderBottomRightRadius: globalVariables.radius.none,
   },
 });
 

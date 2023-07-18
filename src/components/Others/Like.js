@@ -18,14 +18,19 @@ export function LikeInfo({ like }) {
         style={{
           width: 50,
           height: 50,
-          borderWidth: 1,
+          borderWidth: globalVariables.border.main,
           borderColor: globalVariables.color.grey,
-          borderRadius: 50,
+          borderRadius: globalVariables.radius.circle,
           backgroundColor: globalVariables.color.lightGrey2,
           marginRight: 15,
         }}
       />
-      <Text style={{ fontSize: 16, fontWeight: "500" }}>
+      <Text
+        style={{
+          fontSize: globalVariables.font.size.md,
+          fontWeight: globalVariables.font.weight.medium,
+        }}
+      >
         {like.owner.login}
       </Text>
     </View>

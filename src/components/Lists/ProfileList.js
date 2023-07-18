@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     alignSelf: "center",
-    borderRadius: 50,
+    borderRadius: globalVariables.radius.circle,
     backgroundColor: globalVariables.color.green,
   },
 });
