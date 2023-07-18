@@ -34,6 +34,8 @@ import {
   usePasswordVisibility,
 } from "../utils/keyboard";
 
+import { globalVariables } from "../../styles/globalVariables";
+
 export default function Registration() {
   const dispatch = useDispatch();
   const navigation = useNavigation();
@@ -179,7 +181,7 @@ export default function Registration() {
               <View style={styles.text}>
                 <Text style={styles.textColor}>Вже є акаунт?</Text>
                 <CustomLink
-                  color="#1B4371"
+                  color={globalVariables.color.blue}
                   top={0}
                   left={10}
                   text="Увійти"
@@ -224,6 +226,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   textColor: {
-    color: "#1B4371",
+    color: globalVariables.color.blue,
   },
 });

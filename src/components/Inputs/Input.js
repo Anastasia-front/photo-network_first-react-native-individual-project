@@ -6,6 +6,8 @@ import {
   Platform,
 } from "react-native";
 
+import { globalVariables } from "../../../styles/globalVariables";
+
 export default function Input({
   placeholder,
   onChangeText,
@@ -46,8 +48,8 @@ const styles = StyleSheet.create({
     height: 50,
     paddingLeft: 16,
     marginBottom: 16,
-    backgroundColor: "#f6f6f6",
-    borderColor: "#E8E8E8",
+    backgroundColor: globalVariables.color.lightGrey1,
+    borderColor: globalVariables.color.lightGrey2,
     borderWidth: 1,
     borderRadius: 8,
   },

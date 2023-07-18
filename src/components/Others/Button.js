@@ -57,6 +57,6 @@ const style = StyleSheet.create({
     textAlign: "center",
     fontWeight: "400",
     fontSize: 16,
-    color: "#BDBDBD",
+    color: globalVariables.color.lightGrey3,
   },
 });

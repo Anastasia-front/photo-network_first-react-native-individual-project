@@ -29,6 +29,8 @@ import { ProfileList } from "../components/Lists/ProfileList";
 import { exit, avatarTemplate } from "../utils";
 import { LoaderScreen } from "./LoaderScreen";
 
+import { globalVariables } from "../../styles/globalVariables";
+
 export const ProfileScreen = ({ navigation, route }) => {
   const [posts, setPosts] = useState([]);
   const [isShowLoaderAvatar, setIsShowLoaderAvatar] = useState(false);
@@ -179,7 +181,7 @@ const styles = StyleSheet.create({
     alignItems: "flex-end",
     justifyContent: "flex-end",
     borderRadius: 16,
-    backgroundColor: "#F6F6F6",
+    backgroundColor: globalVariables.color.lightGrey1,
   },
 
   avatarWrp: {
@@ -212,7 +214,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     right: 0,
     top: 16,
-    color: "#BDBDBD",
+    color: globalVariables.color.lightGrey3,
   },
   login: {
     marginTop: 10,
@@ -224,6 +226,6 @@ const styles = StyleSheet.create({
     alignSelf: "flex-end",
     fontSize: 12,
     marginBottom: 15,
-    color: "#BDBDBD",
+    color: globalVariables.color.lightGrey3,
   },
 });

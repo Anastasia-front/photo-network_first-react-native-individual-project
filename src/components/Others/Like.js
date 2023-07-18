@@ -21,7 +21,7 @@ export function LikeInfo({ like }) {
           borderWidth: 1,
           borderColor: globalVariables.color.grey,
           borderRadius: 50,
-          backgroundColor: "#E8E8E8",
+          backgroundColor: globalVariables.color.lightGrey2,
           marginRight: 15,
         }}
       />

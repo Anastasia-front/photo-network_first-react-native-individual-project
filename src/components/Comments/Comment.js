@@ -5,6 +5,8 @@ import { auth } from "../../firebase/config";
 import { Ionicons } from "@expo/vector-icons";
 import PostIdContext from "../../utils/context";
 
+import { globalVariables } from "../../../styles/globalVariables";
+
 export function CommentFromOther({
   item: {
     owner: { login, avatar },
@@ -33,7 +35,7 @@ export function CommentFromOther({
                 <Ionicons
                   name="trash-outline"
                   size={20}
-                  color="#BDBDBD"
+                  color={globalVariables.color.lightGrey3}
                   style={{ position: "absolute", top: 3, right: 7 }}
                   onPress={() => {
                     deleteComment(postId, commentId);
@@ -75,7 +77,7 @@ export function CommentOwn({
               <Ionicons
                 name="trash-outline"
                 size={20}
-                color="#BDBDBD"
+                color={globalVariables.color.lightGrey3}
                 style={{ position: "absolute", top: 3, right: 7 }}
                 onPress={() => {
                   deleteComment(postId, commentId);
@@ -127,7 +129,7 @@ const styles = StyleSheet.create({
     marginBottom: 1,
   },
   dateTime: {
-    color: "#BDBDBD",
+    color: globalVariables.color.lightGrey3,
     fontSize: 10,
     fontWeight: "400",
     textAlign: "right",

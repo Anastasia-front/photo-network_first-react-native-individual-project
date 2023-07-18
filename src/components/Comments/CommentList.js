@@ -47,6 +47,6 @@ const styles = StyleSheet.create({
     marginTop: 30,
     marginBottom: 30,
     borderRadius: 8,
-    borderColor: "#E8E8E8",
+    borderColor: globalVariables.color.lightGrey2,
   },
 });

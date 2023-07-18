@@ -62,7 +62,7 @@ export const useKeyboardListener = (number) => {
 
 export const usePasswordVisibility = (initialState, password) => {
   const [showPassword, setShowPassword] = useState(initialState);
-  const [hidden, setHidden] = useState("#F6F6F6");
+  const [hidden, setHidden] = useState(globalVariables.color.lightGrey1);
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -70,7 +70,7 @@ export const usePasswordVisibility = (initialState, password) => {
 
   useEffect(() => {
     if (password === "") {
-      setHidden("#F6F6F6");
+      setHidden(globalVariables.color.lightGrey1);
     } else {
       setHidden(globalVariables.color.blue);
     }

@@ -6,6 +6,8 @@ import {
   Platform,
 } from "react-native";
 
+import { globalVariables } from "../../../styles/globalVariables";
+
 export default function Input({ placeholder, onChangeText, value }) {
   const [isFocused, setIsFocused] = useState(false);
 
@@ -39,7 +41,7 @@ const styles = StyleSheet.create({
     paddingLeft: 36,
     marginBottom: 16,
     backgroundColor: "white",
-    borderBottomColor: "#E8E8E8",
+    borderBottomColor: globalVariables.color.lightGrey2,
     borderBottomWidth: 1,
     borderRadius: 8,
   },

@@ -70,7 +70,7 @@ export const PostsList = ({ navigation, route }) => {
       justifyContent: "center",
     },
     headerExitBtn: {
-      color: "#BDBDBD",
+      color: globalVariables.color.lightGrey3,
     },
     text: {
       alignSelf: "center",

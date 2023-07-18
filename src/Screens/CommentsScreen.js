@@ -14,6 +14,8 @@ import { CommentsList } from "../components/Comments/CommentList";
 import { CommentForm } from "../components/Comments/CommentForm";
 import PostIdContext from "../utils/context";
 
+import { globalVariables } from "../../styles/globalVariables";
+
 const CommentsScreen = ({ navigation, route }) => {
   const { id: postId, owner, photo } = route.params;
   const [allComments, setAllComments] = useState([]);
@@ -79,9 +81,9 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     backgroundColor: "white",
     borderTopWidth: 1,
-    borderColor: "grey",
+    borderColor: globalVariables.color.grey,
   },
-  headerBackBtn: "grey",
+  headerBackBtn: globalVariables.color.grey,
   photo: {
     width: 370,
     height: 240,
@@ -89,7 +91,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginBottom: 7,
     borderRadius: 8,
-    borderColor: "#E8E8E8",
+    borderColor: globalVariables.color.lightGrey2,
   },
   text: {
     fontSize: 20,
@@ -97,7 +99,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 400,
     left: 60,
-    color: "#BDBDBD",
+    color: globalVariables.color.lightGrey3,
     width: "70%",
     textAlign: "center",
   },

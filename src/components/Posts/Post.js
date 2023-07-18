@@ -21,6 +21,8 @@ import {
 import { addLike } from "../../redux/post/postReducer";
 import { ModalLikes, ModalPhoto } from "../Others/Modal";
 
+import { globalVariables } from "../../../styles/globalVariables";
+
 export const Post = ({ post, navigation, route }) => {
   const dispatch = useDispatch();
   const login = useSelector(selectStateLogin);
@@ -170,7 +172,11 @@ export const Post = ({ post, navigation, route }) => {
                   <Feather
                     name="message-circle"
                     size={24}
-                    color={countComments > 0 ? "#A696C8" : "#BDBDBD"}
+                    color={
+                      countComments > 0
+                        ? "#A696C8"
+                        : globalVariables.color.lightGrey3
+                    }
                   />
                 </View>
                 <Text style={styles.commentsCount}>{countComments}</Text>
@@ -184,7 +190,9 @@ export const Post = ({ post, navigation, route }) => {
                   <Ionicons
                     name="heart"
                     size={25}
-                    color={likes > 0 ? "#F5A7A7" : "#BDBDBD"}
+                    color={
+                      likes > 0 ? "#F5A7A7" : globalVariables.color.lightGrey3
+                    }
                     onPress={handleLike}
                   />
                 </View>
@@ -198,7 +206,11 @@ export const Post = ({ post, navigation, route }) => {
                 onPress={() => navigation.navigate("Map", post)}
               >
                 <View style={styles.mapIcon}>
-                  <Ionicons name="navigate" size={20} color="#BDBDBD" />
+                  <Ionicons
+                    name="navigate"
+                    size={20}
+                    color={globalVariables.color.lightGrey3}
+                  />
                 </View>
                 <Text
                   style={styles.mapTitle}
@@ -226,7 +238,7 @@ const styles = StyleSheet.create({
   dateTime: {
     width: 59,
     marginTop: 3,
-    color: "#BDBDBD",
+    color: globalVariables.color.lightGrey3,
     fontSize: 10,
     fontWeight: "400",
     textAlign: "center",
@@ -235,13 +247,13 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   photo: {
-    backgroundColor: "#F6F6F6",
+    backgroundColor: globalVariables.color.lightGrey1,
     borderWidth: 1,
     width: 350,
     height: 240,
     marginBottom: 10,
     borderRadius: 8,
-    borderColor: "#E8E8E8",
+    borderColor: globalVariables.color.lightGrey2,
   },
   bottomInfo: {
     flexDirection: "row",
@@ -259,7 +271,7 @@ const styles = StyleSheet.create({
     width: "100%",
     borderRadius: 50,
     borderWidth: 1,
-    borderColor: "grey",
+    borderColor: globalVariables.color.grey,
     overflow: "hidden",
   },
   row: {
@@ -289,11 +301,10 @@ const styles = StyleSheet.create({
   commentsIcon: {
     marginRight: 10,
     transform: [{ rotate: "-90deg" }],
-    fill: "#BDBDBD",
+    fill: globalVariables.color.lightGrey3,
   },
   commentsCount: {
     fontSize: 16,
-    // color: "#BDBDBD",
   },
   buttonLocation: {
     flexDirection: "row",
@@ -302,7 +313,7 @@ const styles = StyleSheet.create({
   },
   mapIcon: {
     marginRight: 10,
-    fill: "#BDBDBD",
+    fill: globalVariables.color.lightGrey3,
   },
   mapTitle: {
     maxWidth: 100,

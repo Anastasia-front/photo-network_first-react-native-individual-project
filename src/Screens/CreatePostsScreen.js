@@ -295,13 +295,21 @@ export default function CreatePostsScreen() {
                       );
                     }}
                   >
-                    <Feather name="repeat" size={20} color="#BDBDBD" />
+                    <Feather
+                      name="repeat"
+                      size={20}
+                      color={globalVariables.color.lightGrey3}
+                    />
                   </TouchableOpacity>
                   <TouchableOpacity
                     style={styles.cameraButton}
                     onPress={handleCameraPress}
                   >
-                    <Ionicons name="camera" size={30} color="#BDBDBD" />
+                    <Ionicons
+                      name="camera"
+                      size={30}
+                      color={globalVariables.color.lightGrey3}
+                    />
                   </TouchableOpacity>
                 </View>
               </Camera>
@@ -338,7 +346,11 @@ export default function CreatePostsScreen() {
                 }}
                 name="attach"
                 size={25}
-                color={state.titlePost !== "" ? "#F9D89C" : "#BDBDBD"}
+                color={
+                  state.titlePost !== ""
+                    ? "#F9D89C"
+                    : globalVariables.color.lightGrey3
+                }
               />
               <Input
                 placeholder="Місцевість..."
@@ -359,7 +371,11 @@ export default function CreatePostsScreen() {
                 }}
                 name="navigate"
                 size={20}
-                color={state.location?.title ? "#DBE9B7" : "#BDBDBD"}
+                color={
+                  state.location?.title
+                    ? "#DBE9B7"
+                    : globalVariables.color.lightGrey3
+                }
               />
             </KeyboardAvoidingView>
           </View>
@@ -381,7 +397,7 @@ export default function CreatePostsScreen() {
               }}
               name="trash"
               size={25}
-              color="#BDBDBD"
+              color={globalVariables.color.lightGrey3}
               onPress={() => setState(INITIAL_POST)}
             />
           </View>
@@ -421,8 +437,8 @@ const styles = StyleSheet.create({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#f6f6f6",
-    borderColor: "#E8E8E8",
+    backgroundColor: globalVariables.color.lightGrey1,
+    borderColor: globalVariables.color.lightGrey2,
     borderWidth: 1,
     borderRadius: 8,
     overflow: "hidden",
@@ -459,7 +475,7 @@ const styles = StyleSheet.create({
     right: -120,
   },
   text: {
-    color: "#BDBDBD",
+    color: globalVariables.color.lightGrey3,
     marginLeft: 10,
     marginTop: 10,
     marginBottom: 20,
@@ -470,7 +486,7 @@ const styles = StyleSheet.create({
   },
   placeholderText: {
     marginLeft: 5,
-    color: "#BDBDBD",
+    color: globalVariables.color.lightGrey3,
   },
   delete: {
     position: "absolute",

@@ -12,14 +12,14 @@ import {
   Image,
   FlatList,
   TouchableWithoutFeedback,
-  // KeyboardAvoidingView,
-  // Platform,
   Keyboard,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
 import { authUpdateUserLogin } from "../../redux/auth/authOperations";
 import { useDispatch } from "react-redux";
+
+import { globalVariables } from "../../../styles/globalVariables";
 
 export const ModalLikes = ({ modalLikes, setModalLikes, title, likes }) => {
   const [isPressed, setIsPressed] = useState(false);
@@ -136,7 +136,7 @@ export const ModalPhoto = ({ modalPhoto, setModalPhoto, photo }) => {
                     <Ionicons
                       name="close-circle"
                       size={35}
-                      color="grey"
+                      color={globalVariables.color.grey}
                       style={{ marginRight: 10 }}
                       onPress={() => setIsPressed(!isPressed)}
                     />
@@ -145,7 +145,7 @@ export const ModalPhoto = ({ modalPhoto, setModalPhoto, photo }) => {
                   <Ionicons
                     name="close-circle-outline"
                     size={35}
-                    color="grey"
+                    color={globalVariables.color.grey}
                     style={{ marginRight: 10 }}
                   />
                 )}
@@ -216,9 +216,6 @@ export const ModalLogin = ({ modalLogin, setModalLogin, oldLogin, title }) => {
           console.log("Button pressed");
         }}
       >
-        {/* <KeyboardAvoidingView
-          behavior={Platform.OS == "ios" ? "padding" : "height"}
-        > */}
         <View style={[styles.container, { paddingBottom: keyboardHeight }]}>
           <View
             style={[
@@ -283,7 +280,6 @@ export const ModalLogin = ({ modalLogin, setModalLogin, oldLogin, title }) => {
             </View>
           </View>
         </View>
-        {/* </KeyboardAvoidingView> */}
       </TouchableWithoutFeedback>
     </Modal>
   );

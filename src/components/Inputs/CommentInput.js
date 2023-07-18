@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     paddingLeft: 16,
     marginBottom: 16,
     backgroundColor: globalVariables.color.lightGrey1,
-    borderColor: "#E8E8E8",
+    borderColor: globalVariables.color.lightGrey2,
     borderWidth: 1,
     borderRadius: 100,
   },
