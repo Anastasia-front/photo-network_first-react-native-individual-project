@@ -259,7 +259,7 @@ export default function CreatePostsScreen() {
                   <TouchableOpacity
                     style={[
                       styles.cameraButtonSelected,
-                      { backgroundColor: "lightgrey" },
+                      { backgroundColor: globalVariables.color.lightGrey1 },
                     ]}
                     onPress={handleCameraPress}
                   >
@@ -381,7 +381,7 @@ export default function CreatePostsScreen() {
                 size={20}
                 color={
                   state.location?.title
-                    ? "#DBE9B7"
+                    ? globalVariables.color.greenLocation
                     : globalVariables.color.lightGrey3
                 }
               />
@@ -461,7 +461,7 @@ const styles = StyleSheet.create({
   },
   photoView: {
     flex: 1,
-    backgroundColor: "transparent",
+    backgroundColor: globalVariables.color.transparent,
     justifyContent: "center",
   },
   cameraButtonSelected: {
@@ -469,12 +469,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: 60,
     height: 60,
-    backgroundColor: "rgba(255, 255, 255, 0.3);",
+    backgroundColor: globalVariables.color.cameraButtonSelected,
     borderRadius: "50%",
   },
   photoViewSelected: {
     flex: 1,
-    backgroundColor: "transparent",
+    backgroundColor: globalVariables.color.transparent,
     marginTop: 90,
   },
   flipContainer: {

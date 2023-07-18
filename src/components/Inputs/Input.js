@@ -55,6 +55,6 @@ const styles = StyleSheet.create({
   },
   inputFocused: {
     backgroundColor: globalVariables.color.white,
-    borderColor: "#2D767F",
+    borderColor: globalVariables.color.green,
   },
 });

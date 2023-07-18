@@ -174,7 +174,7 @@ export const Post = ({ post, navigation, route }) => {
                     size={24}
                     color={
                       countComments > 0
-                        ? "#A696C8"
+                        ? globalVariables.color.violet
                         : globalVariables.color.lightGrey3
                     }
                   />
@@ -266,7 +266,7 @@ const styles = StyleSheet.create({
     height: 50,
     width: 50,
     borderRadius: 50,
-    backgroundColor: "lightgrey",
+    backgroundColor: globalVariables.color.lightGrey1,
   },
   avatar: {
     height: "100%",

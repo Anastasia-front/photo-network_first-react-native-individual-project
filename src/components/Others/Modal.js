@@ -44,7 +44,7 @@ export const ModalLikes = ({ modalLikes, setModalLikes, title, likes }) => {
               style={[
                 styles.modalView,
                 {
-                  backgroundColor: "orange",
+                  backgroundColor: globalVariables.color.orangeModal,
                   borderTopLeftRadius: 8,
                   borderTopRightRadius: 8,
                 },
@@ -120,7 +120,7 @@ export const ModalPhoto = ({ modalPhoto, setModalPhoto, photo }) => {
               style={[
                 styles.modalView,
                 {
-                  backgroundColor: "lightgrey",
+                  backgroundColor: globalVariables.color.lightGrey1,
                   borderTopLeftRadius: 8,
                   borderTopRightRadius: 8,
                   paddingBottom: 40,
@@ -221,7 +221,7 @@ export const ModalLogin = ({ modalLogin, setModalLogin, oldLogin, title }) => {
             style={[
               styles.modalView,
               {
-                backgroundColor: "teal",
+                backgroundColor: globalVariables.color.teal,
                 borderTopLeftRadius: 8,
                 borderTopRightRadius: 8,
                 paddingBottom: 20,
@@ -238,7 +238,7 @@ export const ModalLogin = ({ modalLogin, setModalLogin, oldLogin, title }) => {
                   <Ionicons
                     name="close-circle"
                     size={35}
-                    color="white"
+                    color={globalVariables.color.white}
                     style={{ marginRight: 10 }}
                     onPress={() => setIsPressed(!isPressed)}
                   />
@@ -247,7 +247,7 @@ export const ModalLogin = ({ modalLogin, setModalLogin, oldLogin, title }) => {
                 <Ionicons
                   name="close-circle-outline"
                   size={35}
-                  color="white"
+                  color={globalVariables.color.white}
                   style={{ marginRight: 10 }}
                 />
               )}
@@ -257,7 +257,7 @@ export const ModalLogin = ({ modalLogin, setModalLogin, oldLogin, title }) => {
             style={[
               styles.modalView,
               {
-                backgroundColor: "white",
+                backgroundColor: globalVariables.color.white,
                 borderBottomLeftRadius: 8,
                 borderBottomRightRadius: 8,
               },
@@ -293,7 +293,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
-    backgroundColor: "rgba(0,0,0,0.5)",
+    backgroundColor: globalVariables.color.commentScreenBg,
   },
   modalView: {
     marginHorizontal: 16,

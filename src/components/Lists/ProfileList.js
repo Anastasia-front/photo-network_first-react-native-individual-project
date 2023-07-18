@@ -9,6 +9,8 @@ import {
 import { MaterialIcons } from "@expo/vector-icons";
 import { ProfilePost } from "../Posts/ProfilePost";
 
+import { globalVariables } from "../../../styles/globalVariables";
+
 export const ProfileList = ({ navigation, posts, route }) => {
   if (posts.length === 0) {
     return (
@@ -22,7 +24,11 @@ export const ProfileList = ({ navigation, posts, route }) => {
           style={styles.buttonCapture}
           onPress={() => navigation.navigate("Create")}
         >
-          <MaterialIcons name="add" size={24} color="white" />
+          <MaterialIcons
+            name="add"
+            size={24}
+            color={globalVariables.color.white}
+          />
         </TouchableOpacity>
       </View>
     );
@@ -58,6 +64,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignSelf: "center",
     borderRadius: 50,
-    backgroundColor: "#2D767F",
+    backgroundColor: globalVariables.color.green,
   },
 });

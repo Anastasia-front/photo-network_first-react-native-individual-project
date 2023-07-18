@@ -204,11 +204,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     borderRadius: 25,
     borderWidth: 1,
-    borderColor: "#FF6C00",
+    borderColor: globalVariables.color.orangeMain,
     backgroundColor: globalVariables.color.white,
   },
   buttonAvatarText: {
-    color: "#FF6C00",
+    color: globalVariables.color.orangeMain,
   },
   exitBtn: {
     position: "absolute",

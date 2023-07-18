@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
   text: {
     width: 300,
     padding: 12,
-    backgroundColor: "rgba(0, 0, 0, 0.03)",
+    backgroundColor: globalVariables.color.commentScreenBg,
   },
   content: {
     color: globalVariables.color.black,

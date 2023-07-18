@@ -22,6 +22,7 @@ import { LoaderScreen } from "./LoaderScreen";
 import { useDispatch } from "react-redux";
 import { useKeyboardListener, usePasswordVisibility } from "../utils/keyboard";
 import { authStateChange } from "../redux/auth/authReducer";
+
 import { globalVariables } from "../../styles/globalVariables";
 
 export default function Login() {
@@ -108,7 +109,7 @@ export default function Login() {
               </View>
 
               <CustomButton
-                color="#FF6C00"
+                color={globalVariables.color.orangeMain}
                 width={343}
                 text="Увійти"
                 onPress={handleSubmit}

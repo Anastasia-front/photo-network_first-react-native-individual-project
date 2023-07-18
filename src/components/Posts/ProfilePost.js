@@ -174,7 +174,7 @@ export const ProfilePost = ({ post, navigation, route }) => {
                     size={24}
                     color={
                       countComments > 0
-                        ? "#A696C8"
+                        ? globalVariables.color.violet
                         : globalVariables.color.lightGrey3
                     }
                   />
@@ -215,7 +215,9 @@ export const ProfilePost = ({ post, navigation, route }) => {
                     size={20}
                     onPress={() => setActive(true)}
                     color={
-                      active ? "#DBE9B7" : globalVariables.color.lightGrey3
+                      active
+                        ? globalVariables.color.greenLocation
+                        : globalVariables.color.lightGrey3
                     }
                   />
                 </View>
@@ -259,7 +261,7 @@ const styles = StyleSheet.create({
     height: 50,
     width: 50,
     borderRadius: 50,
-    backgroundColor: "lightgrey",
+    backgroundColor: globalVariables.color.lightGrey1,
   },
   avatar: {
     height: "100%",

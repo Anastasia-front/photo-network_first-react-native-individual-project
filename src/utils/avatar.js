@@ -36,7 +36,7 @@ function style(photoImageTop, psevdoTop, psevdoRight, avatar) {
       left: 0,
       top: 0,
       backgroundColor: globalVariables.color.white,
-      borderColor: "#FF6C00",
+      borderColor: globalVariables.color.orangeMain,
       borderWidth: 1,
       borderRadius: "50%",
     },
@@ -56,7 +56,7 @@ function style(photoImageTop, psevdoTop, psevdoRight, avatar) {
       height: 13,
       left: 11,
       top: 5,
-      backgroundColor: "#FF6C00",
+      backgroundColor: globalVariables.color.orangeMain,
     },
     afterElementVerticalGray: {
       backgroundColor: globalVariables.color.grey,
@@ -68,7 +68,7 @@ function style(photoImageTop, psevdoTop, psevdoRight, avatar) {
       height: 13,
       left: 11,
       top: 5,
-      backgroundColor: "#FF6C00",
+      backgroundColor: globalVariables.color.orangeMain,
       transform: [{ rotate: "-90deg" }],
     },
     afterElementHorizontalGray: {

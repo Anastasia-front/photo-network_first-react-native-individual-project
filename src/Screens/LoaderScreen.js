@@ -1,5 +1,7 @@
 import { View, ActivityIndicator, StyleSheet } from "react-native";
 
+import { globalVariables } from "../../styles/globalVariables";
+
 export const LoaderScreen = () => {
   return (
     <View style={styles.container}>
@@ -14,6 +16,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   loader: {
-    color: "#2D767F",
+    color: globalVariables.color.green,
   },
 });

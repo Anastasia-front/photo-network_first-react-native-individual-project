@@ -2,6 +2,8 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { StyleSheet } from "react-native";
 import { PostsList } from "../components/Lists/PostList";
 
+import { globalVariables } from "../../styles/globalVariables";
+
 const PostStack = createStackNavigator();
 
 const screenOptions = ({ navigation, route }) => ({
@@ -19,7 +21,7 @@ export const PostsScreen = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  headerTintColor: "#212121",
+  headerTintColor: globalVariables.color.black,
   headerTitleAlign: "center",
   headerTitleStyle: {
     fontWeight: "500",

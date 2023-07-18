@@ -46,6 +46,6 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   inputFocused: {
-    borderBottomColor: "#2D767F",
+    borderBottomColor: globalVariables.color.green,
   },
 });

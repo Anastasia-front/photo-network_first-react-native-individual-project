@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 20,
-    activeFill: "#FF6C00",
+    activeFill: globalVariables.color.orangeMain,
     inActiveFill: globalVariables.color.grey,
   },
 });
