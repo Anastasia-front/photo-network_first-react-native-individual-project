@@ -77,7 +77,7 @@ export const PostsList = ({ navigation, route }) => {
     },
     main: {
       flex: 1,
-      backgroundColor: "#fff",
+      backgroundColor: globalVariables.color.white,
       borderColor: globalVariables.color.grey,
       borderTopWidth: 1,
       borderBottomWidth: 1,

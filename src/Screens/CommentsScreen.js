@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "space-between",
-    backgroundColor: "white",
+    backgroundColor: globalVariables.color.white,
     borderTopWidth: 1,
     borderColor: globalVariables.color.grey,
   },

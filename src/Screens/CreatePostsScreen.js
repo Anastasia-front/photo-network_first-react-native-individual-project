@@ -263,7 +263,11 @@ export default function CreatePostsScreen() {
                     ]}
                     onPress={handleCameraPress}
                   >
-                    <Ionicons name="camera" size={30} color="#fff" />
+                    <Ionicons
+                      name="camera"
+                      size={30}
+                      color={globalVariables.color.white}
+                    />
                   </TouchableOpacity>
                 </View>
               </View>
@@ -278,7 +282,11 @@ export default function CreatePostsScreen() {
                     style={styles.cameraButtonSelected}
                     onPress={handleCameraPress}
                   >
-                    <Ionicons name="camera" size={30} color="#fff" />
+                    <Ionicons
+                      name="camera"
+                      size={30}
+                      color={globalVariables.color.white}
+                    />
                   </TouchableOpacity>
                 </View>
               </ImageBackground>
@@ -348,7 +356,7 @@ export default function CreatePostsScreen() {
                 size={25}
                 color={
                   state.titlePost !== ""
-                    ? "#F9D89C"
+                    ? globalVariables.color.yellow
                     : globalVariables.color.lightGrey3
                 }
               />
@@ -410,7 +418,7 @@ export default function CreatePostsScreen() {
 const styles = StyleSheet.create({
   main: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: globalVariables.color.white,
     borderColor: globalVariables.color.grey,
     borderTopWidth: 1,
     borderBottomWidth: 1,
@@ -448,7 +456,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: 60,
     height: 60,
-    backgroundColor: "#fff",
+    backgroundColor: globalVariables.color.white,
     borderRadius: "50%",
   },
   photoView: {

@@ -27,7 +27,7 @@ export const CommentsList = ({ allComments, photo }) => {
 const styles = StyleSheet.create({
   main: {
     paddingBottom: 50,
-    backgroundColor: "#fff",
+    backgroundColor: globalVariables.color.white,
   },
   parent: {
     marginHorizontal: 20,
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     width: 370,
     height: 240,
     backgroundColor: globalVariables.color.lightGrey1,
-    borderColor: "#fff",
+    borderColor: globalVariables.color.white,
     borderWidth: 1,
     borderRadius: 8,
     overflow: "hidden",

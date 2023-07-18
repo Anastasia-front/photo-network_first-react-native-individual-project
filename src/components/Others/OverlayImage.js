@@ -1,5 +1,7 @@
 import { Image, StyleSheet, View } from "react-native";
 
+import { globalVariables } from "../../../styles/globalVariables";
+
 const OverlayImage = ({ top }) => {
   const imageStyle = StyleSheet.compose(styles.overlayImage, {
     marginTop: top,
@@ -10,7 +12,7 @@ const OverlayImage = ({ top }) => {
 
 const styles = StyleSheet.create({
   overlayImage: {
-    backgroundColor: "#fff",
+    backgroundColor: globalVariables.color.white,
     width: 390,
     height: 710,
     borderTopLeftRadius: 25,

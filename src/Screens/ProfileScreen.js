@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     borderTopLeftRadius: 16,
     borderTopRightRadius: 16,
-    backgroundColor: "#fff",
+    backgroundColor: globalVariables.color.white,
   },
   listContainer: {
     flex: 1,
@@ -205,7 +205,7 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     borderWidth: 1,
     borderColor: "#FF6C00",
-    backgroundColor: "#fff",
+    backgroundColor: globalVariables.color.white,
   },
   buttonAvatarText: {
     color: "#FF6C00",

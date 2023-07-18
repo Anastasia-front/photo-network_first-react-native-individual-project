@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0, 0, 0, 0.03)",
   },
   content: {
-    color: "#212121",
+    color: globalVariables.color.black,
     fontWeight: "400",
     fontSize: 13,
     textAlign: "left",

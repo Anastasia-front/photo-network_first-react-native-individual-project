@@ -33,7 +33,7 @@ const InputWithButton = ({ handleButtonClick, inputValue, setInputValue }) => {
         <Ionicons
           name="arrow-up"
           size={25}
-          color="#fff"
+          color={globalVariables.color.white}
           style={styles.arrow}
           onPress={handleButtonClick}
         />
@@ -54,13 +54,13 @@ const styles = StyleSheet.create({
     borderRadius: 100,
   },
   inputFocused: {
-    backgroundColor: "white",
+    backgroundColor: globalVariables.color.white,
     borderColor: "#2D767F",
   },
   arrowContainer: {
     width: 34,
     height: 34,
-    backgroundColor: "#9D84B7",
+    backgroundColor: globalVariables.color.violet,
     borderRadius: 50,
     position: "absolute",
     top: 10,

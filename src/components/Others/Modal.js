@@ -60,7 +60,7 @@ export const ModalLikes = ({ modalLikes, setModalLikes, title, likes }) => {
                     <Ionicons
                       name="close-circle"
                       size={25}
-                      color="white"
+                      color={globalVariables.color.white}
                       style={{ marginRight: 25 }}
                       onPress={() => setIsPressed(!isPressed)}
                     />
@@ -69,7 +69,7 @@ export const ModalLikes = ({ modalLikes, setModalLikes, title, likes }) => {
                   <Ionicons
                     name="close-circle-outline"
                     size={25}
-                    color="white"
+                    color={globalVariables.color.white}
                     style={{ marginRight: 25 }}
                   />
                 )}
@@ -79,7 +79,7 @@ export const ModalLikes = ({ modalLikes, setModalLikes, title, likes }) => {
               style={[
                 styles.modalView,
                 {
-                  backgroundColor: "white",
+                  backgroundColor: globalVariables.color.white,
                   borderBottomLeftRadius: 8,
                   borderBottomRightRadius: 8,
                 },
@@ -155,7 +155,7 @@ export const ModalPhoto = ({ modalPhoto, setModalPhoto, photo }) => {
               style={[
                 styles.modalView,
                 {
-                  backgroundColor: "white",
+                  backgroundColor: globalVariables.color.white,
                   borderBottomLeftRadius: 8,
                   borderBottomRightRadius: 8,
                 },
@@ -299,7 +299,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
     padding: 5,
     alignItems: "center",
-    shadowColor: "#212121",
+    shadowColor: globalVariables.color.black,
     shadowOffset: {
       width: 0,
       height: 2,
@@ -312,14 +312,14 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     fontSize: 20,
     fontWeight: "700",
-    color: "#fff",
+    color: globalVariables.color.white,
   },
   modalSubTitle: {
     alignSelf: "center",
     marginBottom: 20,
     fontSize: 12,
     fontWeight: "500",
-    color: "#fff",
+    color: globalVariables.color.white,
   },
   buttonClose: {
     position: "absolute",

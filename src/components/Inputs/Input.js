@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   inputFocused: {
-    backgroundColor: "white",
+    backgroundColor: globalVariables.color.white,
     borderColor: "#2D767F",
   },
 });

@@ -14,7 +14,7 @@ function style(photoImageTop, psevdoTop, psevdoRight, avatar) {
       borderRadius: 16,
       borderWidth: 0.5,
       borderColor: globalVariables.color.grey,
-      backgroundColor: "white",
+      backgroundColor: globalVariables.color.white,
     },
     psevdo: {
       position: "absolute",
@@ -35,7 +35,7 @@ function style(photoImageTop, psevdoTop, psevdoRight, avatar) {
       height: 25,
       left: 0,
       top: 0,
-      backgroundColor: "#fff",
+      backgroundColor: globalVariables.color.white,
       borderColor: "#FF6C00",
       borderWidth: 1,
       borderRadius: "50%",

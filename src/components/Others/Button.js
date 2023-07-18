@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontWeight: "400",
     fontSize: 16,
-    color: "#fff",
+    color: globalVariables.color.white,
   },
 });
 

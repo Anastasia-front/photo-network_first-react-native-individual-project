@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
   headerTitleStyle: {
     fontWeight: "500",
     fontSize: 17,
-    color: "#212121",
+    color: globalVariables.color.black,
   },
   headerTitleContainerStyle: {
     justifyContent: "flex-end",

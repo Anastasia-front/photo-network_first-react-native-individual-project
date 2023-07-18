@@ -148,7 +148,7 @@ export const ProfilePost = ({ post, navigation, route }) => {
       <Ionicons
         name="trash-outline"
         size={25}
-        color="#fff"
+        color={globalVariables.color.white}
         style={{
           position: "absolute",
           top: 7,
@@ -191,7 +191,9 @@ export const ProfilePost = ({ post, navigation, route }) => {
                     name="heart"
                     size={25}
                     color={
-                      likes > 0 ? "#F5A7A7" : globalVariables.color.lightGrey3
+                      likes > 0
+                        ? globalVariables.color.pink
+                        : globalVariables.color.lightGrey3
                     }
                     onPress={handleLike}
                   />
@@ -279,7 +281,7 @@ const styles = StyleSheet.create({
 
     fontSize: 16,
     fontWeight: "500",
-    color: "#212121",
+    color: globalVariables.color.black,
   },
   buttonsWrp: {
     flexDirection: "row",
@@ -313,6 +315,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "500",
     textDecorationLine: "underline",
-    color: "#212121",
+    color: globalVariables.color.black,
   },
 });
